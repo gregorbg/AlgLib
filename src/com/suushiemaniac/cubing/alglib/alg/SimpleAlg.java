@@ -109,7 +109,7 @@ public class SimpleAlg implements Algorithm {
     }
 
     @Override
-    public SubGroup getSubgroup() {
+    public SubGroup getSubGroup() {
         return SubGroup.fromAlg(this);
     }
 }
