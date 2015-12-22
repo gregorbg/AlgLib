@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
+import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
 public interface Algorithm extends StringFormat {
     Algorithm inverse();
@@ -25,4 +26,6 @@ public interface Algorithm extends StringFormat {
     Move[] subAlg(int from, int to);
 
     Algorithm reduce();
+
+    SubGroup getSubgroup();
 }

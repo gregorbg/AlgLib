@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.util.StringUtils;
+import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
 import java.util.Arrays;
 
@@ -105,6 +106,11 @@ public class SimpleAlg implements Algorithm {
         for (int i = 1; i < this.moves.length; i++)
             startAlg = startAlg.append(moves[i]);
         return startAlg;
+    }
+
+    @Override
+    public SubGroup getSubgroup() {
+        return SubGroup.fromAlg(this);
     }
 
     @Override

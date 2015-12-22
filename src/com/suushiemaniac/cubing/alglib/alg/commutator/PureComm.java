@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.alg.commutator;
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm;
 import com.suushiemaniac.cubing.alglib.move.Move;
+import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
 public class PureComm implements Commutator {
     public static boolean isPureCommutable(Algorithm algorithm) {
@@ -89,6 +90,11 @@ public class PureComm implements Commutator {
     @Override
     public Algorithm reduce() {
         return this.develop().reduce();
+    }
+
+    @Override
+    public SubGroup getSubgroup() {
+        return SubGroup.fromAlg(this.develop());
     }
 
     public Algorithm getPartA() {
