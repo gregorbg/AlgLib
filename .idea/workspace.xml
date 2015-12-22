@@ -7,17 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31278a44-49ea-4f8d-a002-ab645f4dc88b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/antlr-runtime-4.5.1.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/util/SubGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/Algorithm.java" afterPath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/Algorithm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlg.java" afterPath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlg.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/commutator/PureComm.java" afterPath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/commutator/PureComm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/commutator/SetupComm.java" afterPath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/commutator/SetupComm.java" />
     </list>
     <ignored path="AlgLib.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,12 +73,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Move.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Move.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/move/Move.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2917342">
+            <state vertical-scroll-proportion="0.0">
               <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimpleAlg.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlg.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7957861">
+              <caret line="113" column="5" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
+              <folding>
+                <element signature="e#3351#3352#0" expanded="true" />
+                <element signature="e#3396#3397#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -100,6 +104,7 @@
         <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -359,8 +364,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/lang/antlr/CubicAlgorithmReader.java" />
-        <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/move/plane/ClockPlane.java" />
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/move/modifier/ClockDirectionModifier.java" />
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/move/modifier/ClockModifier.java" />
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/lang/antlr/ClockAlgorithmReader.java" />
@@ -406,10 +409,12 @@
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/util/Subgroup.java" />
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/util/SubGroup.java" />
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/Algorithm.java" />
-        <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlg.java" />
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/commutator/PureComm.java" />
         <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/commutator/SetupComm.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlgTest.java" />
+        <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlg.java" />
+        <option value="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/util/StringFormat.java" />
       </list>
     </option>
   </component>
@@ -673,17 +678,24 @@
     <property name="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/lang/res/grammar/SquareOne.g4::/gen-listener" value="false" />
     <property name="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/lang/res/grammar/SquareOne.g4::/gen-visitor" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.suushiemaniac.cubing.alglib.alg" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\suushie_maniac\Desktop\tnoodle-master\AlgLib\src\com\suushiemaniac\cubing\alglib\lang\antlr\algorithm" />
       <recent name="C:\Users\suushie_maniac\Desktop\tnoodle-master\AlgLib\src\com\suushiemaniac\cubing\alglib\lang\res\grammar" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.suushiemaniac.cubing.alglib.move.modifier" />
       <recent name="com.suushiemaniac.cubing.alglib.move.plane" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\suushie_maniac\Desktop\tnoodle-master\AlgLib\src\com\suushiemaniac\cubing\alglib\lang\antlr\algorithm" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\suushie_maniac\Desktop\tnoodle-master\AlgLib\src\com\suushiemaniac\cubing\alglib\lang\res\grammar" />
     </key>
   </component>
@@ -1157,16 +1169,23 @@
       <workItem from="1450779121693" duration="485000" />
       <workItem from="1450779629897" duration="721000" />
       <workItem from="1450783932353" duration="32000" />
-      <workItem from="1450783988476" duration="1580000" />
+      <workItem from="1450783988476" duration="1927000" />
     </task>
+    <task id="LOCAL-00001" summary="Added SubGroup functionality">
+      <created>1450785634415</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1450785634415</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86835000" />
+    <option name="totallyTimeSpent" value="87182000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1055" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1178,7 +1197,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1206,6 +1225,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added SubGroup functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added SubGroup functionality" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1298,13 +1321,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/lang/NotationReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12471655">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/move/modifier/Modifier.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17460318">
@@ -1631,17 +1647,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9613734">
-          <caret line="112" column="38" selection-start-line="112" selection-start-column="38" selection-end-line="112" selection-end-column="38" />
-          <folding>
-            <element signature="e#3351#3352#0" expanded="true" />
-            <element signature="e#3396#3397#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/commutator/Commutator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.07725322">
@@ -1690,9 +1695,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/move/Move.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2917342">
+        <state vertical-scroll-proportion="0.0">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/util/StringFormat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08752026">
+          <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/alg/SimpleAlg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7957861">
+          <caret line="113" column="5" selection-start-line="113" selection-start-column="5" selection-end-line="113" selection-end-column="5" />
+          <folding>
+            <element signature="e#3351#3352#0" expanded="true" />
+            <element signature="e#3396#3397#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

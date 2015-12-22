@@ -112,9 +112,4 @@ public class SimpleAlg implements Algorithm {
     public SubGroup getSubgroup() {
         return SubGroup.fromAlg(this);
     }
-
-    @Override
-    public String toString() {
-        return this.toFormatString();
-    }
 }
