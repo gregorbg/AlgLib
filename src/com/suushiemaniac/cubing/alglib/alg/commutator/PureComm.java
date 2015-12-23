@@ -93,7 +93,7 @@ public class PureComm implements Commutator {
     }
 
     @Override
-    public SubGroup getSubgroup() {
+    public SubGroup getSubGroup() {
         return SubGroup.fromAlg(this.develop());
     }
 

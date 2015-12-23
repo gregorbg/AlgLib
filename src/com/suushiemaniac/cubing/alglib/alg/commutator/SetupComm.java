@@ -94,7 +94,7 @@ public class SetupComm implements Commutator {
     }
 
     @Override
-    public SubGroup getSubgroup() {
+    public SubGroup getSubGroup() {
         return SubGroup.fromAlg(this.develop());
     }
 

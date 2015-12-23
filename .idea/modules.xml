@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AlgLib.iml" filepath="$PROJECT_DIR$/AlgLib.iml" />
-      <module fileurl="file:///var/java/workspace/AlgLib/lib_release/lib.iml" filepath="/var/java/workspace/AlgLib/lib_release/lib.iml" />
     </modules>
   </component>
 </project>

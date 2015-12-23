@@ -27,5 +27,5 @@ public interface Algorithm extends StringFormat {
 
     Algorithm reduce();
 
-    SubGroup getSubgroup();
+    SubGroup getSubGroup();
 }
