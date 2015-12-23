@@ -6,12 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31278a44-49ea-4f8d-a002-ab645f4dc88b" name="Default" comment="Added Plain getter to Algorithm interface">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/suushiemaniac/cubing/alglib/test/SubGroupTest.java" />
+    <list default="true" id="31278a44-49ea-4f8d-a002-ab645f4dc88b" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AlgLib.iml" afterPath="$PROJECT_DIR$/AlgLib.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/util/SubGroup.java" afterPath="$PROJECT_DIR$/src/com/suushiemaniac/cubing/alglib/util/SubGroup.java" />
     </list>
     <ignored path="AlgLib.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1053,7 +1050,7 @@
       <workItem from="1450806293891" duration="10000" />
       <workItem from="1450867356560" duration="370000" />
       <workItem from="1450877723793" duration="1438000" />
-      <workItem from="1450880213481" duration="3162000" />
+      <workItem from="1450880213481" duration="3220000" />
     </task>
     <task id="LOCAL-00001" summary="Added SubGroup functionality">
       <created>1450785634415</created>
@@ -1085,7 +1082,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450878469755</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixed bugs and implemented SubGroup comparability">
+      <created>1450883908926</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1450883908926</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1121,7 +1124,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92363000" />
+    <option name="totallyTimeSpent" value="92421000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1055" extended-state="6" />
@@ -1172,7 +1175,8 @@
     <MESSAGE value="Fixed confusing typo with SubGroup" />
     <MESSAGE value="Fixed more confusing typos with SubGroup" />
     <MESSAGE value="Added Plain getter to Algorithm interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Plain getter to Algorithm interface" />
+    <MESSAGE value="Fixed bugs and implemented SubGroup comparability" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bugs and implemented SubGroup comparability" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
