@@ -21,6 +21,11 @@ public class SimpleAlg implements Algorithm {
     }
 
     @Override
+    public Algorithm plain() {
+        return this;
+    }
+
+    @Override
     public String toFormatString() {
         return StringUtils.join(" ", this.allMoves());
     }

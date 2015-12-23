@@ -39,6 +39,11 @@ public class SetupComm implements Commutator {
     }
 
     @Override
+    public Algorithm plain() {
+        return this.develop();
+    }
+
+    @Override
     public int length() {
         return (2 * this.setup.length() + this.inner.length()) - this.cancelationLength();
     }

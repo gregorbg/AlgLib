@@ -7,6 +7,8 @@ import com.suushiemaniac.cubing.alglib.util.SubGroup;
 public interface Algorithm extends StringFormat {
     Algorithm inverse();
 
+    Algorithm plain();
+
     int length();
 
     int cancelationLength(Algorithm other);

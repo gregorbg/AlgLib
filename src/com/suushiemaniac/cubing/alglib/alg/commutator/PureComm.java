@@ -38,6 +38,11 @@ public class PureComm implements Commutator {
     }
 
     @Override
+    public Algorithm plain() {
+        return this.develop();
+    }
+
+    @Override
     public int length() {
         return 2 * this.partA.length() + 2 * this.partB.length();
     }
