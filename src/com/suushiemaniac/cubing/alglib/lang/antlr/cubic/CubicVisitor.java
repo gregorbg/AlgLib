@@ -1,4 +1,4 @@
-// Generated from C:/Users/suushie_maniac/Desktop/tnoodle-master/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar\Cubic.g4 by ANTLR 4.5.1
+// Generated from /jvdocs/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar/Cubic.g4 by ANTLR 4.5.1
 package com.suushiemaniac.cubing.alglib.lang.antlr.cubic;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -35,11 +35,17 @@ public interface CubicVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSingleDepthCubic(CubicParser.SingleDepthCubicContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CubicParser#twoDepthCubic}.
+	 * Visit a parse tree produced by {@link CubicParser#sliceCubic}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTwoDepthCubic(CubicParser.TwoDepthCubicContext ctx);
+	T visitSliceCubic(CubicParser.SliceCubicContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CubicParser#centralSliceCubic}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCentralSliceCubic(CubicParser.CentralSliceCubicContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CubicParser#nDepthCubic}.
 	 * @param ctx the parse tree

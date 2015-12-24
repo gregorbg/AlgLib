@@ -5,12 +5,14 @@ cubic: cubicAlg | cubicComm;
 cubicAlg: cubicMove+;
 
 cubicMove: singleDepthCubic
-         | twoDepthCubic
+         | sliceCubic
+         | centralSliceCubic
          | nDepthCubic;
 
 singleDepthCubic: CUBIC_PLANE CUBIC_MODIFIER?;
-twoDepthCubic: CUBIC_PLANE CUBIC_WIDE CUBIC_MODIFIER?;
-nDepthCubic: CUBIC_DEPTH twoDepthCubic;
+sliceCubic: CUBIC_DEPTH? CUBIC_SLICE CUBIC_MODIFIER?;
+centralSliceCubic: CUBIC_CENTRAL_SLICE CUBIC_MODIFIER?;
+nDepthCubic: CUBIC_DEPTH? CUBIC_PLANE CUBIC_WIDE CUBIC_MODIFIER?;
 
 cubicComm: cubicPureComm | cubicSetupComm;
 
@@ -18,7 +20,9 @@ cubicPureComm: COMM_BR_OPEN cubic COMM_COMMA cubic COMM_BR_CLOSE;
 
 cubicSetupComm: COMM_BR_OPEN cubic COMM_SEMI_COLON cubic COMM_BR_CLOSE;
 
-CUBIC_PLANE: [UDLRFBMSExyz];
+CUBIC_PLANE: [UDLRFBxyz];
+CUBIC_SLICE: [udlrfb];
+CUBIC_CENTRAL_SLICE: [MSE];
 CUBIC_MODIFIER: [\'2];
 CUBIC_WIDE: 'w';
 CUBIC_DEPTH: [3-9] | ([1-9][0-9]+);

@@ -13,6 +13,7 @@ import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.IntegerList;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements NotationReader {
@@ -34,16 +35,26 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
         }
 
         @Override
-        public CubicMove visitTwoDepthCubic(CubicParser.TwoDepthCubicContext ctx) {
-            CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_PLANE().getText());
+        public CubicMove visitSliceCubic(CubicParser.SliceCubicContext ctx) {
+            CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_SLICE().getText());
             CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
-            return new CubicMove(plane, modifier, 2);
+            int depth = ctx.CUBIC_DEPTH() == null ? 1 : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
+            return new CubicMove(plane, modifier, depth);
+        }
+
+        @Override
+        public CubicMove visitCentralSliceCubic(CubicParser.CentralSliceCubicContext ctx) {
+            CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_CENTRAL_SLICE().getText());
+            CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
+            return new CubicMove(plane, modifier, 1);
         }
 
         @Override
         public CubicMove visitNDepthCubic(CubicParser.NDepthCubicContext ctx) {
-            CubicMove twoMove = visit(ctx.twoDepthCubic());
-            return new CubicMove(twoMove.getPlane(), twoMove.getModifier(), Integer.parseInt(ctx.CUBIC_DEPTH().getText()));
+            CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_PLANE().getText());
+            CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
+            int depth = ctx.CUBIC_DEPTH() == null ? 1 : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
+            return new CubicMove(plane, modifier, depth);
         }
     }
 

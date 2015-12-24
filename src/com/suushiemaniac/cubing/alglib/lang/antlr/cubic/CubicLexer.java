@@ -1,4 +1,4 @@
-// Generated from C:/Users/suushie_maniac/Desktop/tnoodle-master/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar\Cubic.g4 by ANTLR 4.5.1
+// Generated from /jvdocs/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar/Cubic.g4 by ANTLR 4.5.1
 package com.suushiemaniac.cubing.alglib.lang.antlr.cubic;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -17,23 +17,26 @@ public class CubicLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		CUBIC_PLANE=1, CUBIC_MODIFIER=2, CUBIC_WIDE=3, CUBIC_DEPTH=4, COMM_BR_OPEN=5, 
-		COMM_COMMA=6, COMM_BR_CLOSE=7, COMM_SEMI_COLON=8, WHITESPACE=9;
+		CUBIC_PLANE=1, CUBIC_SLICE=2, CUBIC_CENTRAL_SLICE=3, CUBIC_MODIFIER=4, 
+		CUBIC_WIDE=5, CUBIC_DEPTH=6, COMM_BR_OPEN=7, COMM_COMMA=8, COMM_BR_CLOSE=9, 
+		COMM_SEMI_COLON=10, WHITESPACE=11;
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
 	};
 
 	public static final String[] ruleNames = {
-		"CUBIC_PLANE", "CUBIC_MODIFIER", "CUBIC_WIDE", "CUBIC_DEPTH", "COMM_BR_OPEN", 
-		"COMM_COMMA", "COMM_BR_CLOSE", "COMM_SEMI_COLON", "WHITESPACE"
+		"CUBIC_PLANE", "CUBIC_SLICE", "CUBIC_CENTRAL_SLICE", "CUBIC_MODIFIER", 
+		"CUBIC_WIDE", "CUBIC_DEPTH", "COMM_BR_OPEN", "COMM_COMMA", "COMM_BR_CLOSE", 
+		"COMM_SEMI_COLON", "WHITESPACE"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, null, null, "'w'", null, "'['", "','", "']'"
+		null, null, null, null, null, "'w'", null, "'['", "','", "']'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, "CUBIC_PLANE", "CUBIC_MODIFIER", "CUBIC_WIDE", "CUBIC_DEPTH", "COMM_BR_OPEN", 
-		"COMM_COMMA", "COMM_BR_CLOSE", "COMM_SEMI_COLON", "WHITESPACE"
+		null, "CUBIC_PLANE", "CUBIC_SLICE", "CUBIC_CENTRAL_SLICE", "CUBIC_MODIFIER", 
+		"CUBIC_WIDE", "CUBIC_DEPTH", "COMM_BR_OPEN", "COMM_COMMA", "COMM_BR_CLOSE", 
+		"COMM_SEMI_COLON", "WHITESPACE"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -90,20 +93,23 @@ public class CubicLexer extends Lexer {
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2\13\60\b\1\4\2\t\2"+
-		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3"+
-		"\2\3\3\3\3\3\4\3\4\3\5\3\5\3\5\6\5\37\n\5\r\5\16\5 \5\5#\n\5\3\6\3\6\3"+
-		"\7\3\7\3\b\3\b\3\t\3\t\3\n\3\n\3\n\3\n\2\2\13\3\3\5\4\7\5\t\6\13\7\r\b"+
-		"\17\t\21\n\23\13\3\2\t\b\2DDFHNOTUWWz|\4\2))\64\64\3\2\65;\3\2\63;\3\2"+
-		"\62;\3\2<=\4\2\13\f\"\"\61\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2"+
-		"\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\3"+
-		"\25\3\2\2\2\5\27\3\2\2\2\7\31\3\2\2\2\t\"\3\2\2\2\13$\3\2\2\2\r&\3\2\2"+
-		"\2\17(\3\2\2\2\21*\3\2\2\2\23,\3\2\2\2\25\26\t\2\2\2\26\4\3\2\2\2\27\30"+
-		"\t\3\2\2\30\6\3\2\2\2\31\32\7y\2\2\32\b\3\2\2\2\33#\t\4\2\2\34\36\t\5"+
-		"\2\2\35\37\t\6\2\2\36\35\3\2\2\2\37 \3\2\2\2 \36\3\2\2\2 !\3\2\2\2!#\3"+
-		"\2\2\2\"\33\3\2\2\2\"\34\3\2\2\2#\n\3\2\2\2$%\7]\2\2%\f\3\2\2\2&\'\7."+
-		"\2\2\'\16\3\2\2\2()\7_\2\2)\20\3\2\2\2*+\t\7\2\2+\22\3\2\2\2,-\t\b\2\2"+
-		"-.\3\2\2\2./\b\n\2\2/\24\3\2\2\2\5\2 \"\3\b\2\2";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2\r8\b\1\4\2\t\2\4"+
+		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
+		"\13\4\f\t\f\3\2\3\2\3\3\3\3\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\7\6\7\'"+
+		"\n\7\r\7\16\7(\5\7+\n\7\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13\3\f\3\f\3\f"+
+		"\3\f\2\2\r\3\3\5\4\7\5\t\6\13\7\r\b\17\t\21\n\23\13\25\f\27\r\3\2\13\t"+
+		"\2DDFFHHNNTTWWz|\b\2ddffhhnnttww\5\2GGOOUU\4\2))\64\64\3\2\65;\3\2\63"+
+		";\3\2\62;\3\2<=\4\2\13\f\"\"9\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t"+
+		"\3\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2"+
+		"\2\2\25\3\2\2\2\2\27\3\2\2\2\3\31\3\2\2\2\5\33\3\2\2\2\7\35\3\2\2\2\t"+
+		"\37\3\2\2\2\13!\3\2\2\2\r*\3\2\2\2\17,\3\2\2\2\21.\3\2\2\2\23\60\3\2\2"+
+		"\2\25\62\3\2\2\2\27\64\3\2\2\2\31\32\t\2\2\2\32\4\3\2\2\2\33\34\t\3\2"+
+		"\2\34\6\3\2\2\2\35\36\t\4\2\2\36\b\3\2\2\2\37 \t\5\2\2 \n\3\2\2\2!\"\7"+
+		"y\2\2\"\f\3\2\2\2#+\t\6\2\2$&\t\7\2\2%\'\t\b\2\2&%\3\2\2\2\'(\3\2\2\2"+
+		"(&\3\2\2\2()\3\2\2\2)+\3\2\2\2*#\3\2\2\2*$\3\2\2\2+\16\3\2\2\2,-\7]\2"+
+		"\2-\20\3\2\2\2./\7.\2\2/\22\3\2\2\2\60\61\7_\2\2\61\24\3\2\2\2\62\63\t"+
+		"\t\2\2\63\26\3\2\2\2\64\65\t\n\2\2\65\66\3\2\2\2\66\67\b\f\2\2\67\30\3"+
+		"\2\2\2\5\2(*\3\b\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -1,7 +1,7 @@
 package com.suushiemaniac.cubing.alglib.move.plane;
 
 public enum CubicPlane implements Plane {
-    UP("U"), DOWN("D"), LEFT("L"), RIGHT("R"), FRONT("F"), BACK("B"), MIDDLE("M"), EQUATOR("E"), SANDWICH("S"), HORIZONTAL("x"), VERTICAL("y"), SPATIAL("z");
+    UP("U"), DOWN("D"), LEFT("L"), RIGHT("R"), FRONT("F"), BACK("B"), UP_SLICE("u"), DOWN_SLICE("d"), LEFT_SLICE("l"), RIGHT_SLICE("r"), FRONT_SLICE("f"), BACK_SLICE("b"), MIDDLE("M"), EQUATOR("E"), SANDWICH("S"), HORIZONTAL("x"), VERTICAL("y"), SPATIAL("z");
 
     public static CubicPlane fromNotation(String notation) {
         for (CubicPlane plane : CubicPlane.values())
