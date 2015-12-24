@@ -13,7 +13,6 @@ import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.misc.IntegerList;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements NotationReader {
@@ -53,7 +52,7 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
         public CubicMove visitNDepthCubic(CubicParser.NDepthCubicContext ctx) {
             CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_PLANE().getText());
             CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
-            int depth = ctx.CUBIC_DEPTH() == null ? 1 : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
+            int depth = ctx.CUBIC_DEPTH() == null ? 2 : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
             return new CubicMove(plane, modifier, depth);
         }
     }
