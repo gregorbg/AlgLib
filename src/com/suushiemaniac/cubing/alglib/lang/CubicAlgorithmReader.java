@@ -37,14 +37,6 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
         public CubicMove visitSliceCubic(CubicParser.SliceCubicContext ctx) {
             CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_SLICE().getText());
             CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
-            int depth = ctx.CUBIC_DEPTH() == null ? 1 : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
-            return new CubicMove(plane, modifier, depth);
-        }
-
-        @Override
-        public CubicMove visitCentralSliceCubic(CubicParser.CentralSliceCubicContext ctx) {
-            CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_CENTRAL_SLICE().getText());
-            CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
             return new CubicMove(plane, modifier, 1);
         }
 

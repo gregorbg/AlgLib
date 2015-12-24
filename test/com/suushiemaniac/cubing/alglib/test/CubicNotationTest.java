@@ -27,6 +27,6 @@ public class CubicNotationTest {
 
     @Test
     public void testSliceNotation() {
-        testNotation("r2 b' 2f2");
+        testNotation("r2 b' f2");
     }
 }

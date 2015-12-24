@@ -26,6 +26,6 @@ public enum CubicPlane implements Plane {
 
     @Override
     public boolean isRotation() {
-        return this.name().length() > 5;
+        return this.name().length() > 5 && !this.name().contains("SLICE");
     }
 }
