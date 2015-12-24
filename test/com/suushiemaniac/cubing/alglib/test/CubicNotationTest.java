@@ -19,4 +19,14 @@ public class CubicNotationTest {
     public void testWideNotation() {
         testNotation("3Rw2 17Bw' 3Fw");
     }
+
+    @Test
+    public void testCentralSliceNotation() {
+        testNotation("M S' E2");
+    }
+
+    @Test
+    public void testSliceNotation() {
+        testNotation("r2 b' 2f2");
+    }
 }

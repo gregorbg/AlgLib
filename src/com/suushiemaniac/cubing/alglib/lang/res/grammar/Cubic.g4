@@ -25,7 +25,7 @@ CUBIC_SLICE: [udlrfb];
 CUBIC_CENTRAL_SLICE: [MSE];
 CUBIC_MODIFIER: [\'2];
 CUBIC_WIDE: 'w';
-CUBIC_DEPTH: [2-9] | ([1-9][0-9]+);
+CUBIC_DEPTH: [3-9] | ([1-9][0-9]+);
 
 COMM_BR_OPEN: '[';
 COMM_COMMA: ',';
