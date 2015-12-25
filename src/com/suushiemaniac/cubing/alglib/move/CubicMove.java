@@ -60,7 +60,7 @@ public class CubicMove implements Move {
 
     @Override
     public String toFormatString() {
-        return (this.depth > 2 ? String.valueOf(this.depth) : "") + this.plane.toFormatString() + (this.depth > 1 ? "w" : "") + this.modifier.toFormatString();
+        return (this.depth > (this.plane.name().contains("SLICE") ? 1 : 2) ? String.valueOf(this.depth) : "") + this.plane.toFormatString() + (this.depth > 1 && !this.plane.name().contains("SLICE") ? "w" : "") + this.modifier.toFormatString();
     }
 
     @Override
