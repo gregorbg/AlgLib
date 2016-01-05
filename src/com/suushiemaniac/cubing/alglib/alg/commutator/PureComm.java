@@ -4,6 +4,8 @@ import com.suushiemaniac.cubing.alglib.alg.Algorithm;
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
+import java.util.List;
+
 public class PureComm implements Commutator {
     public static boolean isPureCommutable(Algorithm algorithm) {
         //Not very useful atm, add functionality as long-term project??
@@ -44,12 +46,12 @@ public class PureComm implements Commutator {
 
     @Override
     public int length() {
-        return 2 * this.partA.length() + 2 * this.partB.length();
+        return this.develop().length();
     }
 
     @Override
     public int cancelationLength() {
-        return 0;
+        return (2 * this.partA.length() + 2 * this.partB.length()) - this.length();
     }
 
     @Override
@@ -83,23 +85,23 @@ public class PureComm implements Commutator {
     }
 
     @Override
-    public Move[] allMoves() {
+    public List<Move> allMoves() {
         return this.develop().allMoves();
     }
 
     @Override
-    public Move[] subAlg(int from, int to) {
+    public Algorithm subAlg(int from, int to) {
         return this.develop().subAlg(from, to);
-    }
-
-    @Override
-    public Algorithm reduce() {
-        return this.develop().reduce();
     }
 
     @Override
     public SubGroup getSubGroup() {
         return SubGroup.fromAlg(this.develop());
+    }
+
+    @Override
+    public boolean cancels() {
+        return this.cancelationLength() > 0;
     }
 
     public Algorithm getPartA() {
@@ -115,7 +117,7 @@ public class PureComm implements Commutator {
         if (!(obj instanceof PureComm)) return false;
         else {
             PureComm compareTo = (PureComm) obj;
-            return this.partA.equals(compareTo.getPartA()) && this.partB.equals(compareTo.partB);
+            return this.partA.equals(compareTo.partA) && this.partB.equals(compareTo.partB);
         }
     }
 }

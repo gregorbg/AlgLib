@@ -10,4 +10,6 @@ public interface Commutator extends Algorithm {
     Algorithm develop();
 
     Commutator inverse();
+
+    boolean cancels();
 }

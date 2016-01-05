@@ -4,6 +4,8 @@ import com.suushiemaniac.cubing.alglib.alg.Algorithm;
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
+import java.util.List;
+
 public class SetupComm implements Commutator {
     public static boolean isSetupCommutable(Algorithm algorithm) {
         //Not very useful atm, add functionality as long-term project??
@@ -29,8 +31,7 @@ public class SetupComm implements Commutator {
 
     @Override
     public Algorithm develop() {
-        Algorithm setupMerged = this.setup.merge(this.inner);
-        return setupMerged.merge(this.setup.inverse());
+        return this.setup.merge(this.inner).merge(this.setup.inverse());
     }
 
     @Override
@@ -45,12 +46,12 @@ public class SetupComm implements Commutator {
 
     @Override
     public int length() {
-        return (2 * this.setup.length() + this.inner.length()) - this.cancelationLength();
+        return this.develop().length();
     }
 
     @Override
     public int cancelationLength() {
-        return this.cancels() ? 1 : ((2 * this.setup.length() + this.inner.length()) - this.develop().length());
+        return (2 * this.setup.length() + this.inner.length()) - this.length();
     }
 
     @Override
@@ -84,18 +85,13 @@ public class SetupComm implements Commutator {
     }
 
     @Override
-    public Move[] allMoves() {
+    public List<Move> allMoves() {
         return this.develop().allMoves();
     }
 
     @Override
-    public Move[] subAlg(int from, int to) {
+    public Algorithm subAlg(int from, int to) {
         return this.develop().subAlg(from, to);
-    }
-
-    @Override
-    public Algorithm reduce() {
-        return this.develop().reduce();
     }
 
     @Override
@@ -112,8 +108,7 @@ public class SetupComm implements Commutator {
     }
 
     public boolean cancels() {
-        return this.setup.lastMove().merges(this.inner.firstMove())
-                || this.setup.lastMove().merges(this.inner.lastMove());
+        return this.cancelationLength() > 0;
     }
 
     @Override
@@ -121,7 +116,7 @@ public class SetupComm implements Commutator {
         if (!(obj instanceof SetupComm)) return false;
         else {
             SetupComm compareTo = (SetupComm) obj;
-            return this.setup.equals(compareTo.getSetup()) && this.inner.equals(compareTo.getInner());
+            return this.setup.equals(compareTo.setup) && this.inner.equals(compareTo.inner);
         }
     }
 }

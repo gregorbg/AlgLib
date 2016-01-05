@@ -34,8 +34,8 @@ public class SubGroup implements StringFormat {
     }
 
     public static SubGroup fromAlg(Algorithm alg) {
-        CubicPlane[] algPlanes = new CubicPlane[alg.allMoves().length];
-        for (int i = 0; i < alg.allMoves().length; i++)
+        CubicPlane[] algPlanes = new CubicPlane[alg.allMoves().size()];
+        for (int i = 0; i < alg.allMoves().size(); i++)
             algPlanes[i] = (CubicPlane) alg.nMove(i).getPlane();
         return new SubGroup(algPlanes);
     }

@@ -4,20 +4,40 @@ import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.util.StringUtils;
 import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class SimpleAlg implements Algorithm {
-    private final Move[] moves;
+    private final List<Move> moves;
 
     public SimpleAlg(Move... moves) {
-        this.moves = Arrays.copyOf(moves, moves.length);
+        this(Arrays.asList(moves));
+    }
+
+    public SimpleAlg(List<Move> moves) {
+        List<Move> reducedList = new ArrayList<>();
+        for (Move move : moves) reducedList = appendToList(reducedList, move);
+        this.moves = new ArrayList<>(reducedList);
+    }
+
+    private List<Move> appendToList(List<Move> list, Move other) {
+        if (list.size() == 0) //noinspection ArraysAsListWithZeroOrOneArgument
+            return new ArrayList<>(Arrays.asList(other));
+
+        if (list.get(list.size() - 1).cancels(other)) list = list.subList(0, this.length() - 1);
+        else if (list.get(list.size() - 1).merges(other))
+            list.set(list.size() - 1, list.get(list.size() - 1).merge(other));
+        else if (list.get(list.size() - 1).mayAppend(other)) list.add(other);
+        return new ArrayList<>(list);
     }
 
     @Override
     public SimpleAlg inverse() {
-        Move[] inverse = new Move[this.moves.length];
-        for (int i = 0; i < this.moves.length; i++) inverse[-i + inverse.length - 1] = this.moves[i].inverse();
-        return new SimpleAlg(inverse);
+        List<Move> reversedMoves = new ArrayList<>(this.moves);
+        Collections.reverse(reversedMoves);
+        return new SimpleAlg(reversedMoves);
     }
 
     @Override
@@ -32,30 +52,21 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public int length() {
-        return this.moves.length;
+        return this.moves.size();
     }
 
     @Override
     public SimpleAlg merge(Algorithm other) {
-        SimpleAlg startAlg = new SimpleAlg(this.allMoves());
-        for (Move newMove : other.allMoves()) startAlg = startAlg.append(newMove);
-        return startAlg;
+        List<Move> oldMoves = this.allMoves();
+        oldMoves.addAll(other.allMoves());
+        return new SimpleAlg(oldMoves);
     }
 
     @Override
     public SimpleAlg append(Move other) {
-        Move[] newMoves;
-        if (this.lastMove().cancels(other)) {
-            newMoves = new Move[this.allMoves().length - 1];
-            for (int i = 0; i < newMoves.length; i++) newMoves[i] = this.allMoves()[i];
-        } else if (this.lastMove().merges(other)) {
-            newMoves = this.allMoves();
-            newMoves[newMoves.length - 1] = newMoves[newMoves.length - 1].merge(other);
-        } else if (this.lastMove().mayAppend(other)) {
-            newMoves = Arrays.copyOf(this.allMoves(), this.allMoves().length + 1);
-            newMoves[newMoves.length - 1] = other;
-        } else newMoves = this.allMoves();
-        return new SimpleAlg(newMoves);
+        List<Move> oldMoves = this.allMoves();
+        oldMoves.add(other);
+        return new SimpleAlg(oldMoves);
     }
 
     @Override
@@ -65,7 +76,7 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public Move nMove(int n) {
-        return this.moves[n];
+        return this.moves.get(n);
     }
 
     @Override
@@ -75,21 +86,17 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public Move lastMove() {
-        return this.nMove(this.moves.length- 1);
+        return this.nMove(this.moves.size() - 1);
     }
 
     @Override
-    public Move[] allMoves() {
-        return this.moves;
+    public List<Move> allMoves() {
+        return new ArrayList<>(this.moves);
     }
 
     @Override
-    public Move[] subAlg(int from, int to) {
-        Move[] subMoves = new Move[to - from + 1];
-        int j = 0;
-        for (int i = from; i <= to; i++)
-            subMoves[j++] = this.nMove(i);
-        return subMoves;
+    public Algorithm subAlg(int from, int to) {
+        return new SimpleAlg(this.moves.subList(from, to));
     }
 
     @Override
@@ -103,14 +110,6 @@ public class SimpleAlg implements Algorithm {
                     return false;
             return true;
         }
-    }
-
-    @Override
-    public SimpleAlg reduce() {
-        SimpleAlg startAlg = new SimpleAlg(this.moves[0]);
-        for (int i = 1; i < this.moves.length; i++)
-            startAlg = startAlg.append(moves[i]);
-        return startAlg;
     }
 
     @Override

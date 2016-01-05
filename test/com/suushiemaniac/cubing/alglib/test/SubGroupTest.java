@@ -10,7 +10,7 @@ import com.suushiemaniac.cubing.alglib.util.SubGroup;
 import org.junit.Test;
 
 public class SubGroupTest {
-    private Algorithm testAlg = new PureComm(new SimpleAlg(new CubicMove(CubicPlane.MIDDLE, CubicModifier.CCW, 1), new CubicMove(CubicPlane.UP, CubicModifier.DOUBLE, 1), new CubicMove(CubicPlane.MIDDLE, CubicModifier.CW, 1)), new SimpleAlg(new CubicMove(CubicPlane.DOWN, CubicModifier.CCW, 1)));
+    private Algorithm testAlg = new PureComm(new SimpleAlg(new CubicMove[]{new CubicMove(CubicPlane.MIDDLE, CubicModifier.CCW, 1), new CubicMove(CubicPlane.UP, CubicModifier.DOUBLE, 1), new CubicMove(CubicPlane.MIDDLE, CubicModifier.CW, 1)}), new SimpleAlg(new CubicMove[]{new CubicMove(CubicPlane.DOWN, CubicModifier.CCW, 1)}));
     private SubGroup testSubGroup = new SubGroup(CubicPlane.MIDDLE, CubicPlane.UP, CubicPlane.DOWN);
 
     @Test

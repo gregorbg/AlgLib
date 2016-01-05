@@ -4,6 +4,8 @@ import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
+import java.util.List;
+
 public interface Algorithm extends StringFormat {
     Algorithm inverse();
 
@@ -23,11 +25,9 @@ public interface Algorithm extends StringFormat {
 
     Move lastMove();
 
-    Move[] allMoves();
+    List<Move> allMoves();
 
-    Move[] subAlg(int from, int to);
-
-    Algorithm reduce();
+    Algorithm subAlg(int from, int to);
 
     SubGroup getSubGroup();
 }

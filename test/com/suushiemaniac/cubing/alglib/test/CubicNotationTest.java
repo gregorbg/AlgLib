@@ -43,6 +43,14 @@ public class CubicNotationTest {
     @Test
     public void testSliceNotation() {
         testNotation("r2 b' 3f2");
-        testNegNotation("uw dw'");
+        testNegNotation("uw Dw2'");
+    }
+
+    @Test
+    public void testCommNotation() {
+        testNotation("[R' U R , D]");
+        testNotation("[F ; [R' U R , D]]");
+        testNotation("[D : [R' U R , D]]");
+        testNegNotation("[U2 R2 U2]");
     }
 }
