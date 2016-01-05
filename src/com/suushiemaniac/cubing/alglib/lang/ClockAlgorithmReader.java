@@ -12,8 +12,7 @@ import com.suushiemaniac.cubing.alglib.move.ClockMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.ClockDirectionModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.ClockNumModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.ClockPlane;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class ClockAlgorithmReader extends ClockBaseVisitor<Algorithm> implements NotationReader {
@@ -22,6 +21,12 @@ public class ClockAlgorithmReader extends ClockBaseVisitor<Algorithm> implements
         ClockLexer lexer = new ClockLexer(new ANTLRInputStream(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ClockParser parser = new ClockParser(tokens);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new BaseErrorListener() {
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+                System.err.println("Something went wrong @ " + input + " : " + msg);
+            }
+        });
         ParseTree tree = parser.clock();
         return this.visit(tree);
     }

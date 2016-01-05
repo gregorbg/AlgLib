@@ -13,8 +13,7 @@ import com.suushiemaniac.cubing.alglib.move.modifier.MegaminxUpModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.MegaminxWideModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxUpPlane;
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxWidePlane;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class MegaminxAlgorithmReader extends MegaminxBaseVisitor<Algorithm> implements NotationReader {
@@ -23,6 +22,12 @@ public class MegaminxAlgorithmReader extends MegaminxBaseVisitor<Algorithm> impl
         MegaminxLexer lexer = new MegaminxLexer(new ANTLRInputStream(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MegaminxParser parser = new MegaminxParser(tokens);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new BaseErrorListener() {
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+                System.err.println("Something went wrong @ " + input + " : " + msg);
+            }
+        });
         ParseTree tree = parser.megaminx();
         return this.visit(tree);
     }

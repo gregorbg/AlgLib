@@ -13,8 +13,7 @@ import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneDirectionModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneHalfModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneNumModifier;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class SquareOneAlgorithmReader extends SquareOneBaseVisitor<Algorithm> implements NotationReader {
@@ -23,6 +22,12 @@ public class SquareOneAlgorithmReader extends SquareOneBaseVisitor<Algorithm> im
         SquareOneLexer lexer = new SquareOneLexer(new ANTLRInputStream(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         SquareOneParser parser = new SquareOneParser(tokens);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new BaseErrorListener() {
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+                System.err.println("Something went wrong @ " + input + " : " + msg);
+            }
+        });
         ParseTree tree = parser.squareOne();
         return this.visit(tree);
     }

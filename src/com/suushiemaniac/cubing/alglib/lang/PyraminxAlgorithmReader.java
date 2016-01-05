@@ -11,8 +11,7 @@ import com.suushiemaniac.cubing.alglib.lang.antlr.pyraminx.PyraminxParser;
 import com.suushiemaniac.cubing.alglib.move.PyraminxMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.PyraminxModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.PyraminxPlane;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class PyraminxAlgorithmReader extends PyraminxBaseVisitor<Algorithm> implements NotationReader {
@@ -21,6 +20,12 @@ public class PyraminxAlgorithmReader extends PyraminxBaseVisitor<Algorithm> impl
         PyraminxLexer lexer = new PyraminxLexer(new ANTLRInputStream(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         PyraminxParser parser = new PyraminxParser(tokens);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new BaseErrorListener() {
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+                System.err.println("Something went wrong @ " + input + " : " + msg);
+            }
+        });
         ParseTree tree = parser.pyraminx();
         return this.visit(tree);
     }

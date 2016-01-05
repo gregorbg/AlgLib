@@ -11,8 +11,7 @@ import com.suushiemaniac.cubing.alglib.lang.antlr.skewb.SkewbParser;
 import com.suushiemaniac.cubing.alglib.move.SkewbMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.SkewbModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.SkewbPlane;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class SkewbAlgorithmReader extends SkewbBaseVisitor<Algorithm> implements NotationReader {
@@ -21,6 +20,12 @@ public class SkewbAlgorithmReader extends SkewbBaseVisitor<Algorithm> implements
         SkewbLexer lexer = new SkewbLexer(new ANTLRInputStream(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         SkewbParser parser = new SkewbParser(tokens);
+        parser.removeErrorListeners();
+        parser.addErrorListener(new BaseErrorListener() {
+            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+                System.err.println("Something went wrong @ " + input + " : " + msg);
+            }
+        });
         ParseTree tree = parser.skewb();
         return this.visit(tree);
     }
