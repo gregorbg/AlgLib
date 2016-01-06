@@ -17,20 +17,15 @@ public class SimpleAlg implements Algorithm {
     }
 
     public SimpleAlg(List<Move> moves) {
-        List<Move> reducedList = new ArrayList<>();
-        for (Move move : moves) reducedList = appendToList(reducedList, move);
-        this.moves = new ArrayList<>(reducedList);
-    }
-
-    private List<Move> appendToList(List<Move> list, Move other) {
-        if (list.size() == 0) //noinspection ArraysAsListWithZeroOrOneArgument
-            return new ArrayList<>(Arrays.asList(other));
-
-        if (list.get(list.size() - 1).cancels(other)) list = list.subList(0, this.length() - 1);
-        else if (list.get(list.size() - 1).merges(other))
-            list.set(list.size() - 1, list.get(list.size() - 1).merge(other));
-        else if (list.get(list.size() - 1).mayAppend(other)) list.add(other);
-        return new ArrayList<>(list);
+        List<Move> list = new ArrayList<>();
+        for (Move move : moves) {
+            if (list.size() == 0) list.add(move);
+            else if (list.get(list.size() - 1).cancels(move)) list.remove(list.size() - 1);
+            else if (list.get(list.size() - 1).merges(move))
+                list.set(list.size() - 1, list.get(list.size() - 1).merge(move));
+            else if (list.get(list.size() - 1).mayAppend(move)) list.add(move);
+        }
+        this.moves = new ArrayList<>(list);
     }
 
     @Override
@@ -101,15 +96,7 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof SimpleAlg)) return false;
-        else {
-            SimpleAlg compareTo = (SimpleAlg) obj;
-            if (this.length() != compareTo.length()) return false;
-            for (int i = 0; i < (this.length() & compareTo.length()); i++)
-                if (!this.nMove(i).equals(compareTo.nMove(i)))
-                    return false;
-            return true;
-        }
+        return obj instanceof SimpleAlg && this.allMoves().containsAll(((SimpleAlg) obj).allMoves()) && ((SimpleAlg) obj).allMoves().containsAll(this.allMoves());
     }
 
     @Override
