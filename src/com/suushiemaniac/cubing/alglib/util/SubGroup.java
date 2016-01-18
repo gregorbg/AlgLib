@@ -53,7 +53,7 @@ public class SubGroup implements StringFormat {
     public SubGroup(CubicPlane... planes) {
         this.groupList = new ArrayList<>();
         for (CubicPlane p : planes)
-            if (!this.groupList.contains(p))
+            if (!this.groupList.contains(p) && !p.isRotation())
                 this.groupList.add(p);
         Collections.sort(this.groupList, new GroupComparator());
     }
