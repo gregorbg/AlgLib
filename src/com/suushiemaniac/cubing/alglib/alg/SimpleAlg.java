@@ -32,6 +32,7 @@ public class SimpleAlg implements Algorithm {
     public SimpleAlg inverse() {
         List<Move> reversedMoves = new ArrayList<>(this.moves);
         Collections.reverse(reversedMoves);
+        for (int i = 0; i < reversedMoves.size(); i++) reversedMoves.set(i, reversedMoves.get(i).inverse());
         return new SimpleAlg(reversedMoves);
     }
 
