@@ -2,7 +2,6 @@ package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
-import com.suushiemaniac.cubing.alglib.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,8 +67,12 @@ public class SubGroup implements StringFormat {
     @Override
     public String toFormatString() {
         String groupString = "<";
-        groupString += StringUtils.join(",", this.getElementsAsString());
+        groupString += String.join(",", this.getElementsAsString());
         return groupString + ">";
+    }
+
+    public String toRawString() {
+        return String.join("", this.getElementsAsString());
     }
 
     public boolean sameSubGroup(SubGroup other) {
