@@ -1,8 +1,8 @@
 package com.suushiemaniac.cubing.alglib.alg.commutator;
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm;
+import com.suushiemaniac.cubing.alglib.alg.SubGroup;
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.util.SubGroup;
 
 import java.util.List;
 

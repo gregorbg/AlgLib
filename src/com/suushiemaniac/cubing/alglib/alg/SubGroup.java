@@ -1,7 +1,8 @@
-package com.suushiemaniac.cubing.alglib.util;
+package com.suushiemaniac.cubing.alglib.alg;
 
-import com.suushiemaniac.cubing.alglib.alg.Algorithm;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
+import com.suushiemaniac.cubing.alglib.util.StringFormat;
+import com.suushiemaniac.cubing.alglib.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

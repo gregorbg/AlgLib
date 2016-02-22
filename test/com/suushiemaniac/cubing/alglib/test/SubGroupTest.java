@@ -2,11 +2,11 @@ package com.suushiemaniac.cubing.alglib.test;
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm;
 import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
+import com.suushiemaniac.cubing.alglib.alg.SubGroup;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.move.CubicMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
-import com.suushiemaniac.cubing.alglib.util.SubGroup;
 import org.junit.Test;
 
 public class SubGroupTest {
