@@ -5,6 +5,7 @@ import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm;
+import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException;
 import com.suushiemaniac.cubing.alglib.lang.antlr.clock.ClockBaseVisitor;
 import com.suushiemaniac.cubing.alglib.lang.antlr.clock.ClockLexer;
 import com.suushiemaniac.cubing.alglib.lang.antlr.clock.ClockParser;
@@ -24,7 +25,7 @@ public class ClockAlgorithmReader extends ClockBaseVisitor<Algorithm> implements
         parser.removeErrorListeners();
         parser.addErrorListener(new BaseErrorListener() {
             public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                System.err.println("Something went wrong @ " + input + " : " + msg);
+                throw new InvalidNotationException(input, msg);
             }
         });
         ParseTree tree = parser.clock();
