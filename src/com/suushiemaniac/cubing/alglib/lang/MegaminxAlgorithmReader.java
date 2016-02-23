@@ -5,7 +5,6 @@ import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm;
-import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException;
 import com.suushiemaniac.cubing.alglib.lang.antlr.megaminx.MegaminxBaseVisitor;
 import com.suushiemaniac.cubing.alglib.lang.antlr.megaminx.MegaminxLexer;
 import com.suushiemaniac.cubing.alglib.lang.antlr.megaminx.MegaminxParser;
@@ -14,21 +13,21 @@ import com.suushiemaniac.cubing.alglib.move.modifier.MegaminxUpModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.MegaminxWideModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxUpPlane;
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxWidePlane;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class MegaminxAlgorithmReader extends MegaminxBaseVisitor<Algorithm> implements NotationReader {
     @Override
     public Algorithm parse(String input) {
+        InvalidNotationErrorListener errorListener = new InvalidNotationErrorListener(input);
         MegaminxLexer lexer = new MegaminxLexer(new ANTLRInputStream(input));
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(errorListener);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MegaminxParser parser = new MegaminxParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(new BaseErrorListener() {
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                throw new InvalidNotationException(input, msg);
-            }
-        });
+        parser.addErrorListener(errorListener);
         ParseTree tree = parser.megaminx();
         return this.visit(tree);
     }

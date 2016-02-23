@@ -5,7 +5,6 @@ import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm;
-import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException;
 import com.suushiemaniac.cubing.alglib.lang.antlr.clock.ClockBaseVisitor;
 import com.suushiemaniac.cubing.alglib.lang.antlr.clock.ClockLexer;
 import com.suushiemaniac.cubing.alglib.lang.antlr.clock.ClockParser;
@@ -13,21 +12,21 @@ import com.suushiemaniac.cubing.alglib.move.ClockMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.ClockDirectionModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.ClockNumModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.ClockPlane;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class ClockAlgorithmReader extends ClockBaseVisitor<Algorithm> implements NotationReader {
     @Override
     public Algorithm parse(String input) {
+        InvalidNotationErrorListener errorListener = new InvalidNotationErrorListener(input);
         ClockLexer lexer = new ClockLexer(new ANTLRInputStream(input));
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(errorListener);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ClockParser parser = new ClockParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(new BaseErrorListener() {
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                throw new InvalidNotationException(input, msg);
-            }
-        });
+        parser.addErrorListener(errorListener);
         ParseTree tree = parser.clock();
         return this.visit(tree);
     }

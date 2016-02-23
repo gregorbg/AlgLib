@@ -5,28 +5,27 @@ import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm;
-import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException;
 import com.suushiemaniac.cubing.alglib.lang.antlr.cubic.CubicBaseVisitor;
 import com.suushiemaniac.cubing.alglib.lang.antlr.cubic.CubicLexer;
 import com.suushiemaniac.cubing.alglib.lang.antlr.cubic.CubicParser;
 import com.suushiemaniac.cubing.alglib.move.CubicMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements NotationReader {
     @Override
     public Algorithm parse(String input) {
+        InvalidNotationErrorListener errorListener = new InvalidNotationErrorListener(input);
         CubicLexer lexer = new CubicLexer(new ANTLRInputStream(input));
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(errorListener);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CubicParser parser = new CubicParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(new BaseErrorListener() {
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                throw new InvalidNotationException(input, msg);
-            }
-        });
+        parser.addErrorListener(errorListener);
         ParseTree tree = parser.cubic();
         return this.visit(tree);
     }

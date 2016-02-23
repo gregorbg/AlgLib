@@ -5,28 +5,27 @@ import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm;
-import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException;
 import com.suushiemaniac.cubing.alglib.lang.antlr.pyraminx.PyraminxBaseVisitor;
 import com.suushiemaniac.cubing.alglib.lang.antlr.pyraminx.PyraminxLexer;
 import com.suushiemaniac.cubing.alglib.lang.antlr.pyraminx.PyraminxParser;
 import com.suushiemaniac.cubing.alglib.move.PyraminxMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.PyraminxModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.PyraminxPlane;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class PyraminxAlgorithmReader extends PyraminxBaseVisitor<Algorithm> implements NotationReader {
     @Override
     public Algorithm parse(String input) {
+        InvalidNotationErrorListener errorListener = new InvalidNotationErrorListener(input);
         PyraminxLexer lexer = new PyraminxLexer(new ANTLRInputStream(input));
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(errorListener);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         PyraminxParser parser = new PyraminxParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(new BaseErrorListener() {
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                throw new InvalidNotationException(input, msg);
-            }
-        });
+        parser.addErrorListener(errorListener);
         ParseTree tree = parser.pyraminx();
         return this.visit(tree);
     }

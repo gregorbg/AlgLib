@@ -5,28 +5,27 @@ import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm;
-import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException;
 import com.suushiemaniac.cubing.alglib.lang.antlr.skewb.SkewbBaseVisitor;
 import com.suushiemaniac.cubing.alglib.lang.antlr.skewb.SkewbLexer;
 import com.suushiemaniac.cubing.alglib.lang.antlr.skewb.SkewbParser;
 import com.suushiemaniac.cubing.alglib.move.SkewbMove;
 import com.suushiemaniac.cubing.alglib.move.modifier.SkewbModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.SkewbPlane;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class SkewbAlgorithmReader extends SkewbBaseVisitor<Algorithm> implements NotationReader {
     @Override
     public Algorithm parse(String input) {
+        InvalidNotationErrorListener errorListener = new InvalidNotationErrorListener(input);
         SkewbLexer lexer = new SkewbLexer(new ANTLRInputStream(input));
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(errorListener);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         SkewbParser parser = new SkewbParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(new BaseErrorListener() {
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                throw new InvalidNotationException(input, msg);
-            }
-        });
+        parser.addErrorListener(errorListener);
         ParseTree tree = parser.skewb();
         return this.visit(tree);
     }

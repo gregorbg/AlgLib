@@ -5,7 +5,6 @@ import com.suushiemaniac.cubing.alglib.alg.SimpleAlg;
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator;
 import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm;
 import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm;
-import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException;
 import com.suushiemaniac.cubing.alglib.lang.antlr.squareone.SquareOneBaseVisitor;
 import com.suushiemaniac.cubing.alglib.lang.antlr.squareone.SquareOneLexer;
 import com.suushiemaniac.cubing.alglib.lang.antlr.squareone.SquareOneParser;
@@ -14,21 +13,21 @@ import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneDirectionModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneHalfModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneNumModifier;
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class SquareOneAlgorithmReader extends SquareOneBaseVisitor<Algorithm> implements NotationReader {
     @Override
     public Algorithm parse(String input) {
+        InvalidNotationErrorListener errorListener = new InvalidNotationErrorListener(input);
         SquareOneLexer lexer = new SquareOneLexer(new ANTLRInputStream(input));
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(errorListener);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         SquareOneParser parser = new SquareOneParser(tokens);
         parser.removeErrorListeners();
-        parser.addErrorListener(new BaseErrorListener() {
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                throw new InvalidNotationException(input, msg);
-            }
-        });
+        parser.addErrorListener(errorListener);
         ParseTree tree = parser.squareOne();
         return this.visit(tree);
     }
