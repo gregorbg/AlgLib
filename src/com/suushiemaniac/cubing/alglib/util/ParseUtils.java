@@ -15,30 +15,14 @@ public class ParseUtils {
     }
 
     public NotationReader getReaderForPuzzle(String puzzle) {
-        switch (puzzle) {
-            case "222":
-            case "333":
-            case "333ni":
-            case "444":
-            case "444ni":
-            case "555":
-            case "555ni":
-            case "666":
-            case "777":
-                return new CubicAlgorithmReader();
-            case "skewb":
-                return new SkewbAlgorithmReader();
-            case "pyram":
-                return new PyraminxAlgorithmReader();
-            case "minx":
-                return new MegaminxAlgorithmReader();
-            case "sq1":
-                return new SquareOneAlgorithmReader();
-            case "clock":
-                return new ClockAlgorithmReader();
-            default:
-                return null;
-        }
+        if (puzzle.equals("222") || puzzle.equals("333") || puzzle.equals("333ni") || puzzle.equals("444") || puzzle.equals("444ni") || puzzle.equals("555") || puzzle.equals("555ni") || puzzle.equals("666") || puzzle.equals("777"))
+            return new CubicAlgorithmReader();
+        else if (puzzle.equals("skewb")) return new SkewbAlgorithmReader();
+        else if (puzzle.equals("pyram")) return new PyraminxAlgorithmReader();
+        else if (puzzle.equals("minx")) return new MegaminxAlgorithmReader();
+        else if (puzzle.equals("sq1")) return new SquareOneAlgorithmReader();
+        else if (puzzle.equals("clock")) return new ClockAlgorithmReader();
+        else return null;
     }
 
     public NotationReader guessReaderForAlgString(String algString) {
