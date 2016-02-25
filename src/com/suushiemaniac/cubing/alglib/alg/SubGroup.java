@@ -4,22 +4,16 @@ import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class SubGroup implements StringFormat {
-    private class GroupComparator implements Comparator<CubicPlane> {
+    public class GroupComparator implements Comparator<CubicPlane> {
         @Override
         public int compare(CubicPlane o1, CubicPlane o2) {
             CubicPlane[] orderedPlanes = {CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK};
-            int o1Index = 0;
-            for (int i = 0; i < orderedPlanes.length; i++) if (orderedPlanes[i] == o1) o1Index = i;
-            int o2Index = 0;
-            for (int i = 0; i < orderedPlanes.length; i++) if (orderedPlanes[i] == o2) o2Index = i;
-
-            if (o1Index < o2Index) return -1;
-            else if (o1Index == o2Index) return 0;
-            else return 1;
+            return Integer.compare(Arrays.binarySearch(orderedPlanes, o1), Arrays.binarySearch(orderedPlanes, o2));
         }
 
         @Override
