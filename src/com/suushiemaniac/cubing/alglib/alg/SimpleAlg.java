@@ -16,7 +16,7 @@ public class SimpleAlg implements Algorithm {
     }
 
     public SimpleAlg(List<Move> moves) {
-        List<Move> list = new ArrayList<>();
+        List<Move> list = new ArrayList<Move>();
         for (Move move : moves) {
             if (list.size() == 0) list.add(move);
             else if (list.get(list.size() - 1).cancels(move)) list.remove(list.size() - 1);
@@ -24,12 +24,12 @@ public class SimpleAlg implements Algorithm {
                 list.set(list.size() - 1, list.get(list.size() - 1).merge(move));
             else if (list.get(list.size() - 1).mayAppend(move)) list.add(move);
         }
-        this.moves = new ArrayList<>(list);
+        this.moves = new ArrayList<Move>(list);
     }
 
     @Override
     public SimpleAlg inverse() {
-        List<Move> reversedMoves = new ArrayList<>(this.moves);
+        List<Move> reversedMoves = new ArrayList<Move>(this.moves);
         Collections.reverse(reversedMoves);
         for (int i = 0; i < reversedMoves.size(); i++) reversedMoves.set(i, reversedMoves.get(i).inverse());
         return new SimpleAlg(reversedMoves);
@@ -86,7 +86,7 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public List<Move> allMoves() {
-        return new ArrayList<>(this.moves);
+        return new ArrayList<Move>(this.moves);
     }
 
     @Override
