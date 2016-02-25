@@ -14,7 +14,7 @@ public class ParseUtils {
         }
     }
 
-    public NotationReader getReaderForPuzzle(String puzzle) {
+    public static NotationReader getReaderForPuzzle(String puzzle) {
         if (puzzle.equals("222") || puzzle.equals("333") || puzzle.equals("333ni") || puzzle.equals("444") || puzzle.equals("444ni") || puzzle.equals("555") || puzzle.equals("555ni") || puzzle.equals("666") || puzzle.equals("777"))
             return new CubicAlgorithmReader();
         else if (puzzle.equals("skewb")) return new SkewbAlgorithmReader();
@@ -25,7 +25,7 @@ public class ParseUtils {
         else return null;
     }
 
-    public NotationReader guessReaderForAlgString(String algString) {
+    public static NotationReader guessReaderForAlgString(String algString) {
         if (algString.contains("/") || (algString.contains("(") && algString.contains(")")))
             return new SquareOneAlgorithmReader();
         else if (algString.contains("++") || algString.contains("--"))
