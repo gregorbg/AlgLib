@@ -14,7 +14,7 @@ public class ParseUtils {
         }
     }
 
-    public NotationReader getReaderForPuzzle(String puzzle) {
+    public static NotationReader getReaderForPuzzle(String puzzle) {
         switch (puzzle) {
             case "222":
             case "333":
@@ -41,7 +41,7 @@ public class ParseUtils {
         }
     }
 
-    public NotationReader guessReaderForAlgString(String algString) {
+    public static NotationReader guessReaderForAlgString(String algString) {
         if (algString.contains("/") || (algString.contains("(") && algString.contains(")")))
             return new SquareOneAlgorithmReader();
         else if (algString.contains("++") || algString.contains("--"))
