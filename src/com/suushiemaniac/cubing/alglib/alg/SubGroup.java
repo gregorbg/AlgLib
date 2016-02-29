@@ -44,12 +44,15 @@ public class SubGroup implements StringFormat {
     }
 
     private ArrayList<CubicPlane> groupList;
+    private boolean hasRotation;
 
     public SubGroup(CubicPlane... planes) {
         this.groupList = new ArrayList<>();
-        for (CubicPlane p : planes)
+        for (CubicPlane p : planes) {
+            if (!this.hasRotation && p.isRotation()) hasRotation = true;
             if (!this.groupList.contains(p) && !p.isRotation())
                 this.groupList.add(p);
+        }
         Collections.sort(this.groupList, new GroupComparator());
     }
 
@@ -88,6 +91,10 @@ public class SubGroup implements StringFormat {
 
     public boolean sameOrLargerSubGroup(SubGroup other) {
         return this.sameSubGroup(other) || this.largerSubGroup(other);
+    }
+
+    public boolean hasRotation() {
+        return this.hasRotation;
     }
 
     public int size() {
