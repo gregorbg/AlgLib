@@ -46,7 +46,14 @@ public class SimpleAlg implements Algorithm {
     }
 
     @Override
-    public int length() {
+    public int moveLength() {
+        int size = 0;
+        for (Move m : this.moves) if (!m.getPlane().isRotation()) size++;
+        return size;
+    }
+
+    @Override
+    public int algLength() {
         return this.moves.size();
     }
 
@@ -66,7 +73,7 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public int cancelationLength(Algorithm other) {
-        return ((this.length() + other.length()) - new SimpleAlg(this.allMoves()).merge(other).length()) / 2;
+        return ((this.moveLength() + other.moveLength()) - new SimpleAlg(this.allMoves()).merge(other).moveLength()) / 2;
     }
 
     @Override

@@ -45,13 +45,18 @@ public class PureComm implements Commutator {
     }
 
     @Override
-    public int length() {
-        return this.develop().length();
+    public int moveLength() {
+        return this.develop().moveLength();
+    }
+
+    @Override
+    public int algLength() {
+        return this.develop().algLength();
     }
 
     @Override
     public int cancelationLength() {
-        return (2 * this.partA.length() + 2 * this.partB.length()) - this.length();
+        return (2 * this.partA.moveLength() + 2 * this.partB.moveLength()) - this.moveLength();
     }
 
     @Override

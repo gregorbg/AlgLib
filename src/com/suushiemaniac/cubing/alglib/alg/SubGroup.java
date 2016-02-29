@@ -1,6 +1,7 @@
 package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
+import com.suushiemaniac.cubing.alglib.util.ArrayUtils;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class SubGroup implements StringFormat {
         @Override
         public int compare(CubicPlane o1, CubicPlane o2) {
             CubicPlane[] orderedPlanes = {CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK};
-            return Integer.compare(Arrays.binarySearch(orderedPlanes, o1), Arrays.binarySearch(orderedPlanes, o2));
+            return Integer.compare(ArrayUtils.arrayIndex(orderedPlanes, o1), ArrayUtils.arrayIndex(orderedPlanes, o2));
         }
 
         @Override

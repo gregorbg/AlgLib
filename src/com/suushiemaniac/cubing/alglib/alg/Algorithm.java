@@ -10,7 +10,9 @@ public interface Algorithm extends StringFormat {
 
     Algorithm plain();
 
-    int length();
+    int moveLength();
+
+    int algLength();
 
     int cancelationLength(Algorithm other);
 

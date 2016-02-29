@@ -45,13 +45,18 @@ public class SetupComm implements Commutator {
     }
 
     @Override
-    public int length() {
-        return this.develop().length();
+    public int moveLength() {
+        return this.develop().moveLength();
+    }
+
+    @Override
+    public int algLength() {
+        return this.develop().algLength();
     }
 
     @Override
     public int cancelationLength() {
-        return (2 * this.setup.length() + this.inner.length()) - this.length();
+        return (2 * this.setup.moveLength() + this.inner.moveLength()) - this.moveLength();
     }
 
     @Override
