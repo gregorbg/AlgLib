@@ -16,16 +16,6 @@ public class SubGroup implements StringFormat {
             CubicPlane[] orderedPlanes = {CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK};
             return Integer.compare(ArrayUtils.arrayIndex(orderedPlanes, o1), ArrayUtils.arrayIndex(orderedPlanes, o2));
         }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof GroupComparator)) return false;
-            for (CubicPlane p1 : CubicPlane.values())
-                for (CubicPlane p2 : CubicPlane.values())
-                    if (this.compare(p1, p2) != ((GroupComparator) obj).compare(p1, p2))
-                        return false;
-            return true;
-        }
     }
 
     public static SubGroup fromAlg(Algorithm alg) {
