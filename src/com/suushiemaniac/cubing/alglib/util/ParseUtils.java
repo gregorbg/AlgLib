@@ -8,7 +8,7 @@ public class ParseUtils {
     public static boolean isParseable(String input, NotationReader parser) {
         try {
             Algorithm alg = parser.parse(input);
-            return alg.length() >= 0;
+            return alg.moveLength() >= 0;
         } catch (InvalidNotationException e) {
             return false;
         }
