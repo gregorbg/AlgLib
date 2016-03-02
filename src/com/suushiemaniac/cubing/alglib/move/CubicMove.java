@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.move;
 
 import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 
 public class CubicMove implements Move {
     private final CubicPlane plane;
@@ -56,6 +57,11 @@ public class CubicMove implements Move {
     @Override
     public CubicMove inverse() {
         return new CubicMove(this.plane, this.modifier.inverse(), this.depth);
+    }
+
+    @Override
+    public Move modify(Transform transform) {
+        return transform.supportsMoveClass(this) ? transform.transform(this) : this;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.move;
 
 import com.suushiemaniac.cubing.alglib.move.modifier.Modifier;
 import com.suushiemaniac.cubing.alglib.move.plane.Plane;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 public interface Move extends StringFormat {
@@ -20,4 +21,6 @@ public interface Move extends StringFormat {
     int getDepth();
 
     Move inverse();
+
+    Move modify(Transform transform);
 }

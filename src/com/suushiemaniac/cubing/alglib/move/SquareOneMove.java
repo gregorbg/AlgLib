@@ -5,6 +5,7 @@ import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneHalfModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneNumModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.SquareOnePlane;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 
 public class SquareOneMove implements Move {
     private final SquareOnePlane plane = new SquareOnePlane();
@@ -77,6 +78,11 @@ public class SquareOneMove implements Move {
     @Override
     public SquareOneMove inverse() {
         return new SquareOneMove(this.modifier.inverse(), this.beginSlash, this.endSlash);
+    }
+
+    @Override
+    public Move modify(Transform transform) {
+        return transform.supportsMoveClass(this) ? transform.transform(this) : this;
     }
 
     @Override

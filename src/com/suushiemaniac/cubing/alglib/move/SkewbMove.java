@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.move;
 
 import com.suushiemaniac.cubing.alglib.move.modifier.SkewbModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.SkewbPlane;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 
 public class SkewbMove implements Move {
     private final SkewbPlane plane;
@@ -55,6 +56,11 @@ public class SkewbMove implements Move {
     @Override
     public SkewbMove inverse() {
         return new SkewbMove(this.plane, this.modifier.inverse());
+    }
+
+    @Override
+    public Move modify(Transform transform) {
+        return transform.supportsMoveClass(this) ? transform.transform(this) : this;
     }
 
     @Override

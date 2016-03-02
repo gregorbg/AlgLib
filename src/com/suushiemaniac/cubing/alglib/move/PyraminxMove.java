@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.move;
 
 import com.suushiemaniac.cubing.alglib.move.modifier.PyraminxModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.PyraminxPlane;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 
 public class PyraminxMove implements Move {
     private final PyraminxPlane plane;
@@ -59,6 +60,11 @@ public class PyraminxMove implements Move {
     @Override
     public Move inverse() {
         return new PyraminxMove(this.plane, this.modifier.inverse(), this.depth);
+    }
+
+    @Override
+    public Move modify(Transform transform) {
+        return transform.supportsMoveClass(this) ? transform.transform(this) : this;
     }
 
     @Override

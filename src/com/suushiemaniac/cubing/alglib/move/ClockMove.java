@@ -4,6 +4,7 @@ import com.suushiemaniac.cubing.alglib.move.modifier.ClockDirectionModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.ClockModifier;
 import com.suushiemaniac.cubing.alglib.move.modifier.ClockNumModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.ClockPlane;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 
 public class ClockMove implements Move {
     private final ClockPlane plane;
@@ -75,6 +76,11 @@ public class ClockMove implements Move {
     @Override
     public Move inverse() {
         return this.endPinConfig ? new ClockMove(this.plane) : new ClockMove(this.plane, this.modifier.inverse());
+    }
+
+    @Override
+    public Move modify(Transform transform) {
+        return transform.supportsMoveClass(this) ? transform.transform(this) : this;
     }
 
     @Override

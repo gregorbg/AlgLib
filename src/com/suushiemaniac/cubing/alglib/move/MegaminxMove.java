@@ -6,6 +6,7 @@ import com.suushiemaniac.cubing.alglib.move.modifier.MegaminxWideModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxPlane;
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxUpPlane;
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxWidePlane;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 
 public class MegaminxMove implements Move {
     private final MegaminxPlane plane;
@@ -66,6 +67,11 @@ public class MegaminxMove implements Move {
         else if (this.plane instanceof MegaminxUpPlane && this.modifier instanceof MegaminxUpModifier)
             return new MegaminxMove((MegaminxUpPlane) this.plane, (MegaminxUpModifier) this.modifier.inverse());
         else return null;
+    }
+
+    @Override
+    public Move modify(Transform transform) {
+        return transform.supportsMoveClass(this) ? transform.transform(this) : this;
     }
 
     @Override
