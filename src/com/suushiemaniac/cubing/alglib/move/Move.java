@@ -22,5 +22,5 @@ public interface Move extends StringFormat {
 
     Move inverse();
 
-    Move modify(Transform transform);
+    Move transform(Transform transform);
 }
