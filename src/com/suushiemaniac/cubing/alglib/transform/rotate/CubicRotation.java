@@ -1,10 +1,10 @@
-package com.suushiemaniac.cubing.alglib.modify.rotate;
+package com.suushiemaniac.cubing.alglib.transform.rotate;
 
+import com.suushiemaniac.cubing.alglib.move.CubicMove;
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.move.PyraminxMove;
 
-public enum PyraminxRotation implements Rotation {
-    AXIS_F, AXIS_D, AXIS_L, AXIS_R;
+public enum CubicRotation implements Rotation {
+    X, Y, Z;
 
     @Override
     public Move rotate(Move origin) {
@@ -18,6 +18,6 @@ public enum PyraminxRotation implements Rotation {
 
     @Override
     public boolean supportsMoveClass(Move moveInst) {
-        return moveInst instanceof PyraminxMove;
+        return moveInst instanceof CubicMove;
     }
 }

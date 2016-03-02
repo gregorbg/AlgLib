@@ -1,10 +1,10 @@
-package com.suushiemaniac.cubing.alglib.modify.mirror;
+package com.suushiemaniac.cubing.alglib.transform.mirror;
 
+import com.suushiemaniac.cubing.alglib.move.ClockMove;
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.move.PyraminxMove;
 
-public enum PyraminxMirror implements Mirror {
-    ;
+public enum ClockMirror implements Mirror {
+    X, Y, Z;
 
     @Override
     public Move mirror(Move origin) {
@@ -18,6 +18,6 @@ public enum PyraminxMirror implements Mirror {
 
     @Override
     public boolean supportsMoveClass(Move moveInst) {
-        return moveInst instanceof PyraminxMove;
+        return moveInst instanceof ClockMove;
     }
 }

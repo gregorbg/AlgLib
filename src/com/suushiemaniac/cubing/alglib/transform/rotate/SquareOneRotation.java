@@ -1,17 +1,19 @@
-package com.suushiemaniac.cubing.alglib.modify.mirror;
+package com.suushiemaniac.cubing.alglib.transform.rotate;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.move.SquareOneMove;
 
-public class SquareOneMirror implements Mirror {
+public enum SquareOneRotation implements Rotation {
+    ;
+
     @Override
-    public Move mirror(Move origin) {
+    public Move rotate(Move origin) {
         return null;
     }
 
     @Override
     public Move modify(Move origin) {
-        return this.mirror(origin);
+        return this.rotate(origin);
     }
 
     @Override

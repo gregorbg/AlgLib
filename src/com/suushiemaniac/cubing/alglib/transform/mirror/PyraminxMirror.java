@@ -1,9 +1,9 @@
-package com.suushiemaniac.cubing.alglib.modify.mirror;
+package com.suushiemaniac.cubing.alglib.transform.mirror;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.move.SkewbMove;
+import com.suushiemaniac.cubing.alglib.move.PyraminxMove;
 
-public enum SkewbMirror implements Mirror {
+public enum PyraminxMirror implements Mirror {
     ;
 
     @Override
@@ -18,6 +18,6 @@ public enum SkewbMirror implements Mirror {
 
     @Override
     public boolean supportsMoveClass(Move moveInst) {
-        return moveInst instanceof SkewbMove;
+        return moveInst instanceof PyraminxMove;
     }
 }

@@ -1,19 +1,19 @@
-package com.suushiemaniac.cubing.alglib.modify.rotate;
+package com.suushiemaniac.cubing.alglib.transform.mirror;
 
 import com.suushiemaniac.cubing.alglib.move.MegaminxMove;
 import com.suushiemaniac.cubing.alglib.move.Move;
 
-public enum MegaminxRotation implements Rotation {
+public enum MegaminxMirror implements Mirror {
     ;
 
     @Override
-    public Move rotate(Move origin) {
+    public Move mirror(Move origin) {
         return null;
     }
 
     @Override
     public Move modify(Move origin) {
-        return this.rotate(origin);
+        return this.mirror(origin);
     }
 
     @Override

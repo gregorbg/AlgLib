@@ -1,11 +1,9 @@
-package com.suushiemaniac.cubing.alglib.modify.mirror;
+package com.suushiemaniac.cubing.alglib.transform.mirror;
 
-import com.suushiemaniac.cubing.alglib.move.CubicMove;
 import com.suushiemaniac.cubing.alglib.move.Move;
+import com.suushiemaniac.cubing.alglib.move.SquareOneMove;
 
-public enum CubicMirror implements Mirror {
-    ;
-
+public class SquareOneMirror implements Mirror {
     @Override
     public Move mirror(Move origin) {
         return null;
@@ -18,6 +16,6 @@ public enum CubicMirror implements Mirror {
 
     @Override
     public boolean supportsMoveClass(Move moveInst) {
-        return moveInst instanceof CubicMove;
+        return moveInst instanceof SquareOneMove;
     }
 }

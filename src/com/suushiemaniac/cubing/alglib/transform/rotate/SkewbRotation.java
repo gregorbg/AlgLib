@@ -1,9 +1,10 @@
-package com.suushiemaniac.cubing.alglib.modify.rotate;
+package com.suushiemaniac.cubing.alglib.transform.rotate;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.move.SquareOneMove;
+import com.suushiemaniac.cubing.alglib.move.SkewbMove;
 
-public enum SquareOneRotation implements Rotation {
+public enum SkewbRotation implements Rotation {
+    //TODO
     ;
 
     @Override
@@ -18,6 +19,6 @@ public enum SquareOneRotation implements Rotation {
 
     @Override
     public boolean supportsMoveClass(Move moveInst) {
-        return moveInst instanceof SquareOneMove;
+        return moveInst instanceof SkewbMove;
     }
 }
