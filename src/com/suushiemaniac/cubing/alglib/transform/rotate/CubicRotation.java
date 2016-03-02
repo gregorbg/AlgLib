@@ -12,7 +12,7 @@ public enum CubicRotation implements Rotation {
     }
 
     @Override
-    public Move modify(Move origin) {
+    public Move transform(Move origin) {
         return this.rotate(origin);
     }
 

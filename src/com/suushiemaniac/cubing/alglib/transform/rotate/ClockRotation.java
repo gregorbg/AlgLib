@@ -10,7 +10,7 @@ public enum ClockRotation implements Rotation {
         return null;
     }
 
-    public Move modify(Move origin) {
+    public Move transform(Move origin) {
         return this.rotate(origin);
     }
 

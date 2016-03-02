@@ -12,7 +12,7 @@ public enum PyraminxMirror implements Mirror {
     }
 
     @Override
-    public Move modify(Move origin) {
+    public Move transform(Move origin) {
         return this.mirror(origin);
     }
 

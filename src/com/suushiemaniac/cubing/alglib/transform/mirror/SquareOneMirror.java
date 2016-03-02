@@ -10,7 +10,7 @@ public class SquareOneMirror implements Mirror {
     }
 
     @Override
-    public Move modify(Move origin) {
+    public Move transform(Move origin) {
         return this.mirror(origin);
     }
 
