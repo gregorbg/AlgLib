@@ -1,6 +1,7 @@
 package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 import com.suushiemaniac.cubing.alglib.util.StringUtils;
 
 import java.util.ArrayList;
@@ -68,6 +69,13 @@ public class SimpleAlg implements Algorithm {
     public SimpleAlg append(Move other) {
         List<Move> oldMoves = this.allMoves();
         oldMoves.add(other);
+        return new SimpleAlg(oldMoves);
+    }
+
+    @Override
+    public Algorithm transform(Transform transform) {
+        List<Move> oldMoves = this.allMoves();
+        for (int i = 0; i < oldMoves.size(); i++) oldMoves.set(i, oldMoves.get(i).transform(transform));
         return new SimpleAlg(oldMoves);
     }
 

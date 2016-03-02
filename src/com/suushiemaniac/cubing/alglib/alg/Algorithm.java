@@ -1,6 +1,7 @@
 package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface Algorithm extends StringFormat {
     Algorithm merge(Algorithm other);
 
     Algorithm append(Move other);
+
+    Algorithm transform(Transform transform);
 
     Move nMove(int n);
 

@@ -3,6 +3,7 @@ package com.suushiemaniac.cubing.alglib.alg.commutator;
 import com.suushiemaniac.cubing.alglib.alg.Algorithm;
 import com.suushiemaniac.cubing.alglib.alg.SubGroup;
 import com.suushiemaniac.cubing.alglib.move.Move;
+import com.suushiemaniac.cubing.alglib.transform.Transform;
 
 import java.util.List;
 
@@ -72,6 +73,11 @@ public class SetupComm implements Commutator {
     @Override
     public Algorithm append(Move other) {
         return this.develop().append(other);
+    }
+
+    @Override
+    public SetupComm transform(Transform transform) {
+        return new SetupComm(this.setup.transform(transform), this.inner.transform(transform));
     }
 
     @Override
