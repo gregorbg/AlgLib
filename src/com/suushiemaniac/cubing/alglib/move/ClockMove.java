@@ -80,7 +80,7 @@ public class ClockMove implements Move {
 
     @Override
     public Move transform(Transform transform) {
-        return transform.supportsMoveClass(this) ? transform.transform(this) : this;
+        return transform.transform(this);
     }
 
     @Override
