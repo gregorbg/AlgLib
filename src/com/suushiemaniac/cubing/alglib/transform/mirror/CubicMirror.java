@@ -2,13 +2,15 @@ package com.suushiemaniac.cubing.alglib.transform.mirror;
 
 import com.suushiemaniac.cubing.alglib.move.CubicMove;
 import com.suushiemaniac.cubing.alglib.move.Move;
+import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
+import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
 
 public enum CubicMirror implements Mirror {
-    MIRROR_M, MIRROR_S, MIRROR_E;
+    MIRROR_E, MIRROR_M, MIRROR_S;
 
     @Override
-    public Move mirror(Move origin) {
-        if (!(origin instanceof CubicMove)) return origin;
+    public CubicMove mirror(Move origin) {
+        if (!(origin instanceof CubicMove)) return null;
         else {
             CubicMove cOrigin = (CubicMove) origin;
             return cOrigin;
@@ -16,7 +18,7 @@ public enum CubicMirror implements Mirror {
     }
 
     @Override
-    public Move transform(Move origin) {
+    public CubicMove transform(Move origin) {
         return this.mirror(origin);
     }
 }

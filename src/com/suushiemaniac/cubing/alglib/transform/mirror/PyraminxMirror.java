@@ -1,7 +1,6 @@
 package com.suushiemaniac.cubing.alglib.transform.mirror;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.move.PyraminxMove;
 
 public enum PyraminxMirror implements Mirror {
     ;

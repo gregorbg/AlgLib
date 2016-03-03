@@ -1,10 +1,8 @@
 package com.suushiemaniac.cubing.alglib.transform.rotate;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.move.SkewbMove;
 
 public enum SkewbRotation implements Rotation {
-    //TODO
     ;
 
     @Override

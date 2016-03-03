@@ -1,7 +1,6 @@
 package com.suushiemaniac.cubing.alglib.transform.rotate;
 
 import com.suushiemaniac.cubing.alglib.move.Move;
-import com.suushiemaniac.cubing.alglib.move.SquareOneMove;
 
 public enum SquareOneRotation implements Rotation {
     ;

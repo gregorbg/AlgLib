@@ -1,6 +1,5 @@
 package com.suushiemaniac.cubing.alglib.transform.rotate;
 
-import com.suushiemaniac.cubing.alglib.move.MegaminxMove;
 import com.suushiemaniac.cubing.alglib.move.Move;
 
 public enum MegaminxRotation implements Rotation {
