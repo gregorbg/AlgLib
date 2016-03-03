@@ -6,7 +6,7 @@ import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
 
 public enum CubicMirror implements Mirror {
-    MIRROR_E, MIRROR_M, MIRROR_S;
+    E, M, S;
 
     @Override
     public CubicMove mirror(Move origin) {
