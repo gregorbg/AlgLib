@@ -13,9 +13,4 @@ public class SquareOneMirror implements Mirror {
     public Move transform(Move origin) {
         return this.mirror(origin);
     }
-
-    @Override
-    public boolean supportsMoveClass(Move moveInst) {
-        return moveInst instanceof SquareOneMove;
-    }
 }

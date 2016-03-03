@@ -15,9 +15,4 @@ public enum SquareOneRotation implements Rotation {
     public Move transform(Move origin) {
         return this.rotate(origin);
     }
-
-    @Override
-    public boolean supportsMoveClass(Move moveInst) {
-        return moveInst instanceof SquareOneMove;
-    }
 }
