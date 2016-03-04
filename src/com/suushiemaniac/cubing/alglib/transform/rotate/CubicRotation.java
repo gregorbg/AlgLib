@@ -2,6 +2,7 @@ package com.suushiemaniac.cubing.alglib.transform.rotate;
 
 import com.suushiemaniac.cubing.alglib.move.CubicMove;
 import com.suushiemaniac.cubing.alglib.move.Move;
+import com.suushiemaniac.cubing.alglib.move.modifier.CubicModifier;
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
 import com.suushiemaniac.cubing.alglib.util.ArrayUtils;
 
@@ -11,9 +12,9 @@ public enum CubicRotation implements Rotation {
     Y_90, X_90, Z_90, Y_180, X_180, Z_180, Y_270, X_270, Z_270;
 
     private static CubicPlane[][][] rotOrder = {
-            {{RIGHT, FRONT, LEFT, BACK}, {RIGHT_SLICE, FRONT_SLICE, LEFT_SLICE, BACK_SLICE}, {MIDDLE, SANDWICH}, {HORIZONTAL, SPATIAL}},
+            {{RIGHT, FRONT, LEFT, BACK}, {RIGHT_SLICE, FRONT_SLICE, LEFT_SLICE, BACK_SLICE}, {MIDDLE, SANDWICH}, {SPATIAL, HORIZONTAL}},
             {{UP, BACK, DOWN, FRONT}, {UP_SLICE, BACK_SLICE, DOWN_SLICE, FRONT_SLICE}, {SANDWICH, EQUATOR}, {VERTICAL, SPATIAL}},
-            {{RIGHT, DOWN, LEFT, UP}, {RIGHT_SLICE, DOWN_SLICE, LEFT_SLICE, UP_SLICE}, {MIDDLE, EQUATOR}, {VERTICAL, HORIZONTAL}}
+            {{RIGHT, DOWN, LEFT, UP}, {RIGHT_SLICE, DOWN_SLICE, LEFT_SLICE, UP_SLICE}, {MIDDLE, EQUATOR}, {HORIZONTAL, VERTICAL}}
     };
 
     @Override
@@ -34,9 +35,15 @@ public enum CubicRotation implements Rotation {
             int typeBase = ordinal < 6 ? 0 : ordinal < 12 ? 1 : ordinal < 15 ? 2 : 3;
             int rotIndex = isPlaneAffected ? ArrayUtils.arrayIndex(rotOrder[rotBaseOrdinal][typeBase], cPlane) : 0;
             int modLen = (size / 3) * 2;
-            CubicPlane plane = isPlaneAffected ? rotOrder[rotBaseOrdinal][typeBase][(rotIndex + rotAmountOrdinal + 1) % modLen] : cPlane;
+            int fullIndex = (rotIndex + rotAmountOrdinal + 1) % modLen;
+            CubicPlane plane = isPlaneAffected ? rotOrder[rotBaseOrdinal][typeBase][fullIndex] : cPlane;
 
-            return new CubicMove(plane, cOrigin.getModifier(), cOrigin.getDepth());
+            CubicModifier modifier = cOrigin.getModifier();
+            for (int i = 0; i <= rotAmountOrdinal; i++)
+                if (isPlaneAffected && modLen == 2 && (++rotIndex % 2) % 2 == 1)
+                    modifier = modifier.inverse();
+
+            return new CubicMove(plane, modifier, cOrigin.getDepth());
         }
     }
 
