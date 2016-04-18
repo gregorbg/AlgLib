@@ -1,23 +1,13 @@
 package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
-import com.suushiemaniac.cubing.alglib.util.ArrayUtils;
+import com.suushiemaniac.cubing.alglib.util.FixArrayComparator;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class SubGroup implements StringFormat {
-    public class GroupComparator implements Comparator<CubicPlane> {
-        @Override
-        public int compare(CubicPlane o1, CubicPlane o2) {
-            CubicPlane[] orderedPlanes = {CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK};
-            return Integer.compare(ArrayUtils.arrayIndex(orderedPlanes, o1), ArrayUtils.arrayIndex(orderedPlanes, o2));
-        }
-    }
-
     public static SubGroup fromAlg(Algorithm alg) {
         CubicPlane[] algPlanes = new CubicPlane[alg.allMoves().size()];
         for (int i = 0; i < alg.allMoves().size(); i++)
@@ -43,7 +33,8 @@ public class SubGroup implements StringFormat {
             if (!this.groupList.contains(p) && !p.isRotation())
                 this.groupList.add(p);
         }
-        Collections.sort(this.groupList, new GroupComparator());
+        CubicPlane[] orderedPlanes = {CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK};
+        Collections.sort(this.groupList, new FixArrayComparator<>(orderedPlanes));
     }
 
     private String[] getElementsAsString() {
