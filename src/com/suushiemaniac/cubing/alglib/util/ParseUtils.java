@@ -50,7 +50,7 @@ public class ParseUtils {
             return new ClockAlgorithmReader();
         else if (algString.contains("u") || algString.contains("d") || algString.contains("l") || algString.contains("r"))
             return new PyraminxAlgorithmReader();
-        else if (algString.contains("D") || algString.contains("F"))
+        else if (algString.contains("D") || algString.contains("F") || algString.contains("x") || algString.contains("y") || algString.contains("z"))
             return new CubicAlgorithmReader();
         else if (algString.contains("U") || algString.contains("B") || algString.contains("L") || algString.contains("R"))
             return new SkewbAlgorithmReader();

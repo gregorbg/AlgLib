@@ -4,10 +4,7 @@ import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.transform.Transform;
 import com.suushiemaniac.cubing.alglib.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SimpleAlg implements Algorithm {
     private final List<Move> moves;
@@ -117,5 +114,10 @@ public class SimpleAlg implements Algorithm {
     @Override
     public SubGroup getSubGroup() {
         return SubGroup.fromAlg(this);
+    }
+
+    @Override
+    public Iterator<Move> iterator() {
+        return this.allMoves().iterator();
     }
 }

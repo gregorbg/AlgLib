@@ -5,6 +5,7 @@ import com.suushiemaniac.cubing.alglib.alg.SubGroup;
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.transform.Transform;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class PureComm implements Commutator {
@@ -130,5 +131,10 @@ public class PureComm implements Commutator {
             PureComm compareTo = (PureComm) obj;
             return this.partA.equals(compareTo.partA) && this.partB.equals(compareTo.partB);
         }
+    }
+
+    @Override
+    public Iterator<Move> iterator() {
+        return this.plain().allMoves().iterator();
     }
 }

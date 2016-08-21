@@ -5,6 +5,7 @@ import com.suushiemaniac.cubing.alglib.alg.SubGroup;
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.transform.Transform;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class SetupComm implements Commutator {
@@ -129,5 +130,10 @@ public class SetupComm implements Commutator {
             SetupComm compareTo = (SetupComm) obj;
             return this.setup.equals(compareTo.setup) && this.inner.equals(compareTo.inner);
         }
+    }
+
+    @Override
+    public Iterator<Move> iterator() {
+        return this.plain().allMoves().iterator();
     }
 }
