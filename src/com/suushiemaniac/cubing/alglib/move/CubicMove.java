@@ -64,7 +64,12 @@ public class CubicMove implements Move {
         return transform.transform(this);
     }
 
-    @Override
+	@Override
+	public String toString() {
+		return this.toFormatString();
+	}
+
+	@Override
     public String toFormatString() {
         return (this.depth > (this.plane.name().contains("SLICE") ? 1 : 2) ? String.valueOf(this.depth) : "") + this.plane.toFormatString() + (this.depth > 1 && !this.plane.name().contains("SLICE") ? "w" : "") + this.modifier.toFormatString();
     }
@@ -79,4 +84,9 @@ public class CubicMove implements Move {
                     && this.depth == compareTo.getDepth();
         }
     }
+
+	@Override
+	public int hashCode() {
+		return this.toFormatString().hashCode();
+	}
 }

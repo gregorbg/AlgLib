@@ -84,6 +84,24 @@ public class ClockMove implements Move {
     }
 
     @Override
+    public String toString() {
+        return this.toFormatString();
+    }
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof ClockMove
+				&& ((ClockMove) obj).plane.equals(this.plane)
+				&& ((ClockMove) obj).modifier.equals(this.modifier)
+				&& ((ClockMove) obj).endPinConfig == this.endPinConfig;
+	}
+
+	@Override
+	public int hashCode() {
+		return this.toFormatString().hashCode();
+	}
+
+	@Override
     public String toFormatString() {
         if (this.endPinConfig) return this.plane.toFormatString();
         else return this.plane.toFormatString() + (this.plane.isRotation() ? this.modifier.getNumModifier().toFormatString() : this.modifier.toFormatString());

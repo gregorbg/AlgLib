@@ -134,6 +134,11 @@ public class PureComm implements Commutator {
     }
 
     @Override
+    public int hashCode() {
+        return this.partA.hashCode() + this.partB.hashCode();
+    }
+
+    @Override
     public Iterator<Move> iterator() {
         return this.plain().allMoves().iterator();
     }

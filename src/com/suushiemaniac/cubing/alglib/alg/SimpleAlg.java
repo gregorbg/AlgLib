@@ -112,6 +112,11 @@ public class SimpleAlg implements Algorithm {
     }
 
     @Override
+    public int hashCode() {
+        return this.allMoves().hashCode();
+    }
+
+    @Override
     public SubGroup getSubGroup() {
         return SubGroup.fromAlg(this);
     }

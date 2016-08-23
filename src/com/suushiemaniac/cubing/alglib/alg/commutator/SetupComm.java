@@ -133,6 +133,11 @@ public class SetupComm implements Commutator {
     }
 
     @Override
+    public int hashCode() {
+        return this.setup.hashCode() + this.inner.hashCode();
+    }
+
+    @Override
     public Iterator<Move> iterator() {
         return this.plain().allMoves().iterator();
     }

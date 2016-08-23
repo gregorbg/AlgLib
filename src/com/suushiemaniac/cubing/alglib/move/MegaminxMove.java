@@ -75,7 +75,17 @@ public class MegaminxMove implements Move {
     }
 
     @Override
+    public String toString() {
+        return this.toFormatString();
+    }
+
+    @Override
     public String toFormatString() {
         return this.plane.toFormatString() + this.modifier.toFormatString();
     }
+
+	@Override
+	public int hashCode() {
+		return this.toFormatString().hashCode();
+	}
 }

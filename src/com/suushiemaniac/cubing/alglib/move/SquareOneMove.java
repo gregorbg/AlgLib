@@ -86,11 +86,21 @@ public class SquareOneMove implements Move {
     }
 
     @Override
+    public String toString() {
+        return this.toFormatString();
+    }
+
+    @Override
     public String toFormatString() {
         return (this.beginSlash ? "/ " : "") + this.modifier.toFormatString() + (this.endSlash ? " /" : "");
     }
 
-    public boolean isBeginSlash() {
+	@Override
+	public int hashCode() {
+		return this.toFormatString().hashCode();
+	}
+
+	public boolean isBeginSlash() {
         return this.beginSlash;
     }
 

@@ -44,6 +44,11 @@ public class SubGroup implements StringFormat {
     }
 
     @Override
+    public String toString() {
+        return this.toFormatString();
+    }
+
+    @Override
     public String toFormatString() {
         String groupString = "<";
         groupString += String.join(",", this.getElementsAsString());
@@ -84,5 +89,15 @@ public class SubGroup implements StringFormat {
 
     public boolean containsAll(SubGroup other) {
         return this.groupList.containsAll(other.groupList);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toRawString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof SubGroup && ((SubGroup) obj).sameSubGroup(this);
     }
 }
