@@ -1,14 +1,11 @@
 package com.suushiemaniac.cubing.alglib.alg.commutator;
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm;
-import com.suushiemaniac.cubing.alglib.alg.SubGroup;
-import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.transform.Transform;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.Collection;
 
-public class SetupComm implements Commutator {
+public class SetupComm extends Commutator {
     public static boolean isSetupCommutable(Algorithm algorithm) {
         //Not very useful atm, add functionality as long-term project??
         return algorithm instanceof SetupComm;
@@ -27,11 +24,6 @@ public class SetupComm implements Commutator {
     }
 
     @Override
-    public String toPlainString() {
-        return this.develop().toFormatString();
-    }
-
-    @Override
     public Algorithm develop() {
         return this.setup.merge(this.inner).merge(this.setup.inverse());
     }
@@ -42,73 +34,13 @@ public class SetupComm implements Commutator {
     }
 
     @Override
-    public Algorithm plain() {
-        return this.develop();
-    }
-
-    @Override
-    public int moveLength() {
-        return this.develop().moveLength();
-    }
-
-    @Override
-    public int algLength() {
-        return this.develop().algLength();
-    }
-
-    @Override
     public int cancelationLength() {
         return (2 * this.setup.moveLength() + this.inner.moveLength()) - this.moveLength();
     }
 
     @Override
-    public int cancelationLength(Algorithm other) {
-        return this.develop().cancelationLength(other);
-    }
-
-    @Override
-    public Algorithm merge(Algorithm other) {
-        return this.develop().merge(other);
-    }
-
-    @Override
-    public Algorithm append(Move other) {
-        return this.develop().append(other);
-    }
-
-    @Override
     public SetupComm transform(Transform transform) {
         return new SetupComm(this.setup.transform(transform), this.inner.transform(transform));
-    }
-
-    @Override
-    public Move nMove(int n) {
-        return this.develop().nMove(n);
-    }
-
-    @Override
-    public Move firstMove() {
-        return this.setup.firstMove();
-    }
-
-    @Override
-    public Move lastMove() {
-        return this.setup.inverse().lastMove();
-    }
-
-    @Override
-    public List<Move> allMoves() {
-        return this.develop().allMoves();
-    }
-
-    @Override
-    public Algorithm subAlg(int from, int to) {
-        return this.develop().subAlg(from, to);
-    }
-
-    @Override
-    public SubGroup getSubGroup() {
-        return SubGroup.fromAlg(this.develop());
     }
 
     public Algorithm getSetup() {
@@ -119,8 +51,25 @@ public class SetupComm implements Commutator {
         return this.inner;
     }
 
-    public boolean cancels() {
-        return this.cancelationLength() > 0;
+    @Override
+    public boolean remove(Object o) {
+        return this.setup.remove(o) | this.inner.remove(o);
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return this.setup.removeAll(c) | this.inner.removeAll(c);
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return this.setup.retainAll(c) | this.inner.retainAll(c);
+    }
+
+    @Override
+    public void clear() {
+        this.setup.clear();
+        this.inner.clear();
     }
 
     @Override
@@ -135,10 +84,5 @@ public class SetupComm implements Commutator {
     @Override
     public int hashCode() {
         return this.setup.hashCode() + this.inner.hashCode();
-    }
-
-    @Override
-    public Iterator<Move> iterator() {
-        return this.plain().allMoves().iterator();
     }
 }

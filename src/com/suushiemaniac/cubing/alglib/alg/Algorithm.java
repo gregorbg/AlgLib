@@ -6,7 +6,7 @@ import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 import java.util.List;
 
-public interface Algorithm extends StringFormat, Iterable<Move> {
+public interface Algorithm extends StringFormat, List<Move> {
     Algorithm inverse();
 
     Algorithm plain();

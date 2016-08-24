@@ -7,30 +7,46 @@ import com.suushiemaniac.cubing.alglib.util.StringUtils;
 import java.util.*;
 
 public class SimpleAlg implements Algorithm {
-    private final List<Move> moves;
+    private List<Move> moves;
+	private boolean reduceAutomatic;
 
     public SimpleAlg(Move... moves) {
         this(Arrays.asList(moves));
     }
 
     public SimpleAlg(List<Move> moves) {
-        List<Move> list = new ArrayList<>();
-        for (Move move : moves) {
-            if (list.size() == 0) list.add(move);
-            else if (list.get(list.size() - 1).cancels(move)) list.remove(list.size() - 1);
-            else if (list.get(list.size() - 1).merges(move))
-                list.set(list.size() - 1, list.get(list.size() - 1).merge(move));
-            else if (list.get(list.size() - 1).mayAppend(move)) list.add(move);
-        }
-        this.moves = new ArrayList<>(list);
+    	this(moves, true);
+	}
+
+    public SimpleAlg(List<Move> moves, boolean reduceAutomatic) {
+        this.moves = new ArrayList<>(moves);
+		this.reduceAutomatic = reduceAutomatic;
+
+		if (this.reduceAutomatic)
+			this.reduce();
     }
+
+    private void reduce() {
+		List<Move> list = new ArrayList<>();
+
+		for (Move move : this.moves) {
+			if (list.size() == 0) list.add(move);
+			else if (list.get(list.size() - 1).cancels(move)) list.remove(list.size() - 1);
+			else if (list.get(list.size() - 1).merges(move))
+				list.set(list.size() - 1, list.get(list.size() - 1).merge(move));
+			else if (list.get(list.size() - 1).mayAppend(move)) list.add(move);
+		}
+
+		this.moves = list;
+	}
 
     @Override
     public SimpleAlg inverse() {
-        List<Move> reversedMoves = new ArrayList<>(this.moves);
-        Collections.reverse(reversedMoves);
-        for (int i = 0; i < reversedMoves.size(); i++) reversedMoves.set(i, reversedMoves.get(i).inverse());
-        return new SimpleAlg(reversedMoves);
+        Collections.reverse(this.moves);
+        for (int i = 0; i < this.moves.size(); i++) this.moves.set(i, this.moves.get(i).inverse());
+        if (this.reduceAutomatic) this.reduce();
+
+		return this;
     }
 
     @Override
@@ -57,28 +73,31 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public SimpleAlg merge(Algorithm other) {
-        List<Move> oldMoves = this.allMoves();
-        oldMoves.addAll(other.allMoves());
-        return new SimpleAlg(oldMoves);
+        this.moves.addAll(other.allMoves());
+		if (this.reduceAutomatic) this.reduce();
+
+		return this;
     }
 
     @Override
     public SimpleAlg append(Move other) {
-        List<Move> oldMoves = this.allMoves();
-        oldMoves.add(other);
-        return new SimpleAlg(oldMoves);
+    	this.moves.add(other);
+		if (this.reduceAutomatic) this.reduce();
+
+		return this;
     }
 
     @Override
     public Algorithm transform(Transform transform) {
-        List<Move> oldMoves = this.allMoves();
-        for (int i = 0; i < oldMoves.size(); i++) oldMoves.set(i, oldMoves.get(i).transform(transform));
-        return new SimpleAlg(oldMoves);
+        for (int i = 0; i < this.moves.size(); i++) this.moves.set(i, this.moves.get(i).transform(transform));
+        if (this.reduceAutomatic) this.reduce();
+
+		return this;
     }
 
     @Override
     public int cancelationLength(Algorithm other) {
-        return ((this.moveLength() + other.moveLength()) - new SimpleAlg(this.allMoves()).merge(other).moveLength()) / 2;
+        return ((this.moveLength() + other.moveLength()) - new SimpleAlg(this.allMoves(), this.reduceAutomatic).merge(other).moveLength()) / 2;
     }
 
     @Override
@@ -116,13 +135,149 @@ public class SimpleAlg implements Algorithm {
         return this.allMoves().hashCode();
     }
 
-    @Override
-    public SubGroup getSubGroup() {
-        return SubGroup.fromAlg(this);
-    }
+	@Override
+	public Move get(int index) {
+		return this.moves.get(index);
+	}
 
-    @Override
+	@Override
+	public Move set(int index, Move element) {
+		Move m = this.moves.set(index, element);
+		if (this.reduceAutomatic) this.reduce();
+
+		return m;
+	}
+
+	@Override
+	public void add(int index, Move element) {
+		this.moves.add(index, element);
+		if (this.reduceAutomatic) this.reduce();
+	}
+
+	@Override
+	public Move remove(int index) {
+		Move m = this.moves.remove(index);
+		if (this.reduceAutomatic) this.reduce();
+
+		return m;
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		return this.moves.indexOf(o);
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		return this.moves.lastIndexOf(o);
+	}
+
+	@Override
+	public ListIterator<Move> listIterator() {
+		return this.moves.listIterator();
+	}
+
+	@Override
+	public ListIterator<Move> listIterator(int index) {
+		return this.moves.listIterator(index);
+	}
+
+	@Override
+	public List<Move> subList(int fromIndex, int toIndex) {
+		return this.subAlg(fromIndex, toIndex);
+	}
+
+	@Override
+	public SubGroup getSubGroup() {
+		return SubGroup.fromAlg(this);
+	}
+
+	@Override
+	public int size() {
+		return this.algLength();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return this.moves.isEmpty();
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return this.moves.contains(o);
+	}
+
+	@Override
     public Iterator<Move> iterator() {
         return this.allMoves().iterator();
     }
+
+	@Override
+	public Object[] toArray() {
+		return this.moves.toArray();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return this.moves.toArray(a);
+	}
+
+	@Override
+	public boolean add(Move move) {
+		boolean b = this.moves.add(move);
+		if (this.reduceAutomatic) this.reduce();
+
+		return b;
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		boolean b = this.moves.remove(o);
+		if (this.reduceAutomatic) this.reduce();
+
+		return b;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return this.moves.containsAll(c);
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends Move> c) {
+		boolean b = this.moves.addAll(c);
+		if (this.reduceAutomatic) this.reduce();
+
+		return b;
+	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends Move> c) {
+		boolean b = this.moves.addAll(index, c);
+		if (this.reduceAutomatic) this.reduce();
+
+		return b;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		boolean b = this.moves.removeAll(c);
+		if (this.reduceAutomatic) this.reduce();
+
+		return b;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		boolean b = this.moves.retainAll(c);
+		if (this.reduceAutomatic) this.reduce();
+
+		return b;
+	}
+
+	@Override
+	public void clear() {
+		this.moves.clear();
+		if (this.reduceAutomatic) this.reduce();
+	}
 }

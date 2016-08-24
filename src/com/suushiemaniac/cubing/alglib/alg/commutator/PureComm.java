@@ -5,10 +5,12 @@ import com.suushiemaniac.cubing.alglib.alg.SubGroup;
 import com.suushiemaniac.cubing.alglib.move.Move;
 import com.suushiemaniac.cubing.alglib.transform.Transform;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
-public class PureComm implements Commutator {
+public class PureComm extends Commutator {
     public static boolean isPureCommutable(Algorithm algorithm) {
         //Not very useful atm, add functionality as long-term project??
         return algorithm instanceof PureComm;
@@ -27,11 +29,6 @@ public class PureComm implements Commutator {
     }
 
     @Override
-    public String toPlainString() {
-        return this.develop().toFormatString();
-    }
-
-    @Override
     public Algorithm develop() {
         return this.partA.merge(this.partB).merge(this.partA.inverse()).merge(this.partB.inverse());
     }
@@ -42,78 +39,13 @@ public class PureComm implements Commutator {
     }
 
     @Override
-    public Algorithm plain() {
-        return this.develop();
-    }
-
-    @Override
-    public int moveLength() {
-        return this.develop().moveLength();
-    }
-
-    @Override
-    public int algLength() {
-        return this.develop().algLength();
-    }
-
-    @Override
     public int cancelationLength() {
         return (2 * this.partA.moveLength() + 2 * this.partB.moveLength()) - this.moveLength();
     }
 
     @Override
-    public int cancelationLength(Algorithm other) {
-        return this.develop().cancelationLength(other);
-    }
-
-    @Override
-    public Algorithm merge(Algorithm other) {
-        return this.develop().merge(other);
-    }
-
-    @Override
-    public Algorithm append(Move other) {
-        return this.develop().append(other);
-    }
-
-    @Override
     public PureComm transform(Transform transform) {
         return new PureComm(this.partA.transform(transform), this.partB.transform(transform));
-    }
-
-    @Override
-    public Move nMove(int n) {
-        return this.develop().nMove(n);
-    }
-
-    @Override
-    public Move firstMove() {
-        return this.partA.firstMove();
-    }
-
-    @Override
-    public Move lastMove() {
-        return this.partB.inverse().lastMove();
-    }
-
-    @Override
-    public List<Move> allMoves() {
-        return this.develop().allMoves();
-    }
-
-    @Override
-    public Algorithm subAlg(int from, int to) {
-        return this.develop().subAlg(from, to);
-    }
-
-    @Override
-    public SubGroup getSubGroup() {
-        return SubGroup.fromAlg(this.develop());
-    }
-
-    @Override
-    public boolean cancels() {
-        return this.cancelationLength() > 0;
     }
 
     public Algorithm getPartA() {
@@ -122,6 +54,27 @@ public class PureComm implements Commutator {
 
     public Algorithm getPartB() {
         return this.partB;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return this.partA.remove(o) | this.partB.remove(o);
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return this.partA.removeAll(c) | this.partB.removeAll(c);
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return this.partA.retainAll(c) | this.partB.retainAll(c);
+    }
+
+    @Override
+    public void clear() {
+        this.partA.clear();
+        this.partB.clear();
     }
 
     @Override
@@ -136,10 +89,5 @@ public class PureComm implements Commutator {
     @Override
     public int hashCode() {
         return this.partA.hashCode() + this.partB.hashCode();
-    }
-
-    @Override
-    public Iterator<Move> iterator() {
-        return this.plain().allMoves().iterator();
     }
 }
