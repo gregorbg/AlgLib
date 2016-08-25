@@ -1,4 +1,4 @@
-// Generated from C:/Users/suushie_maniac/Desktop/tnoodle-master/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar\Skewb.g4 by ANTLR 4.5.1
+// Generated from /jvdocs/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar/Skewb.g4 by ANTLR 4.5.3
 package com.suushiemaniac.cubing.alglib.lang.antlr.skewb;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class SkewbParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -107,6 +107,9 @@ public class SkewbParser extends Parser {
 			setState(14);
 			switch (_input.LA(1)) {
 			case SKEWB_PLANE:
+			case COMM_COMMA:
+			case COMM_BR_CLOSE:
+			case COMM_SEMI_COLON:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(12);
@@ -160,20 +163,20 @@ public class SkewbParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(17); 
+			setState(19);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			do {
+			while (_la==SKEWB_PLANE) {
 				{
 				{
 				setState(16);
 				skewbMove();
 				}
 				}
-				setState(19); 
+				setState(21);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( _la==SKEWB_PLANE );
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -208,13 +211,13 @@ public class SkewbParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(21);
+			setState(22);
 			match(SKEWB_PLANE);
-			setState(23);
+			setState(24);
 			_la = _input.LA(1);
 			if (_la==SKEWB_MODIFIER) {
 				{
-				setState(22);
+				setState(23);
 				match(SKEWB_MODIFIER);
 				}
 			}
@@ -254,19 +257,20 @@ public class SkewbParser extends Parser {
 		SkewbCommContext _localctx = new SkewbCommContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_skewbComm);
 		try {
-			setState(27);
+			setState(28);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(25);
+				setState(26);
 				skewbPureComm();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(26);
+				setState(27);
 				skewbSetupComm();
 				}
 				break;
@@ -310,15 +314,15 @@ public class SkewbParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(29);
-			match(COMM_BR_OPEN);
 			setState(30);
-			skewb();
+			match(COMM_BR_OPEN);
 			setState(31);
-			match(COMM_COMMA);
-			setState(32);
 			skewb();
+			setState(32);
+			match(COMM_COMMA);
 			setState(33);
+			skewb();
+			setState(34);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -360,15 +364,15 @@ public class SkewbParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(35);
-			match(COMM_BR_OPEN);
 			setState(36);
-			skewb();
+			match(COMM_BR_OPEN);
 			setState(37);
-			match(COMM_SEMI_COLON);
-			setState(38);
 			skewb();
+			setState(38);
+			match(COMM_SEMI_COLON);
 			setState(39);
+			skewb();
+			setState(40);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -384,18 +388,18 @@ public class SkewbParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t,\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\5\2\21\n\2\3\3\6\3\24\n\3\r"+
-		"\3\16\3\25\3\4\3\4\5\4\32\n\4\3\5\3\5\5\5\36\n\5\3\6\3\6\3\6\3\6\3\6\3"+
-		"\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\2\2\b\2\4\6\b\n\f\2\2)\2\20\3\2\2\2\4\23"+
-		"\3\2\2\2\6\27\3\2\2\2\b\35\3\2\2\2\n\37\3\2\2\2\f%\3\2\2\2\16\21\5\4\3"+
-		"\2\17\21\5\b\5\2\20\16\3\2\2\2\20\17\3\2\2\2\21\3\3\2\2\2\22\24\5\6\4"+
-		"\2\23\22\3\2\2\2\24\25\3\2\2\2\25\23\3\2\2\2\25\26\3\2\2\2\26\5\3\2\2"+
-		"\2\27\31\7\3\2\2\30\32\7\4\2\2\31\30\3\2\2\2\31\32\3\2\2\2\32\7\3\2\2"+
-		"\2\33\36\5\n\6\2\34\36\5\f\7\2\35\33\3\2\2\2\35\34\3\2\2\2\36\t\3\2\2"+
-		"\2\37 \7\5\2\2 !\5\2\2\2!\"\7\6\2\2\"#\5\2\2\2#$\7\7\2\2$\13\3\2\2\2%"+
-		"&\7\5\2\2&\'\5\2\2\2\'(\7\b\2\2()\5\2\2\2)*\7\7\2\2*\r\3\2\2\2\6\20\25"+
-		"\31\35";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t-\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\5\2\21\n\2\3\3\7\3\24\n\3\f"+
+		"\3\16\3\27\13\3\3\4\3\4\5\4\33\n\4\3\5\3\5\5\5\37\n\5\3\6\3\6\3\6\3\6"+
+		"\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\2\2\b\2\4\6\b\n\f\2\2*\2\20\3\2\2"+
+		"\2\4\25\3\2\2\2\6\30\3\2\2\2\b\36\3\2\2\2\n \3\2\2\2\f&\3\2\2\2\16\21"+
+		"\5\4\3\2\17\21\5\b\5\2\20\16\3\2\2\2\20\17\3\2\2\2\21\3\3\2\2\2\22\24"+
+		"\5\6\4\2\23\22\3\2\2\2\24\27\3\2\2\2\25\23\3\2\2\2\25\26\3\2\2\2\26\5"+
+		"\3\2\2\2\27\25\3\2\2\2\30\32\7\3\2\2\31\33\7\4\2\2\32\31\3\2\2\2\32\33"+
+		"\3\2\2\2\33\7\3\2\2\2\34\37\5\n\6\2\35\37\5\f\7\2\36\34\3\2\2\2\36\35"+
+		"\3\2\2\2\37\t\3\2\2\2 !\7\5\2\2!\"\5\2\2\2\"#\7\6\2\2#$\5\2\2\2$%\7\7"+
+		"\2\2%\13\3\2\2\2&\'\7\5\2\2\'(\5\2\2\2()\7\b\2\2)*\5\2\2\2*+\7\7\2\2+"+
+		"\r\3\2\2\2\6\20\25\32\36";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

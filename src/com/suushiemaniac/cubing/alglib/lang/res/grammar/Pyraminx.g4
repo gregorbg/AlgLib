@@ -2,7 +2,7 @@ grammar Pyraminx;
 
 pyraminx: pyraminxAlg | pyraminxComm;
 
-pyraminxAlg: pyraminxMove+;
+pyraminxAlg: pyraminxMove*;
 
 pyraminxMove: pyraminxFullMove | pyraminxTipMove;
 

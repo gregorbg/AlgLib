@@ -1,4 +1,4 @@
-// Generated from C:/Users/suushie_maniac/Desktop/tnoodle-master/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar\SquareOne.g4 by ANTLR 4.5.1
+// Generated from /jvdocs/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar/SquareOne.g4 by ANTLR 4.5.3
 package com.suushiemaniac.cubing.alglib.lang.antlr.squareone;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class SquareOneParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -113,6 +113,9 @@ public class SquareOneParser extends Parser {
 			switch (_input.LA(1)) {
 			case SQUARE_ONE_SLASH:
 			case SQUARE_ONE_BR_OPEN:
+			case COMM_COMMA:
+			case COMM_BR_CLOSE:
+			case COMM_SEMI_COLON:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(18);
@@ -145,6 +148,7 @@ public class SquareOneParser extends Parser {
 		public SquareOneModifierContext squareOneModifier() {
 			return getRuleContext(SquareOneModifierContext.class,0);
 		}
+		public TerminalNode SQUARE_ONE_SLASH() { return getToken(SquareOneParser.SQUARE_ONE_SLASH, 0); }
 		public SquareOneBeginSlashContext squareOneBeginSlash() {
 			return getRuleContext(SquareOneBeginSlashContext.class,0);
 		}
@@ -154,7 +158,6 @@ public class SquareOneParser extends Parser {
 		public SquareOneMoveSlashContext squareOneMoveSlash(int i) {
 			return getRuleContext(SquareOneMoveSlashContext.class,i);
 		}
-		public TerminalNode SQUARE_ONE_SLASH() { return getToken(SquareOneParser.SQUARE_ONE_SLASH, 0); }
 		public SquareOneAlgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -174,38 +177,46 @@ public class SquareOneParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(23);
-			_la = _input.LA(1);
-			if (_la==SQUARE_ONE_SLASH) {
-				{
-				setState(22);
-				squareOneBeginSlash();
-				}
-			}
-
-			setState(28);
+			setState(32);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
+			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			case 1:
+				{
+				setState(23);
+				_la = _input.LA(1);
+				if (_la==SQUARE_ONE_SLASH) {
 					{
-					{
-					setState(25);
-					squareOneMoveSlash();
+					setState(22);
+					squareOneBeginSlash();
 					}
-					} 
 				}
-				setState(30);
+
+				setState(28);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+					if ( _alt==1 ) {
+						{
+						{
+						setState(25);
+						squareOneMoveSlash();
+						}
+						} 
+					}
+					setState(30);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				}
+				setState(31);
+				squareOneModifier();
+				}
+				break;
 			}
-			setState(31);
-			squareOneModifier();
-			setState(33);
+			setState(35);
 			_la = _input.LA(1);
 			if (_la==SQUARE_ONE_SLASH) {
 				{
-				setState(32);
+				setState(34);
 				match(SQUARE_ONE_SLASH);
 				}
 			}
@@ -242,7 +253,7 @@ public class SquareOneParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(35);
+			setState(37);
 			match(SQUARE_ONE_SLASH);
 			}
 		}
@@ -279,9 +290,9 @@ public class SquareOneParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37);
+			setState(39);
 			squareOneModifier();
-			setState(38);
+			setState(40);
 			match(SQUARE_ONE_SLASH);
 			}
 		}
@@ -323,15 +334,15 @@ public class SquareOneParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(40);
-			match(SQUARE_ONE_BR_OPEN);
-			setState(41);
-			squareOneFaceTurn();
 			setState(42);
-			match(SQUARE_ONE_COMMA);
+			match(SQUARE_ONE_BR_OPEN);
 			setState(43);
 			squareOneFaceTurn();
 			setState(44);
+			match(SQUARE_ONE_COMMA);
+			setState(45);
+			squareOneFaceTurn();
+			setState(46);
 			match(SQUARE_ONE_BR_CLOSE);
 			}
 		}
@@ -366,12 +377,12 @@ public class SquareOneParser extends Parser {
 		enterRule(_localctx, 10, RULE_squareOneFaceTurn);
 		int _la;
 		try {
-			setState(51);
+			setState(53);
 			switch (_input.LA(1)) {
 			case SQUARE_ONE_PLANE_ZERO:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(46);
+				setState(48);
 				match(SQUARE_ONE_PLANE_ZERO);
 				}
 				break;
@@ -380,16 +391,16 @@ public class SquareOneParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				setState(48);
+				setState(50);
 				_la = _input.LA(1);
 				if (_la==SQUARE_ONE_DIRECTION_MODIFIER) {
 					{
-					setState(47);
+					setState(49);
 					match(SQUARE_ONE_DIRECTION_MODIFIER);
 					}
 				}
 
-				setState(50);
+				setState(52);
 				match(SQUARE_ONE_PLANE_POS);
 				}
 				}
@@ -431,19 +442,20 @@ public class SquareOneParser extends Parser {
 		SquareOneCommContext _localctx = new SquareOneCommContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_squareOneComm);
 		try {
-			setState(55);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			setState(57);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(53);
+				setState(55);
 				squareOnePureComm();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(54);
+				setState(56);
 				squareOneSetupComm();
 				}
 				break;
@@ -487,15 +499,15 @@ public class SquareOneParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(57);
-			match(COMM_BR_OPEN);
-			setState(58);
-			squareOne();
 			setState(59);
-			match(COMM_COMMA);
+			match(COMM_BR_OPEN);
 			setState(60);
 			squareOne();
 			setState(61);
+			match(COMM_COMMA);
+			setState(62);
+			squareOne();
+			setState(63);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -537,15 +549,15 @@ public class SquareOneParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(63);
-			match(COMM_BR_OPEN);
-			setState(64);
-			squareOne();
 			setState(65);
-			match(COMM_SEMI_COLON);
+			match(COMM_BR_OPEN);
 			setState(66);
 			squareOne();
 			setState(67);
+			match(COMM_SEMI_COLON);
+			setState(68);
+			squareOne();
+			setState(69);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -561,24 +573,24 @@ public class SquareOneParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\16H\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\16J\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\5\2"+
-		"\27\n\2\3\3\5\3\32\n\3\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\3\3\3\5\3$\n\3"+
-		"\3\4\3\4\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\5\7\63\n\7\3\7\5"+
-		"\7\66\n\7\3\b\3\b\5\b:\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n"+
-		"\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20\22\2\2E\2\26\3\2\2\2\4\31\3\2\2\2\6"+
-		"%\3\2\2\2\b\'\3\2\2\2\n*\3\2\2\2\f\65\3\2\2\2\169\3\2\2\2\20;\3\2\2\2"+
-		"\22A\3\2\2\2\24\27\5\4\3\2\25\27\5\16\b\2\26\24\3\2\2\2\26\25\3\2\2\2"+
-		"\27\3\3\2\2\2\30\32\5\6\4\2\31\30\3\2\2\2\31\32\3\2\2\2\32\36\3\2\2\2"+
-		"\33\35\5\b\5\2\34\33\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37"+
-		"!\3\2\2\2 \36\3\2\2\2!#\5\n\6\2\"$\7\3\2\2#\"\3\2\2\2#$\3\2\2\2$\5\3\2"+
-		"\2\2%&\7\3\2\2&\7\3\2\2\2\'(\5\n\6\2()\7\3\2\2)\t\3\2\2\2*+\7\4\2\2+,"+
-		"\5\f\7\2,-\7\6\2\2-.\5\f\7\2./\7\7\2\2/\13\3\2\2\2\60\66\7\5\2\2\61\63"+
-		"\7\t\2\2\62\61\3\2\2\2\62\63\3\2\2\2\63\64\3\2\2\2\64\66\7\b\2\2\65\60"+
-		"\3\2\2\2\65\62\3\2\2\2\66\r\3\2\2\2\67:\5\20\t\28:\5\22\n\29\67\3\2\2"+
-		"\298\3\2\2\2:\17\3\2\2\2;<\7\n\2\2<=\5\2\2\2=>\7\13\2\2>?\5\2\2\2?@\7"+
-		"\f\2\2@\21\3\2\2\2AB\7\n\2\2BC\5\2\2\2CD\7\r\2\2DE\5\2\2\2EF\7\f\2\2F"+
-		"\23\3\2\2\2\t\26\31\36#\62\659";
+		"\27\n\2\3\3\5\3\32\n\3\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\3\5\3#\n\3\3\3"+
+		"\5\3&\n\3\3\4\3\4\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\5\7\65\n"+
+		"\7\3\7\5\78\n\7\3\b\3\b\5\b<\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3"+
+		"\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20\22\2\2H\2\26\3\2\2\2\4\"\3\2\2"+
+		"\2\6\'\3\2\2\2\b)\3\2\2\2\n,\3\2\2\2\f\67\3\2\2\2\16;\3\2\2\2\20=\3\2"+
+		"\2\2\22C\3\2\2\2\24\27\5\4\3\2\25\27\5\16\b\2\26\24\3\2\2\2\26\25\3\2"+
+		"\2\2\27\3\3\2\2\2\30\32\5\6\4\2\31\30\3\2\2\2\31\32\3\2\2\2\32\36\3\2"+
+		"\2\2\33\35\5\b\5\2\34\33\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2"+
+		"\2\37!\3\2\2\2 \36\3\2\2\2!#\5\n\6\2\"\31\3\2\2\2\"#\3\2\2\2#%\3\2\2\2"+
+		"$&\7\3\2\2%$\3\2\2\2%&\3\2\2\2&\5\3\2\2\2\'(\7\3\2\2(\7\3\2\2\2)*\5\n"+
+		"\6\2*+\7\3\2\2+\t\3\2\2\2,-\7\4\2\2-.\5\f\7\2./\7\6\2\2/\60\5\f\7\2\60"+
+		"\61\7\7\2\2\61\13\3\2\2\2\628\7\5\2\2\63\65\7\t\2\2\64\63\3\2\2\2\64\65"+
+		"\3\2\2\2\65\66\3\2\2\2\668\7\b\2\2\67\62\3\2\2\2\67\64\3\2\2\28\r\3\2"+
+		"\2\29<\5\20\t\2:<\5\22\n\2;9\3\2\2\2;:\3\2\2\2<\17\3\2\2\2=>\7\n\2\2>"+
+		"?\5\2\2\2?@\7\13\2\2@A\5\2\2\2AB\7\f\2\2B\21\3\2\2\2CD\7\n\2\2DE\5\2\2"+
+		"\2EF\7\r\2\2FG\5\2\2\2GH\7\f\2\2H\23\3\2\2\2\n\26\31\36\"%\64\67;";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

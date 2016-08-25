@@ -2,7 +2,7 @@ grammar Clock;
 
 clock: clockAlg | clockComm;
 
-clockAlg: clockMove+ endPinClock?;
+clockAlg: clockMove* endPinClock?;
 
 clockMove: turnPinClock
          | rotationClock;

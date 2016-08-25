@@ -1,4 +1,4 @@
-// Generated from C:/Users/suushie_maniac/Desktop/tnoodle-master/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar\Clock.g4 by ANTLR 4.5.1
+// Generated from /jvdocs/AlgLib/src/com/suushiemaniac/cubing/alglib/lang/res/grammar/Clock.g4 by ANTLR 4.5.3
 package com.suushiemaniac.cubing.alglib.lang.antlr.clock;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ClockParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -112,6 +112,9 @@ public class ClockParser extends Parser {
 			switch (_input.LA(1)) {
 			case CLOCK_PLANE_SINGLE:
 			case CLOCK_PLANE_ROTATION:
+			case COMM_COMMA:
+			case COMM_BR_CLOSE:
+			case COMM_SEMI_COLON:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(18);
@@ -169,31 +172,27 @@ public class ClockParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(23); 
+			setState(25);
 			_errHandler.sync(this);
-			_alt = 1;
-			do {
-				switch (_alt) {
-				case 1:
+			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
 					{
 					{
 					setState(22);
 					clockMove();
 					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+					} 
 				}
-				setState(25); 
+				setState(27);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-			setState(28);
+			}
+			setState(29);
 			_la = _input.LA(1);
 			if (_la==CLOCK_PLANE_SINGLE) {
 				{
-				setState(27);
+				setState(28);
 				endPinClock();
 				}
 			}
@@ -233,19 +232,19 @@ public class ClockParser extends Parser {
 		ClockMoveContext _localctx = new ClockMoveContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_clockMove);
 		try {
-			setState(32);
+			setState(33);
 			switch (_input.LA(1)) {
 			case CLOCK_PLANE_SINGLE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(30);
+				setState(31);
 				turnPinClock();
 				}
 				break;
 			case CLOCK_PLANE_ROTATION:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(31);
+				setState(32);
 				rotationClock();
 				}
 				break;
@@ -285,11 +284,11 @@ public class ClockParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(34);
-			match(CLOCK_PLANE_SINGLE);
 			setState(35);
-			match(CLOCK_NUM_MODIFIER);
+			match(CLOCK_PLANE_SINGLE);
 			setState(36);
+			match(CLOCK_NUM_MODIFIER);
+			setState(37);
 			match(CLOCK_DIRECTION_MODIFIER);
 			}
 		}
@@ -323,7 +322,7 @@ public class ClockParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(38);
+			setState(39);
 			match(CLOCK_PLANE_ROTATION);
 			}
 		}
@@ -357,7 +356,7 @@ public class ClockParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(40);
+			setState(41);
 			match(CLOCK_PLANE_SINGLE);
 			}
 		}
@@ -394,19 +393,20 @@ public class ClockParser extends Parser {
 		ClockCommContext _localctx = new ClockCommContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_clockComm);
 		try {
-			setState(44);
+			setState(45);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(42);
+				setState(43);
 				clockPureComm();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(43);
+				setState(44);
 				clockSetupComm();
 				}
 				break;
@@ -450,15 +450,15 @@ public class ClockParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
-			match(COMM_BR_OPEN);
 			setState(47);
-			clock();
+			match(COMM_BR_OPEN);
 			setState(48);
-			match(COMM_COMMA);
-			setState(49);
 			clock();
+			setState(49);
+			match(COMM_COMMA);
 			setState(50);
+			clock();
+			setState(51);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -500,15 +500,15 @@ public class ClockParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(52);
-			match(COMM_BR_OPEN);
 			setState(53);
-			clock();
+			match(COMM_BR_OPEN);
 			setState(54);
-			match(COMM_SEMI_COLON);
-			setState(55);
 			clock();
+			setState(55);
+			match(COMM_SEMI_COLON);
 			setState(56);
+			clock();
+			setState(57);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -524,21 +524,21 @@ public class ClockParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13=\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13>\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\5\2"+
-		"\27\n\2\3\3\6\3\32\n\3\r\3\16\3\33\3\3\5\3\37\n\3\3\4\3\4\5\4#\n\4\3\5"+
-		"\3\5\3\5\3\5\3\6\3\6\3\7\3\7\3\b\3\b\5\b/\n\b\3\t\3\t\3\t\3\t\3\t\3\t"+
-		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20\22\2\28\2\26\3\2"+
-		"\2\2\4\31\3\2\2\2\6\"\3\2\2\2\b$\3\2\2\2\n(\3\2\2\2\f*\3\2\2\2\16.\3\2"+
-		"\2\2\20\60\3\2\2\2\22\66\3\2\2\2\24\27\5\4\3\2\25\27\5\16\b\2\26\24\3"+
-		"\2\2\2\26\25\3\2\2\2\27\3\3\2\2\2\30\32\5\6\4\2\31\30\3\2\2\2\32\33\3"+
-		"\2\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\36\3\2\2\2\35\37\5\f\7\2\36\35\3"+
-		"\2\2\2\36\37\3\2\2\2\37\5\3\2\2\2 #\5\b\5\2!#\5\n\6\2\" \3\2\2\2\"!\3"+
-		"\2\2\2#\7\3\2\2\2$%\7\3\2\2%&\7\4\2\2&\'\7\5\2\2\'\t\3\2\2\2()\7\6\2\2"+
-		")\13\3\2\2\2*+\7\3\2\2+\r\3\2\2\2,/\5\20\t\2-/\5\22\n\2.,\3\2\2\2.-\3"+
-		"\2\2\2/\17\3\2\2\2\60\61\7\7\2\2\61\62\5\2\2\2\62\63\7\b\2\2\63\64\5\2"+
-		"\2\2\64\65\7\t\2\2\65\21\3\2\2\2\66\67\7\7\2\2\678\5\2\2\289\7\n\2\29"+
-		":\5\2\2\2:;\7\t\2\2;\23\3\2\2\2\7\26\33\36\".";
+		"\27\n\2\3\3\7\3\32\n\3\f\3\16\3\35\13\3\3\3\5\3 \n\3\3\4\3\4\5\4$\n\4"+
+		"\3\5\3\5\3\5\3\5\3\6\3\6\3\7\3\7\3\b\3\b\5\b\60\n\b\3\t\3\t\3\t\3\t\3"+
+		"\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20\22\2\29\2"+
+		"\26\3\2\2\2\4\33\3\2\2\2\6#\3\2\2\2\b%\3\2\2\2\n)\3\2\2\2\f+\3\2\2\2\16"+
+		"/\3\2\2\2\20\61\3\2\2\2\22\67\3\2\2\2\24\27\5\4\3\2\25\27\5\16\b\2\26"+
+		"\24\3\2\2\2\26\25\3\2\2\2\27\3\3\2\2\2\30\32\5\6\4\2\31\30\3\2\2\2\32"+
+		"\35\3\2\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\36"+
+		" \5\f\7\2\37\36\3\2\2\2\37 \3\2\2\2 \5\3\2\2\2!$\5\b\5\2\"$\5\n\6\2#!"+
+		"\3\2\2\2#\"\3\2\2\2$\7\3\2\2\2%&\7\3\2\2&\'\7\4\2\2\'(\7\5\2\2(\t\3\2"+
+		"\2\2)*\7\6\2\2*\13\3\2\2\2+,\7\3\2\2,\r\3\2\2\2-\60\5\20\t\2.\60\5\22"+
+		"\n\2/-\3\2\2\2/.\3\2\2\2\60\17\3\2\2\2\61\62\7\7\2\2\62\63\5\2\2\2\63"+
+		"\64\7\b\2\2\64\65\5\2\2\2\65\66\7\t\2\2\66\21\3\2\2\2\678\7\7\2\289\5"+
+		"\2\2\29:\7\n\2\2:;\5\2\2\2;<\7\t\2\2<\23\3\2\2\2\7\26\33\37#/";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

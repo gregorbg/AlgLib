@@ -2,7 +2,7 @@ grammar Skewb;
 
 skewb: skewbAlg | skewbComm;
 
-skewbAlg: skewbMove+;
+skewbAlg: skewbMove*;
 
 skewbMove: SKEWB_PLANE SKEWB_MODIFIER?;
 

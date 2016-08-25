@@ -2,7 +2,7 @@ grammar Cubic;
 
 cubic: cubicAlg | cubicComm;
 
-cubicAlg: cubicMove+;
+cubicAlg: cubicMove*;
 
 cubicMove: singleDepthCubic
          | nDepthCubic

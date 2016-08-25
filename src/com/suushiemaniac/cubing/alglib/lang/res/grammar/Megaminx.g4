@@ -2,7 +2,7 @@ grammar Megaminx;
 
 megaminx: megaminxAlg | megaminxComm;
 
-megaminxAlg: megaminxMove+;
+megaminxAlg: megaminxMove*;
 
 megaminxMove: gripMegaminx
            | uMegaminx;

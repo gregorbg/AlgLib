@@ -2,7 +2,7 @@ grammar SquareOne;
 
 squareOne: squareOneAlg | squareOneComm;
 
-squareOneAlg: squareOneBeginSlash? squareOneMoveSlash* squareOneModifier SQUARE_ONE_SLASH?;
+squareOneAlg: (squareOneBeginSlash? squareOneMoveSlash* squareOneModifier)? SQUARE_ONE_SLASH?;
 
 squareOneBeginSlash: SQUARE_ONE_SLASH;
 squareOneMoveSlash: squareOneModifier SQUARE_ONE_SLASH;
