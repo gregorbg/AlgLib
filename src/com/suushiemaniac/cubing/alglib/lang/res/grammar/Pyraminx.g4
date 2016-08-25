@@ -1,8 +1,10 @@
 grammar Pyraminx;
 
-pyraminx: pyraminxAlg | pyraminxComm;
+pyraminx: pyraminxAlg | EOF;
 
-pyraminxAlg: pyraminxMove*;
+pyraminxAlg: pyraminxSimple | pyraminxComm;
+
+pyraminxSimple: pyraminxMove+;
 
 pyraminxMove: pyraminxFullMove | pyraminxTipMove;
 
@@ -11,9 +13,9 @@ pyraminxTipMove: PYRAMINX_TIP_PLANE PYRAMINX_MODIFIER?;
 
 pyraminxComm: pyraminxPureComm | pyraminxSetupComm;
 
-pyraminxPureComm: COMM_BR_OPEN pyraminx COMM_COMMA pyraminx COMM_BR_CLOSE;
+pyraminxPureComm: COMM_BR_OPEN pyraminxAlg COMM_COMMA pyraminxAlg COMM_BR_CLOSE;
 
-pyraminxSetupComm: COMM_BR_OPEN pyraminx COMM_SEMI_COLON pyraminx COMM_BR_CLOSE;
+pyraminxSetupComm: COMM_BR_OPEN pyraminxAlg COMM_SEMI_COLON pyraminxAlg COMM_BR_CLOSE;
 
 PYRAMINX_FULL_PLANE: [UBLR];
 PYRAMINX_TIP_PLANE: [ublr];

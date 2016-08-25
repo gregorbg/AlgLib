@@ -1,16 +1,18 @@
 grammar Skewb;
 
-skewb: skewbAlg | skewbComm;
+skewb: skewbAlg | EOF;
 
-skewbAlg: skewbMove*;
+skewbAlg: skewbSimple | skewbComm;
+
+skewbSimple: skewbMove+;
 
 skewbMove: SKEWB_PLANE SKEWB_MODIFIER?;
 
 skewbComm: skewbPureComm | skewbSetupComm;
 
-skewbPureComm: COMM_BR_OPEN skewb COMM_COMMA skewb COMM_BR_CLOSE;
+skewbPureComm: COMM_BR_OPEN skewbAlg COMM_COMMA skewbAlg COMM_BR_CLOSE;
 
-skewbSetupComm: COMM_BR_OPEN skewb COMM_SEMI_COLON skewb COMM_BR_CLOSE;
+skewbSetupComm: COMM_BR_OPEN skewbAlg COMM_SEMI_COLON skewbAlg COMM_BR_CLOSE;
 
 SKEWB_PLANE: [UBLR];
 SKEWB_MODIFIER: '\'';

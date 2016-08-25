@@ -21,12 +21,12 @@ public class ClockParser extends Parser {
 		CLOCK_PLANE_ROTATION=4, COMM_BR_OPEN=5, COMM_COMMA=6, COMM_BR_CLOSE=7, 
 		COMM_SEMI_COLON=8, WHITESPACE=9;
 	public static final int
-		RULE_clock = 0, RULE_clockAlg = 1, RULE_clockMove = 2, RULE_turnPinClock = 3, 
-		RULE_rotationClock = 4, RULE_endPinClock = 5, RULE_clockComm = 6, RULE_clockPureComm = 7, 
-		RULE_clockSetupComm = 8;
+		RULE_clock = 0, RULE_clockAlg = 1, RULE_clockSimple = 2, RULE_clockMove = 3, 
+		RULE_turnPinClock = 4, RULE_rotationClock = 5, RULE_endPinClock = 6, RULE_clockComm = 7, 
+		RULE_clockPureComm = 8, RULE_clockSetupComm = 9;
 	public static final String[] ruleNames = {
-		"clock", "clockAlg", "clockMove", "turnPinClock", "rotationClock", "endPinClock", 
-		"clockComm", "clockPureComm", "clockSetupComm"
+		"clock", "clockAlg", "clockSimple", "clockMove", "turnPinClock", "rotationClock", 
+		"endPinClock", "clockComm", "clockPureComm", "clockSetupComm"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -90,9 +90,7 @@ public class ClockParser extends Parser {
 		public ClockAlgContext clockAlg() {
 			return getRuleContext(ClockAlgContext.class,0);
 		}
-		public ClockCommContext clockComm() {
-			return getRuleContext(ClockCommContext.class,0);
-		}
+		public TerminalNode EOF() { return getToken(ClockParser.EOF, 0); }
 		public ClockContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -108,24 +106,22 @@ public class ClockParser extends Parser {
 		ClockContext _localctx = new ClockContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_clock);
 		try {
-			setState(20);
+			setState(22);
 			switch (_input.LA(1)) {
 			case CLOCK_PLANE_SINGLE:
 			case CLOCK_PLANE_ROTATION:
-			case COMM_COMMA:
-			case COMM_BR_CLOSE:
-			case COMM_SEMI_COLON:
+			case COMM_BR_OPEN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(18);
+				setState(20);
 				clockAlg();
 				}
 				break;
-			case COMM_BR_OPEN:
+			case EOF:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(19);
-				clockComm();
+				setState(21);
+				match(EOF);
 				}
 				break;
 			default:
@@ -144,14 +140,11 @@ public class ClockParser extends Parser {
 	}
 
 	public static class ClockAlgContext extends ParserRuleContext {
-		public List<ClockMoveContext> clockMove() {
-			return getRuleContexts(ClockMoveContext.class);
+		public ClockSimpleContext clockSimple() {
+			return getRuleContext(ClockSimpleContext.class,0);
 		}
-		public ClockMoveContext clockMove(int i) {
-			return getRuleContext(ClockMoveContext.class,i);
-		}
-		public EndPinClockContext endPinClock() {
-			return getRuleContext(EndPinClockContext.class,0);
+		public ClockCommContext clockComm() {
+			return getRuleContext(ClockCommContext.class,0);
 		}
 		public ClockAlgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -167,32 +160,93 @@ public class ClockParser extends Parser {
 	public final ClockAlgContext clockAlg() throws RecognitionException {
 		ClockAlgContext _localctx = new ClockAlgContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_clockAlg);
+		try {
+			setState(26);
+			switch (_input.LA(1)) {
+			case CLOCK_PLANE_SINGLE:
+			case CLOCK_PLANE_ROTATION:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(24);
+				clockSimple();
+				}
+				break;
+			case COMM_BR_OPEN:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(25);
+				clockComm();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ClockSimpleContext extends ParserRuleContext {
+		public List<ClockMoveContext> clockMove() {
+			return getRuleContexts(ClockMoveContext.class);
+		}
+		public ClockMoveContext clockMove(int i) {
+			return getRuleContext(ClockMoveContext.class,i);
+		}
+		public EndPinClockContext endPinClock() {
+			return getRuleContext(EndPinClockContext.class,0);
+		}
+		public ClockSimpleContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_clockSimple; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ClockVisitor ) return ((ClockVisitor<? extends T>)visitor).visitClockSimple(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ClockSimpleContext clockSimple() throws RecognitionException {
+		ClockSimpleContext _localctx = new ClockSimpleContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_clockSimple);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(25);
+			setState(29); 
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
 					{
 					{
-					setState(22);
+					setState(28);
 					clockMove();
 					}
-					} 
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
-				setState(27);
+				setState(31); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
-			}
-			setState(29);
+				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+			setState(34);
 			_la = _input.LA(1);
 			if (_la==CLOCK_PLANE_SINGLE) {
 				{
-				setState(28);
+				setState(33);
 				endPinClock();
 				}
 			}
@@ -230,21 +284,21 @@ public class ClockParser extends Parser {
 
 	public final ClockMoveContext clockMove() throws RecognitionException {
 		ClockMoveContext _localctx = new ClockMoveContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_clockMove);
+		enterRule(_localctx, 6, RULE_clockMove);
 		try {
-			setState(33);
+			setState(38);
 			switch (_input.LA(1)) {
 			case CLOCK_PLANE_SINGLE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(31);
+				setState(36);
 				turnPinClock();
 				}
 				break;
 			case CLOCK_PLANE_ROTATION:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(32);
+				setState(37);
 				rotationClock();
 				}
 				break;
@@ -280,15 +334,15 @@ public class ClockParser extends Parser {
 
 	public final TurnPinClockContext turnPinClock() throws RecognitionException {
 		TurnPinClockContext _localctx = new TurnPinClockContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_turnPinClock);
+		enterRule(_localctx, 8, RULE_turnPinClock);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(35);
+			setState(40);
 			match(CLOCK_PLANE_SINGLE);
-			setState(36);
+			setState(41);
 			match(CLOCK_NUM_MODIFIER);
-			setState(37);
+			setState(42);
 			match(CLOCK_DIRECTION_MODIFIER);
 			}
 		}
@@ -318,11 +372,11 @@ public class ClockParser extends Parser {
 
 	public final RotationClockContext rotationClock() throws RecognitionException {
 		RotationClockContext _localctx = new RotationClockContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_rotationClock);
+		enterRule(_localctx, 10, RULE_rotationClock);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(39);
+			setState(44);
 			match(CLOCK_PLANE_ROTATION);
 			}
 		}
@@ -352,11 +406,11 @@ public class ClockParser extends Parser {
 
 	public final EndPinClockContext endPinClock() throws RecognitionException {
 		EndPinClockContext _localctx = new EndPinClockContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_endPinClock);
+		enterRule(_localctx, 12, RULE_endPinClock);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(41);
+			setState(46);
 			match(CLOCK_PLANE_SINGLE);
 			}
 		}
@@ -391,22 +445,22 @@ public class ClockParser extends Parser {
 
 	public final ClockCommContext clockComm() throws RecognitionException {
 		ClockCommContext _localctx = new ClockCommContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_clockComm);
+		enterRule(_localctx, 14, RULE_clockComm);
 		try {
-			setState(45);
+			setState(50);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(43);
+				setState(48);
 				clockPureComm();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(44);
+				setState(49);
 				clockSetupComm();
 				}
 				break;
@@ -425,11 +479,11 @@ public class ClockParser extends Parser {
 
 	public static class ClockPureCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(ClockParser.COMM_BR_OPEN, 0); }
-		public List<ClockContext> clock() {
-			return getRuleContexts(ClockContext.class);
+		public List<ClockAlgContext> clockAlg() {
+			return getRuleContexts(ClockAlgContext.class);
 		}
-		public ClockContext clock(int i) {
-			return getRuleContext(ClockContext.class,i);
+		public ClockAlgContext clockAlg(int i) {
+			return getRuleContext(ClockAlgContext.class,i);
 		}
 		public TerminalNode COMM_COMMA() { return getToken(ClockParser.COMM_COMMA, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(ClockParser.COMM_BR_CLOSE, 0); }
@@ -446,19 +500,19 @@ public class ClockParser extends Parser {
 
 	public final ClockPureCommContext clockPureComm() throws RecognitionException {
 		ClockPureCommContext _localctx = new ClockPureCommContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_clockPureComm);
+		enterRule(_localctx, 16, RULE_clockPureComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(47);
+			setState(52);
 			match(COMM_BR_OPEN);
-			setState(48);
-			clock();
-			setState(49);
+			setState(53);
+			clockAlg();
+			setState(54);
 			match(COMM_COMMA);
-			setState(50);
-			clock();
-			setState(51);
+			setState(55);
+			clockAlg();
+			setState(56);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -475,11 +529,11 @@ public class ClockParser extends Parser {
 
 	public static class ClockSetupCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(ClockParser.COMM_BR_OPEN, 0); }
-		public List<ClockContext> clock() {
-			return getRuleContexts(ClockContext.class);
+		public List<ClockAlgContext> clockAlg() {
+			return getRuleContexts(ClockAlgContext.class);
 		}
-		public ClockContext clock(int i) {
-			return getRuleContext(ClockContext.class,i);
+		public ClockAlgContext clockAlg(int i) {
+			return getRuleContext(ClockAlgContext.class,i);
 		}
 		public TerminalNode COMM_SEMI_COLON() { return getToken(ClockParser.COMM_SEMI_COLON, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(ClockParser.COMM_BR_CLOSE, 0); }
@@ -496,19 +550,19 @@ public class ClockParser extends Parser {
 
 	public final ClockSetupCommContext clockSetupComm() throws RecognitionException {
 		ClockSetupCommContext _localctx = new ClockSetupCommContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_clockSetupComm);
+		enterRule(_localctx, 18, RULE_clockSetupComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53);
+			setState(58);
 			match(COMM_BR_OPEN);
-			setState(54);
-			clock();
-			setState(55);
+			setState(59);
+			clockAlg();
+			setState(60);
 			match(COMM_SEMI_COLON);
-			setState(56);
-			clock();
-			setState(57);
+			setState(61);
+			clockAlg();
+			setState(62);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -524,21 +578,22 @@ public class ClockParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13>\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\5\2"+
-		"\27\n\2\3\3\7\3\32\n\3\f\3\16\3\35\13\3\3\3\5\3 \n\3\3\4\3\4\5\4$\n\4"+
-		"\3\5\3\5\3\5\3\5\3\6\3\6\3\7\3\7\3\b\3\b\5\b\60\n\b\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20\22\2\29\2"+
-		"\26\3\2\2\2\4\33\3\2\2\2\6#\3\2\2\2\b%\3\2\2\2\n)\3\2\2\2\f+\3\2\2\2\16"+
-		"/\3\2\2\2\20\61\3\2\2\2\22\67\3\2\2\2\24\27\5\4\3\2\25\27\5\16\b\2\26"+
-		"\24\3\2\2\2\26\25\3\2\2\2\27\3\3\2\2\2\30\32\5\6\4\2\31\30\3\2\2\2\32"+
-		"\35\3\2\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\36"+
-		" \5\f\7\2\37\36\3\2\2\2\37 \3\2\2\2 \5\3\2\2\2!$\5\b\5\2\"$\5\n\6\2#!"+
-		"\3\2\2\2#\"\3\2\2\2$\7\3\2\2\2%&\7\3\2\2&\'\7\4\2\2\'(\7\5\2\2(\t\3\2"+
-		"\2\2)*\7\6\2\2*\13\3\2\2\2+,\7\3\2\2,\r\3\2\2\2-\60\5\20\t\2.\60\5\22"+
-		"\n\2/-\3\2\2\2/.\3\2\2\2\60\17\3\2\2\2\61\62\7\7\2\2\62\63\5\2\2\2\63"+
-		"\64\7\b\2\2\64\65\5\2\2\2\65\66\7\t\2\2\66\21\3\2\2\2\678\7\7\2\289\5"+
-		"\2\2\29:\7\n\2\2:;\5\2\2\2;<\7\t\2\2<\23\3\2\2\2\7\26\33\37#/";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13C\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\3"+
+		"\2\3\2\5\2\31\n\2\3\3\3\3\5\3\35\n\3\3\4\6\4 \n\4\r\4\16\4!\3\4\5\4%\n"+
+		"\4\3\5\3\5\5\5)\n\5\3\6\3\6\3\6\3\6\3\7\3\7\3\b\3\b\3\t\3\t\5\t\65\n\t"+
+		"\3\n\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\2\2\f\2\4"+
+		"\6\b\n\f\16\20\22\24\2\2>\2\30\3\2\2\2\4\34\3\2\2\2\6\37\3\2\2\2\b(\3"+
+		"\2\2\2\n*\3\2\2\2\f.\3\2\2\2\16\60\3\2\2\2\20\64\3\2\2\2\22\66\3\2\2\2"+
+		"\24<\3\2\2\2\26\31\5\4\3\2\27\31\7\2\2\3\30\26\3\2\2\2\30\27\3\2\2\2\31"+
+		"\3\3\2\2\2\32\35\5\6\4\2\33\35\5\20\t\2\34\32\3\2\2\2\34\33\3\2\2\2\35"+
+		"\5\3\2\2\2\36 \5\b\5\2\37\36\3\2\2\2 !\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2"+
+		"\"$\3\2\2\2#%\5\16\b\2$#\3\2\2\2$%\3\2\2\2%\7\3\2\2\2&)\5\n\6\2\')\5\f"+
+		"\7\2(&\3\2\2\2(\'\3\2\2\2)\t\3\2\2\2*+\7\3\2\2+,\7\4\2\2,-\7\5\2\2-\13"+
+		"\3\2\2\2./\7\6\2\2/\r\3\2\2\2\60\61\7\3\2\2\61\17\3\2\2\2\62\65\5\22\n"+
+		"\2\63\65\5\24\13\2\64\62\3\2\2\2\64\63\3\2\2\2\65\21\3\2\2\2\66\67\7\7"+
+		"\2\2\678\5\4\3\289\7\b\2\29:\5\4\3\2:;\7\t\2\2;\23\3\2\2\2<=\7\7\2\2="+
+		">\5\4\3\2>?\7\n\2\2?@\5\4\3\2@A\7\t\2\2A\25\3\2\2\2\b\30\34!$(\64";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

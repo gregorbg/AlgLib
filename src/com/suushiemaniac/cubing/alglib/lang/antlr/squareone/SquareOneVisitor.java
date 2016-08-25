@@ -23,6 +23,12 @@ public interface SquareOneVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSquareOneAlg(SquareOneParser.SquareOneAlgContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SquareOneParser#squareOneSimple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSquareOneSimple(SquareOneParser.SquareOneSimpleContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SquareOneParser#squareOneBeginSlash}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

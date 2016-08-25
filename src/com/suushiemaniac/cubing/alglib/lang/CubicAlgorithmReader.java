@@ -71,15 +71,15 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
 
         @Override
         public Commutator visitCubicPureComm(CubicParser.CubicPureCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.cubic(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.cubic(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.cubicAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.cubicAlg(1));
             return new PureComm(partA, partB);
         }
 
         @Override
         public Commutator visitCubicSetupComm(CubicParser.CubicSetupCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.cubic(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.cubic(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.cubicAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.cubicAlg(1));
             return new SetupComm(partA, partB);
         }
     }
@@ -93,7 +93,12 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
     }
 
     @Override
-    public SimpleAlg visitCubicAlg(CubicParser.CubicAlgContext ctx) {
+    public Algorithm visitCubic(CubicParser.CubicContext ctx) {
+        return ctx.cubicAlg() != null ? this.visit(ctx.cubicAlg()) : new SimpleAlg();
+    }
+
+    @Override
+    public SimpleAlg visitCubicSimple(CubicParser.CubicSimpleContext ctx) {
         CubicMove[] moves = new CubicMove[ctx.cubicMove().size()];
         for (int i = 0; i < moves.length; i++) moves[i] = this.moveReader.visit(ctx.cubicMove(i));
         return new SimpleAlg(moves);

@@ -23,6 +23,12 @@ public interface PyraminxVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPyraminxAlg(PyraminxParser.PyraminxAlgContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PyraminxParser#pyraminxSimple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPyraminxSimple(PyraminxParser.PyraminxSimpleContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PyraminxParser#pyraminxMove}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

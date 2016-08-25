@@ -61,15 +61,15 @@ public class ClockAlgorithmReader extends ClockBaseVisitor<Algorithm> implements
 
         @Override
         public Commutator visitClockPureComm(ClockParser.ClockPureCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.clock(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.clock(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.clockAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.clockAlg(1));
             return new PureComm(partA, partB);
         }
 
         @Override
         public Commutator visitClockSetupComm(ClockParser.ClockSetupCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.clock(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.clock(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.clockAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.clockAlg(1));
             return new SetupComm(partA, partB);
         }
     }
@@ -82,8 +82,13 @@ public class ClockAlgorithmReader extends ClockBaseVisitor<Algorithm> implements
         this.commReader = new ClockCommReader(this);
     }
 
-    @Override
-    public SimpleAlg visitClockAlg(ClockParser.ClockAlgContext ctx) {
+	@Override
+	public Algorithm visitClock(ClockParser.ClockContext ctx) {
+		return ctx.clockAlg() != null ? this.visit(ctx.clockAlg()) : new SimpleAlg();
+	}
+
+	@Override
+    public SimpleAlg visitClockSimple(ClockParser.ClockSimpleContext ctx) {
         int endConfigLength = ctx.endPinClock() == null ? 0 : 1;
         ClockMove[] moves = new ClockMove[ctx.clockMove().size() + endConfigLength];
         for (int i = 0; i < moves.length - endConfigLength; i++) moves[i] = this.moveReader.visit(ctx.clockMove(i));

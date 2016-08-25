@@ -23,6 +23,12 @@ public interface ClockVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClockAlg(ClockParser.ClockAlgContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ClockParser#clockSimple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClockSimple(ClockParser.ClockSimpleContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ClockParser#clockMove}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

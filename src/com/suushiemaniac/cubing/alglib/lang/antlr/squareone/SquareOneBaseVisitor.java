@@ -31,6 +31,13 @@ public class SquareOneBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitSquareOneSimple(SquareOneParser.SquareOneSimpleContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitSquareOneBeginSlash(SquareOneParser.SquareOneBeginSlashContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

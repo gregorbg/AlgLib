@@ -55,15 +55,15 @@ public class PyraminxAlgorithmReader extends PyraminxBaseVisitor<Algorithm> impl
 
         @Override
         public Commutator visitPyraminxPureComm(PyraminxParser.PyraminxPureCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.pyraminx(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.pyraminx(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.pyraminxAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.pyraminxAlg(1));
             return new PureComm(partA, partB);
         }
 
         @Override
         public Commutator visitPyraminxSetupComm(PyraminxParser.PyraminxSetupCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.pyraminx(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.pyraminx(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.pyraminxAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.pyraminxAlg(1));
             return new SetupComm(partA, partB);
         }
     }
@@ -77,7 +77,12 @@ public class PyraminxAlgorithmReader extends PyraminxBaseVisitor<Algorithm> impl
     }
 
     @Override
-    public SimpleAlg visitPyraminxAlg(PyraminxParser.PyraminxAlgContext ctx) {
+    public Algorithm visitPyraminx(PyraminxParser.PyraminxContext ctx) {
+        return ctx.pyraminxAlg() != null ? this.visit(ctx.pyraminxAlg()) : new SimpleAlg();
+    }
+
+    @Override
+    public SimpleAlg visitPyraminxSimple(PyraminxParser.PyraminxSimpleContext ctx) {
         PyraminxMove[] moves = new PyraminxMove[ctx.pyraminxMove().size()];
         for (int i = 0; i < moves.length; i++) moves[i] = this.moveReader.visit(ctx.pyraminxMove(i));
         return new SimpleAlg(moves);

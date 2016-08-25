@@ -1,8 +1,10 @@
 grammar Megaminx;
 
-megaminx: megaminxAlg | megaminxComm;
+megaminx: megaminxAlg | EOF;
 
-megaminxAlg: megaminxMove*;
+megaminxAlg: megaminxSimple | megaminxComm;
+
+megaminxSimple: megaminxMove+;
 
 megaminxMove: gripMegaminx
            | uMegaminx;
@@ -11,9 +13,9 @@ uMegaminx: MEGAMINX_U_PLANE MEGAMINX_U_MODIFIER?;
 
 megaminxComm: megaminxPureComm | megaminxSetupComm;
 
-megaminxPureComm: COMM_BR_OPEN megaminx COMM_COMMA megaminx COMM_BR_CLOSE;
+megaminxPureComm: COMM_BR_OPEN megaminxAlg COMM_COMMA megaminxAlg COMM_BR_CLOSE;
 
-megaminxSetupComm: COMM_BR_OPEN megaminx COMM_SEMI_COLON megaminx COMM_BR_CLOSE;
+megaminxSetupComm: COMM_BR_OPEN megaminxAlg COMM_SEMI_COLON megaminxAlg COMM_BR_CLOSE;
 
 MEGAMINX_WIDE_PLANE: [RD];
 MEGAMINX_WIDE_MODIFIER: '++' | '--';

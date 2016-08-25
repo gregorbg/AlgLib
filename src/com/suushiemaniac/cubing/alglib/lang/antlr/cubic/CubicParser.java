@@ -21,12 +21,14 @@ public class CubicParser extends Parser {
 		CUBIC_MODIFIER_CCW=5, CUBIC_MODIFIER_DOUBLE=6, CUBIC_WIDE=7, CUBIC_DEPTH=8, 
 		COMM_BR_OPEN=9, COMM_COMMA=10, COMM_BR_CLOSE=11, COMM_SEMI_COLON=12, WHITESPACE=13;
 	public static final int
-		RULE_cubic = 0, RULE_cubicAlg = 1, RULE_cubicMove = 2, RULE_singleDepthCubic = 3, 
-		RULE_nDepthCubic = 4, RULE_centralSliceCubic = 5, RULE_outerSliceCubic = 6, 
-		RULE_cubicComm = 7, RULE_cubicPureComm = 8, RULE_cubicSetupComm = 9;
+		RULE_cubic = 0, RULE_cubicAlg = 1, RULE_cubicSimple = 2, RULE_cubicMove = 3, 
+		RULE_singleDepthCubic = 4, RULE_nDepthCubic = 5, RULE_centralSliceCubic = 6, 
+		RULE_outerSliceCubic = 7, RULE_cubicComm = 8, RULE_cubicPureComm = 9, 
+		RULE_cubicSetupComm = 10;
 	public static final String[] ruleNames = {
-		"cubic", "cubicAlg", "cubicMove", "singleDepthCubic", "nDepthCubic", "centralSliceCubic", 
-		"outerSliceCubic", "cubicComm", "cubicPureComm", "cubicSetupComm"
+		"cubic", "cubicAlg", "cubicSimple", "cubicMove", "singleDepthCubic", "nDepthCubic", 
+		"centralSliceCubic", "outerSliceCubic", "cubicComm", "cubicPureComm", 
+		"cubicSetupComm"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -91,9 +93,7 @@ public class CubicParser extends Parser {
 		public CubicAlgContext cubicAlg() {
 			return getRuleContext(CubicAlgContext.class,0);
 		}
-		public CubicCommContext cubicComm() {
-			return getRuleContext(CubicCommContext.class,0);
-		}
+		public TerminalNode EOF() { return getToken(CubicParser.EOF, 0); }
 		public CubicContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -109,27 +109,25 @@ public class CubicParser extends Parser {
 		CubicContext _localctx = new CubicContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_cubic);
 		try {
-			setState(22);
+			setState(24);
 			switch (_input.LA(1)) {
 			case CUBIC_PLANE:
 			case CUBIC_OUTER_SLICE:
 			case CUBIC_CENTRAL_SLICE:
 			case CUBIC_MODIFIER_DOUBLE:
 			case CUBIC_DEPTH:
-			case COMM_COMMA:
-			case COMM_BR_CLOSE:
-			case COMM_SEMI_COLON:
+			case COMM_BR_OPEN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(20);
+				setState(22);
 				cubicAlg();
 				}
 				break;
-			case COMM_BR_OPEN:
+			case EOF:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(21);
-				cubicComm();
+				setState(23);
+				match(EOF);
 				}
 				break;
 			default:
@@ -148,11 +146,11 @@ public class CubicParser extends Parser {
 	}
 
 	public static class CubicAlgContext extends ParserRuleContext {
-		public List<CubicMoveContext> cubicMove() {
-			return getRuleContexts(CubicMoveContext.class);
+		public CubicSimpleContext cubicSimple() {
+			return getRuleContext(CubicSimpleContext.class,0);
 		}
-		public CubicMoveContext cubicMove(int i) {
-			return getRuleContext(CubicMoveContext.class,i);
+		public CubicCommContext cubicComm() {
+			return getRuleContext(CubicCommContext.class,0);
 		}
 		public CubicAlgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -168,24 +166,81 @@ public class CubicParser extends Parser {
 	public final CubicAlgContext cubicAlg() throws RecognitionException {
 		CubicAlgContext _localctx = new CubicAlgContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_cubicAlg);
+		try {
+			setState(28);
+			switch (_input.LA(1)) {
+			case CUBIC_PLANE:
+			case CUBIC_OUTER_SLICE:
+			case CUBIC_CENTRAL_SLICE:
+			case CUBIC_MODIFIER_DOUBLE:
+			case CUBIC_DEPTH:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(26);
+				cubicSimple();
+				}
+				break;
+			case COMM_BR_OPEN:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(27);
+				cubicComm();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CubicSimpleContext extends ParserRuleContext {
+		public List<CubicMoveContext> cubicMove() {
+			return getRuleContexts(CubicMoveContext.class);
+		}
+		public CubicMoveContext cubicMove(int i) {
+			return getRuleContext(CubicMoveContext.class,i);
+		}
+		public CubicSimpleContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_cubicSimple; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CubicVisitor ) return ((CubicVisitor<? extends T>)visitor).visitCubicSimple(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final CubicSimpleContext cubicSimple() throws RecognitionException {
+		CubicSimpleContext _localctx = new CubicSimpleContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_cubicSimple);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(27);
+			setState(31); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << CUBIC_PLANE) | (1L << CUBIC_OUTER_SLICE) | (1L << CUBIC_CENTRAL_SLICE) | (1L << CUBIC_MODIFIER_DOUBLE) | (1L << CUBIC_DEPTH))) != 0)) {
+			do {
 				{
 				{
-				setState(24);
+				setState(30);
 				cubicMove();
 				}
 				}
-				setState(29);
+				setState(33); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << CUBIC_PLANE) | (1L << CUBIC_OUTER_SLICE) | (1L << CUBIC_CENTRAL_SLICE) | (1L << CUBIC_MODIFIER_DOUBLE) | (1L << CUBIC_DEPTH))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -225,36 +280,36 @@ public class CubicParser extends Parser {
 
 	public final CubicMoveContext cubicMove() throws RecognitionException {
 		CubicMoveContext _localctx = new CubicMoveContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_cubicMove);
+		enterRule(_localctx, 6, RULE_cubicMove);
 		try {
-			setState(34);
+			setState(39);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(30);
+				setState(35);
 				singleDepthCubic();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(31);
+				setState(36);
 				nDepthCubic();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(32);
+				setState(37);
 				outerSliceCubic();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(33);
+				setState(38);
 				centralSliceCubic();
 				}
 				break;
@@ -287,18 +342,18 @@ public class CubicParser extends Parser {
 
 	public final SingleDepthCubicContext singleDepthCubic() throws RecognitionException {
 		SingleDepthCubicContext _localctx = new SingleDepthCubicContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_singleDepthCubic);
+		enterRule(_localctx, 8, RULE_singleDepthCubic);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(36);
+			setState(41);
 			match(CUBIC_PLANE);
-			setState(38);
+			setState(43);
 			_la = _input.LA(1);
 			if (_la==CUBIC_MODIFIER) {
 				{
-				setState(37);
+				setState(42);
 				match(CUBIC_MODIFIER);
 				}
 			}
@@ -334,29 +389,29 @@ public class CubicParser extends Parser {
 
 	public final NDepthCubicContext nDepthCubic() throws RecognitionException {
 		NDepthCubicContext _localctx = new NDepthCubicContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_nDepthCubic);
+		enterRule(_localctx, 10, RULE_nDepthCubic);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(41);
+			setState(46);
 			_la = _input.LA(1);
 			if (_la==CUBIC_DEPTH) {
 				{
-				setState(40);
+				setState(45);
 				match(CUBIC_DEPTH);
 				}
 			}
 
-			setState(43);
+			setState(48);
 			match(CUBIC_PLANE);
-			setState(44);
+			setState(49);
 			match(CUBIC_WIDE);
-			setState(46);
+			setState(51);
 			_la = _input.LA(1);
 			if (_la==CUBIC_MODIFIER) {
 				{
-				setState(45);
+				setState(50);
 				match(CUBIC_MODIFIER);
 				}
 			}
@@ -390,18 +445,18 @@ public class CubicParser extends Parser {
 
 	public final CentralSliceCubicContext centralSliceCubic() throws RecognitionException {
 		CentralSliceCubicContext _localctx = new CentralSliceCubicContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_centralSliceCubic);
+		enterRule(_localctx, 12, RULE_centralSliceCubic);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(53);
 			match(CUBIC_CENTRAL_SLICE);
-			setState(50);
+			setState(55);
 			_la = _input.LA(1);
 			if (_la==CUBIC_MODIFIER) {
 				{
-				setState(49);
+				setState(54);
 				match(CUBIC_MODIFIER);
 				}
 			}
@@ -437,16 +492,16 @@ public class CubicParser extends Parser {
 
 	public final OuterSliceCubicContext outerSliceCubic() throws RecognitionException {
 		OuterSliceCubicContext _localctx = new OuterSliceCubicContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_outerSliceCubic);
+		enterRule(_localctx, 14, RULE_outerSliceCubic);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53);
+			setState(58);
 			_la = _input.LA(1);
 			if (_la==CUBIC_MODIFIER_DOUBLE || _la==CUBIC_DEPTH) {
 				{
-				setState(52);
+				setState(57);
 				_la = _input.LA(1);
 				if ( !(_la==CUBIC_MODIFIER_DOUBLE || _la==CUBIC_DEPTH) ) {
 				_errHandler.recoverInline(this);
@@ -456,13 +511,13 @@ public class CubicParser extends Parser {
 				}
 			}
 
-			setState(55);
+			setState(60);
 			match(CUBIC_OUTER_SLICE);
-			setState(57);
+			setState(62);
 			_la = _input.LA(1);
 			if (_la==CUBIC_MODIFIER) {
 				{
-				setState(56);
+				setState(61);
 				match(CUBIC_MODIFIER);
 				}
 			}
@@ -500,22 +555,22 @@ public class CubicParser extends Parser {
 
 	public final CubicCommContext cubicComm() throws RecognitionException {
 		CubicCommContext _localctx = new CubicCommContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_cubicComm);
+		enterRule(_localctx, 16, RULE_cubicComm);
 		try {
-			setState(61);
+			setState(66);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(59);
+				setState(64);
 				cubicPureComm();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(60);
+				setState(65);
 				cubicSetupComm();
 				}
 				break;
@@ -534,11 +589,11 @@ public class CubicParser extends Parser {
 
 	public static class CubicPureCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(CubicParser.COMM_BR_OPEN, 0); }
-		public List<CubicContext> cubic() {
-			return getRuleContexts(CubicContext.class);
+		public List<CubicAlgContext> cubicAlg() {
+			return getRuleContexts(CubicAlgContext.class);
 		}
-		public CubicContext cubic(int i) {
-			return getRuleContext(CubicContext.class,i);
+		public CubicAlgContext cubicAlg(int i) {
+			return getRuleContext(CubicAlgContext.class,i);
 		}
 		public TerminalNode COMM_COMMA() { return getToken(CubicParser.COMM_COMMA, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(CubicParser.COMM_BR_CLOSE, 0); }
@@ -555,19 +610,19 @@ public class CubicParser extends Parser {
 
 	public final CubicPureCommContext cubicPureComm() throws RecognitionException {
 		CubicPureCommContext _localctx = new CubicPureCommContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_cubicPureComm);
+		enterRule(_localctx, 18, RULE_cubicPureComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(63);
+			setState(68);
 			match(COMM_BR_OPEN);
-			setState(64);
-			cubic();
-			setState(65);
+			setState(69);
+			cubicAlg();
+			setState(70);
 			match(COMM_COMMA);
-			setState(66);
-			cubic();
-			setState(67);
+			setState(71);
+			cubicAlg();
+			setState(72);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -584,11 +639,11 @@ public class CubicParser extends Parser {
 
 	public static class CubicSetupCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(CubicParser.COMM_BR_OPEN, 0); }
-		public List<CubicContext> cubic() {
-			return getRuleContexts(CubicContext.class);
+		public List<CubicAlgContext> cubicAlg() {
+			return getRuleContexts(CubicAlgContext.class);
 		}
-		public CubicContext cubic(int i) {
-			return getRuleContext(CubicContext.class,i);
+		public CubicAlgContext cubicAlg(int i) {
+			return getRuleContext(CubicAlgContext.class,i);
 		}
 		public TerminalNode COMM_SEMI_COLON() { return getToken(CubicParser.COMM_SEMI_COLON, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(CubicParser.COMM_BR_CLOSE, 0); }
@@ -605,19 +660,19 @@ public class CubicParser extends Parser {
 
 	public final CubicSetupCommContext cubicSetupComm() throws RecognitionException {
 		CubicSetupCommContext _localctx = new CubicSetupCommContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_cubicSetupComm);
+		enterRule(_localctx, 20, RULE_cubicSetupComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(69);
+			setState(74);
 			match(COMM_BR_OPEN);
-			setState(70);
-			cubic();
-			setState(71);
+			setState(75);
+			cubicAlg();
+			setState(76);
 			match(COMM_SEMI_COLON);
-			setState(72);
-			cubic();
-			setState(73);
+			setState(77);
+			cubicAlg();
+			setState(78);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -633,26 +688,27 @@ public class CubicParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\17N\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\3"+
-		"\2\3\2\5\2\31\n\2\3\3\7\3\34\n\3\f\3\16\3\37\13\3\3\4\3\4\3\4\3\4\5\4"+
-		"%\n\4\3\5\3\5\5\5)\n\5\3\6\5\6,\n\6\3\6\3\6\3\6\5\6\61\n\6\3\7\3\7\5\7"+
-		"\65\n\7\3\b\5\b8\n\b\3\b\3\b\5\b<\n\b\3\t\3\t\5\t@\n\t\3\n\3\n\3\n\3\n"+
-		"\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\2\2\f\2\4\6\b\n\f\16\20\22"+
-		"\24\2\3\4\2\b\b\n\nO\2\30\3\2\2\2\4\35\3\2\2\2\6$\3\2\2\2\b&\3\2\2\2\n"+
-		"+\3\2\2\2\f\62\3\2\2\2\16\67\3\2\2\2\20?\3\2\2\2\22A\3\2\2\2\24G\3\2\2"+
-		"\2\26\31\5\4\3\2\27\31\5\20\t\2\30\26\3\2\2\2\30\27\3\2\2\2\31\3\3\2\2"+
-		"\2\32\34\5\6\4\2\33\32\3\2\2\2\34\37\3\2\2\2\35\33\3\2\2\2\35\36\3\2\2"+
-		"\2\36\5\3\2\2\2\37\35\3\2\2\2 %\5\b\5\2!%\5\n\6\2\"%\5\16\b\2#%\5\f\7"+
-		"\2$ \3\2\2\2$!\3\2\2\2$\"\3\2\2\2$#\3\2\2\2%\7\3\2\2\2&(\7\3\2\2\')\7"+
-		"\6\2\2(\'\3\2\2\2()\3\2\2\2)\t\3\2\2\2*,\7\n\2\2+*\3\2\2\2+,\3\2\2\2,"+
-		"-\3\2\2\2-.\7\3\2\2.\60\7\t\2\2/\61\7\6\2\2\60/\3\2\2\2\60\61\3\2\2\2"+
-		"\61\13\3\2\2\2\62\64\7\5\2\2\63\65\7\6\2\2\64\63\3\2\2\2\64\65\3\2\2\2"+
-		"\65\r\3\2\2\2\668\t\2\2\2\67\66\3\2\2\2\678\3\2\2\289\3\2\2\29;\7\4\2"+
-		"\2:<\7\6\2\2;:\3\2\2\2;<\3\2\2\2<\17\3\2\2\2=@\5\22\n\2>@\5\24\13\2?="+
-		"\3\2\2\2?>\3\2\2\2@\21\3\2\2\2AB\7\13\2\2BC\5\2\2\2CD\7\f\2\2DE\5\2\2"+
-		"\2EF\7\r\2\2F\23\3\2\2\2GH\7\13\2\2HI\5\2\2\2IJ\7\16\2\2JK\5\2\2\2KL\7"+
-		"\r\2\2L\25\3\2\2\2\f\30\35$(+\60\64\67;?";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\17S\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
+		"\f\t\f\3\2\3\2\5\2\33\n\2\3\3\3\3\5\3\37\n\3\3\4\6\4\"\n\4\r\4\16\4#\3"+
+		"\5\3\5\3\5\3\5\5\5*\n\5\3\6\3\6\5\6.\n\6\3\7\5\7\61\n\7\3\7\3\7\3\7\5"+
+		"\7\66\n\7\3\b\3\b\5\b:\n\b\3\t\5\t=\n\t\3\t\3\t\5\tA\n\t\3\n\3\n\5\nE"+
+		"\n\n\3\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\2\2\r\2"+
+		"\4\6\b\n\f\16\20\22\24\26\2\3\4\2\b\b\n\nT\2\32\3\2\2\2\4\36\3\2\2\2\6"+
+		"!\3\2\2\2\b)\3\2\2\2\n+\3\2\2\2\f\60\3\2\2\2\16\67\3\2\2\2\20<\3\2\2\2"+
+		"\22D\3\2\2\2\24F\3\2\2\2\26L\3\2\2\2\30\33\5\4\3\2\31\33\7\2\2\3\32\30"+
+		"\3\2\2\2\32\31\3\2\2\2\33\3\3\2\2\2\34\37\5\6\4\2\35\37\5\22\n\2\36\34"+
+		"\3\2\2\2\36\35\3\2\2\2\37\5\3\2\2\2 \"\5\b\5\2! \3\2\2\2\"#\3\2\2\2#!"+
+		"\3\2\2\2#$\3\2\2\2$\7\3\2\2\2%*\5\n\6\2&*\5\f\7\2\'*\5\20\t\2(*\5\16\b"+
+		"\2)%\3\2\2\2)&\3\2\2\2)\'\3\2\2\2)(\3\2\2\2*\t\3\2\2\2+-\7\3\2\2,.\7\6"+
+		"\2\2-,\3\2\2\2-.\3\2\2\2.\13\3\2\2\2/\61\7\n\2\2\60/\3\2\2\2\60\61\3\2"+
+		"\2\2\61\62\3\2\2\2\62\63\7\3\2\2\63\65\7\t\2\2\64\66\7\6\2\2\65\64\3\2"+
+		"\2\2\65\66\3\2\2\2\66\r\3\2\2\2\679\7\5\2\28:\7\6\2\298\3\2\2\29:\3\2"+
+		"\2\2:\17\3\2\2\2;=\t\2\2\2<;\3\2\2\2<=\3\2\2\2=>\3\2\2\2>@\7\4\2\2?A\7"+
+		"\6\2\2@?\3\2\2\2@A\3\2\2\2A\21\3\2\2\2BE\5\24\13\2CE\5\26\f\2DB\3\2\2"+
+		"\2DC\3\2\2\2E\23\3\2\2\2FG\7\13\2\2GH\5\4\3\2HI\7\f\2\2IJ\5\4\3\2JK\7"+
+		"\r\2\2K\25\3\2\2\2LM\7\13\2\2MN\5\4\3\2NO\7\16\2\2OP\5\4\3\2PQ\7\r\2\2"+
+		"Q\27\3\2\2\2\r\32\36#)-\60\659<@D";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -23,6 +23,12 @@ public interface MegaminxVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMegaminxAlg(MegaminxParser.MegaminxAlgContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MegaminxParser#megaminxSimple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMegaminxSimple(MegaminxParser.MegaminxSimpleContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MegaminxParser#megaminxMove}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

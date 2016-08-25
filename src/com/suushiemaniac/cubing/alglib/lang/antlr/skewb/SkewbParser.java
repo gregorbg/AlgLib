@@ -20,10 +20,11 @@ public class SkewbParser extends Parser {
 		SKEWB_PLANE=1, SKEWB_MODIFIER=2, COMM_BR_OPEN=3, COMM_COMMA=4, COMM_BR_CLOSE=5, 
 		COMM_SEMI_COLON=6, WHITESPACE=7;
 	public static final int
-		RULE_skewb = 0, RULE_skewbAlg = 1, RULE_skewbMove = 2, RULE_skewbComm = 3, 
-		RULE_skewbPureComm = 4, RULE_skewbSetupComm = 5;
+		RULE_skewb = 0, RULE_skewbAlg = 1, RULE_skewbSimple = 2, RULE_skewbMove = 3, 
+		RULE_skewbComm = 4, RULE_skewbPureComm = 5, RULE_skewbSetupComm = 6;
 	public static final String[] ruleNames = {
-		"skewb", "skewbAlg", "skewbMove", "skewbComm", "skewbPureComm", "skewbSetupComm"
+		"skewb", "skewbAlg", "skewbSimple", "skewbMove", "skewbComm", "skewbPureComm", 
+		"skewbSetupComm"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -86,9 +87,7 @@ public class SkewbParser extends Parser {
 		public SkewbAlgContext skewbAlg() {
 			return getRuleContext(SkewbAlgContext.class,0);
 		}
-		public SkewbCommContext skewbComm() {
-			return getRuleContext(SkewbCommContext.class,0);
-		}
+		public TerminalNode EOF() { return getToken(SkewbParser.EOF, 0); }
 		public SkewbContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -104,23 +103,21 @@ public class SkewbParser extends Parser {
 		SkewbContext _localctx = new SkewbContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_skewb);
 		try {
-			setState(14);
+			setState(16);
 			switch (_input.LA(1)) {
 			case SKEWB_PLANE:
-			case COMM_COMMA:
-			case COMM_BR_CLOSE:
-			case COMM_SEMI_COLON:
+			case COMM_BR_OPEN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(12);
+				setState(14);
 				skewbAlg();
 				}
 				break;
-			case COMM_BR_OPEN:
+			case EOF:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(13);
-				skewbComm();
+				setState(15);
+				match(EOF);
 				}
 				break;
 			default:
@@ -139,11 +136,11 @@ public class SkewbParser extends Parser {
 	}
 
 	public static class SkewbAlgContext extends ParserRuleContext {
-		public List<SkewbMoveContext> skewbMove() {
-			return getRuleContexts(SkewbMoveContext.class);
+		public SkewbSimpleContext skewbSimple() {
+			return getRuleContext(SkewbSimpleContext.class,0);
 		}
-		public SkewbMoveContext skewbMove(int i) {
-			return getRuleContext(SkewbMoveContext.class,i);
+		public SkewbCommContext skewbComm() {
+			return getRuleContext(SkewbCommContext.class,0);
 		}
 		public SkewbAlgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -159,24 +156,77 @@ public class SkewbParser extends Parser {
 	public final SkewbAlgContext skewbAlg() throws RecognitionException {
 		SkewbAlgContext _localctx = new SkewbAlgContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_skewbAlg);
+		try {
+			setState(20);
+			switch (_input.LA(1)) {
+			case SKEWB_PLANE:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(18);
+				skewbSimple();
+				}
+				break;
+			case COMM_BR_OPEN:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(19);
+				skewbComm();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class SkewbSimpleContext extends ParserRuleContext {
+		public List<SkewbMoveContext> skewbMove() {
+			return getRuleContexts(SkewbMoveContext.class);
+		}
+		public SkewbMoveContext skewbMove(int i) {
+			return getRuleContext(SkewbMoveContext.class,i);
+		}
+		public SkewbSimpleContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_skewbSimple; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SkewbVisitor ) return ((SkewbVisitor<? extends T>)visitor).visitSkewbSimple(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final SkewbSimpleContext skewbSimple() throws RecognitionException {
+		SkewbSimpleContext _localctx = new SkewbSimpleContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_skewbSimple);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(19);
+			setState(23); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==SKEWB_PLANE) {
+			do {
 				{
 				{
-				setState(16);
+				setState(22);
 				skewbMove();
 				}
 				}
-				setState(21);
+				setState(25); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
+			} while ( _la==SKEWB_PLANE );
 			}
 		}
 		catch (RecognitionException re) {
@@ -206,18 +256,18 @@ public class SkewbParser extends Parser {
 
 	public final SkewbMoveContext skewbMove() throws RecognitionException {
 		SkewbMoveContext _localctx = new SkewbMoveContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_skewbMove);
+		enterRule(_localctx, 6, RULE_skewbMove);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(22);
+			setState(27);
 			match(SKEWB_PLANE);
-			setState(24);
+			setState(29);
 			_la = _input.LA(1);
 			if (_la==SKEWB_MODIFIER) {
 				{
-				setState(23);
+				setState(28);
 				match(SKEWB_MODIFIER);
 				}
 			}
@@ -255,22 +305,22 @@ public class SkewbParser extends Parser {
 
 	public final SkewbCommContext skewbComm() throws RecognitionException {
 		SkewbCommContext _localctx = new SkewbCommContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_skewbComm);
+		enterRule(_localctx, 8, RULE_skewbComm);
 		try {
-			setState(28);
+			setState(33);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(26);
+				setState(31);
 				skewbPureComm();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(27);
+				setState(32);
 				skewbSetupComm();
 				}
 				break;
@@ -289,11 +339,11 @@ public class SkewbParser extends Parser {
 
 	public static class SkewbPureCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(SkewbParser.COMM_BR_OPEN, 0); }
-		public List<SkewbContext> skewb() {
-			return getRuleContexts(SkewbContext.class);
+		public List<SkewbAlgContext> skewbAlg() {
+			return getRuleContexts(SkewbAlgContext.class);
 		}
-		public SkewbContext skewb(int i) {
-			return getRuleContext(SkewbContext.class,i);
+		public SkewbAlgContext skewbAlg(int i) {
+			return getRuleContext(SkewbAlgContext.class,i);
 		}
 		public TerminalNode COMM_COMMA() { return getToken(SkewbParser.COMM_COMMA, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(SkewbParser.COMM_BR_CLOSE, 0); }
@@ -310,19 +360,19 @@ public class SkewbParser extends Parser {
 
 	public final SkewbPureCommContext skewbPureComm() throws RecognitionException {
 		SkewbPureCommContext _localctx = new SkewbPureCommContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_skewbPureComm);
+		enterRule(_localctx, 10, RULE_skewbPureComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(30);
+			setState(35);
 			match(COMM_BR_OPEN);
-			setState(31);
-			skewb();
-			setState(32);
+			setState(36);
+			skewbAlg();
+			setState(37);
 			match(COMM_COMMA);
-			setState(33);
-			skewb();
-			setState(34);
+			setState(38);
+			skewbAlg();
+			setState(39);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -339,11 +389,11 @@ public class SkewbParser extends Parser {
 
 	public static class SkewbSetupCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(SkewbParser.COMM_BR_OPEN, 0); }
-		public List<SkewbContext> skewb() {
-			return getRuleContexts(SkewbContext.class);
+		public List<SkewbAlgContext> skewbAlg() {
+			return getRuleContexts(SkewbAlgContext.class);
 		}
-		public SkewbContext skewb(int i) {
-			return getRuleContext(SkewbContext.class,i);
+		public SkewbAlgContext skewbAlg(int i) {
+			return getRuleContext(SkewbAlgContext.class,i);
 		}
 		public TerminalNode COMM_SEMI_COLON() { return getToken(SkewbParser.COMM_SEMI_COLON, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(SkewbParser.COMM_BR_CLOSE, 0); }
@@ -360,19 +410,19 @@ public class SkewbParser extends Parser {
 
 	public final SkewbSetupCommContext skewbSetupComm() throws RecognitionException {
 		SkewbSetupCommContext _localctx = new SkewbSetupCommContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_skewbSetupComm);
+		enterRule(_localctx, 12, RULE_skewbSetupComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(36);
+			setState(41);
 			match(COMM_BR_OPEN);
-			setState(37);
-			skewb();
-			setState(38);
+			setState(42);
+			skewbAlg();
+			setState(43);
 			match(COMM_SEMI_COLON);
-			setState(39);
-			skewb();
-			setState(40);
+			setState(44);
+			skewbAlg();
+			setState(45);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -388,18 +438,19 @@ public class SkewbParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t-\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\5\2\21\n\2\3\3\7\3\24\n\3\f"+
-		"\3\16\3\27\13\3\3\4\3\4\5\4\33\n\4\3\5\3\5\5\5\37\n\5\3\6\3\6\3\6\3\6"+
-		"\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\2\2\b\2\4\6\b\n\f\2\2*\2\20\3\2\2"+
-		"\2\4\25\3\2\2\2\6\30\3\2\2\2\b\36\3\2\2\2\n \3\2\2\2\f&\3\2\2\2\16\21"+
-		"\5\4\3\2\17\21\5\b\5\2\20\16\3\2\2\2\20\17\3\2\2\2\21\3\3\2\2\2\22\24"+
-		"\5\6\4\2\23\22\3\2\2\2\24\27\3\2\2\2\25\23\3\2\2\2\25\26\3\2\2\2\26\5"+
-		"\3\2\2\2\27\25\3\2\2\2\30\32\7\3\2\2\31\33\7\4\2\2\32\31\3\2\2\2\32\33"+
-		"\3\2\2\2\33\7\3\2\2\2\34\37\5\n\6\2\35\37\5\f\7\2\36\34\3\2\2\2\36\35"+
-		"\3\2\2\2\37\t\3\2\2\2 !\7\5\2\2!\"\5\2\2\2\"#\7\6\2\2#$\5\2\2\2$%\7\7"+
-		"\2\2%\13\3\2\2\2&\'\7\5\2\2\'(\5\2\2\2()\7\b\2\2)*\5\2\2\2*+\7\7\2\2+"+
-		"\r\3\2\2\2\6\20\25\32\36";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t\62\4\2\t\2\4\3"+
+		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\3\2\3\2\5\2\23\n\2\3\3\3"+
+		"\3\5\3\27\n\3\3\4\6\4\32\n\4\r\4\16\4\33\3\5\3\5\5\5 \n\5\3\6\3\6\5\6"+
+		"$\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\2\2\t\2\4\6"+
+		"\b\n\f\16\2\2/\2\22\3\2\2\2\4\26\3\2\2\2\6\31\3\2\2\2\b\35\3\2\2\2\n#"+
+		"\3\2\2\2\f%\3\2\2\2\16+\3\2\2\2\20\23\5\4\3\2\21\23\7\2\2\3\22\20\3\2"+
+		"\2\2\22\21\3\2\2\2\23\3\3\2\2\2\24\27\5\6\4\2\25\27\5\n\6\2\26\24\3\2"+
+		"\2\2\26\25\3\2\2\2\27\5\3\2\2\2\30\32\5\b\5\2\31\30\3\2\2\2\32\33\3\2"+
+		"\2\2\33\31\3\2\2\2\33\34\3\2\2\2\34\7\3\2\2\2\35\37\7\3\2\2\36 \7\4\2"+
+		"\2\37\36\3\2\2\2\37 \3\2\2\2 \t\3\2\2\2!$\5\f\7\2\"$\5\16\b\2#!\3\2\2"+
+		"\2#\"\3\2\2\2$\13\3\2\2\2%&\7\5\2\2&\'\5\4\3\2\'(\7\6\2\2()\5\4\3\2)*"+
+		"\7\7\2\2*\r\3\2\2\2+,\7\5\2\2,-\5\4\3\2-.\7\b\2\2./\5\4\3\2/\60\7\7\2"+
+		"\2\60\17\3\2\2\2\7\22\26\33\37#";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

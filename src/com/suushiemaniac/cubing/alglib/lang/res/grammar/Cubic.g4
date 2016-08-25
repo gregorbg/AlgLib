@@ -1,8 +1,10 @@
 grammar Cubic;
 
-cubic: cubicAlg | cubicComm;
+cubic: cubicAlg | EOF;
 
-cubicAlg: cubicMove*;
+cubicAlg: cubicSimple | cubicComm;
+
+cubicSimple: cubicMove+;
 
 cubicMove: singleDepthCubic
          | nDepthCubic
@@ -16,9 +18,9 @@ outerSliceCubic: (CUBIC_DEPTH | CUBIC_MODIFIER_DOUBLE)? CUBIC_OUTER_SLICE CUBIC_
 
 cubicComm: cubicPureComm | cubicSetupComm;
 
-cubicPureComm: COMM_BR_OPEN cubic COMM_COMMA cubic COMM_BR_CLOSE;
+cubicPureComm: COMM_BR_OPEN cubicAlg COMM_COMMA cubicAlg COMM_BR_CLOSE;
 
-cubicSetupComm: COMM_BR_OPEN cubic COMM_SEMI_COLON cubic COMM_BR_CLOSE;
+cubicSetupComm: COMM_BR_OPEN cubicAlg COMM_SEMI_COLON cubicAlg COMM_BR_CLOSE;
 
 CUBIC_PLANE: [UDLRFBxyz];
 CUBIC_OUTER_SLICE: [udlrfb];

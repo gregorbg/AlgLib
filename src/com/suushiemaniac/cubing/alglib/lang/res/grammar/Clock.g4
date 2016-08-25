@@ -1,8 +1,10 @@
 grammar Clock;
 
-clock: clockAlg | clockComm;
+clock: clockAlg | EOF;
 
-clockAlg: clockMove* endPinClock?;
+clockAlg: clockSimple | clockComm;
+
+clockSimple: clockMove+ endPinClock?;
 
 clockMove: turnPinClock
          | rotationClock;
@@ -12,9 +14,9 @@ endPinClock: CLOCK_PLANE_SINGLE;
 
 clockComm: clockPureComm | clockSetupComm;
 
-clockPureComm: COMM_BR_OPEN clock COMM_COMMA clock COMM_BR_CLOSE;
+clockPureComm: COMM_BR_OPEN clockAlg COMM_COMMA clockAlg COMM_BR_CLOSE;
 
-clockSetupComm: COMM_BR_OPEN clock COMM_SEMI_COLON clock COMM_BR_CLOSE;
+clockSetupComm: COMM_BR_OPEN clockAlg COMM_SEMI_COLON clockAlg COMM_BR_CLOSE;
 
 CLOCK_PLANE_SINGLE: 'U' | 'R' | 'D' | 'L' | 'UR' | 'DR' | 'DL' | 'UL' | 'ALL';
 CLOCK_NUM_MODIFIER: [0-6];

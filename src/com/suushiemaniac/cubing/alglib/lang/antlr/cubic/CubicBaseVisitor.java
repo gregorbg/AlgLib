@@ -31,6 +31,13 @@ public class CubicBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitCubicSimple(CubicParser.CubicSimpleContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitCubicMove(CubicParser.CubicMoveContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

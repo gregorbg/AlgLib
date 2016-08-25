@@ -80,15 +80,15 @@ public class SquareOneAlgorithmReader extends SquareOneBaseVisitor<Algorithm> im
 
         @Override
         public Commutator visitSquareOnePureComm(SquareOneParser.SquareOnePureCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.squareOne(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.squareOne(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.squareOneAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.squareOneAlg(1));
             return new PureComm(partA, partB);
         }
 
         @Override
         public Commutator visitSquareOneSetupComm(SquareOneParser.SquareOneSetupCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.squareOne(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.squareOne(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.squareOneAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.squareOneAlg(1));
             return new SetupComm(partA, partB);
         }
     }
@@ -103,8 +103,13 @@ public class SquareOneAlgorithmReader extends SquareOneBaseVisitor<Algorithm> im
         this.commReader = new SquareOneCommReader(this);
     }
 
-    @Override
-    public SimpleAlg visitSquareOneAlg(SquareOneParser.SquareOneAlgContext ctx) {
+	@Override
+	public Algorithm visitSquareOne(SquareOneParser.SquareOneContext ctx) {
+		return ctx.squareOneAlg() != null ? this.visit(ctx.squareOneAlg()) : new SimpleAlg();
+	}
+
+	@Override
+    public SimpleAlg visitSquareOneSimple(SquareOneParser.SquareOneSimpleContext ctx) {
         SquareOneMove[] moves = new SquareOneMove[ctx.squareOneMoveSlash().size() + 1];
         SquareOneModifier firstModifier = this.modifierReader.visit(ctx.squareOneMoveSlash().size() > 0 ? ctx.squareOneMoveSlash(0).squareOneModifier() : ctx.squareOneModifier());
         boolean firstBeginSlash = ctx.squareOneBeginSlash() != null;

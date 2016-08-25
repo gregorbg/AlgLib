@@ -31,6 +31,13 @@ public class SkewbBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitSkewbSimple(SkewbParser.SkewbSimpleContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitSkewbMove(SkewbParser.SkewbMoveContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

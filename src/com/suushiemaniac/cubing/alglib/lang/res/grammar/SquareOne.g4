@@ -1,8 +1,10 @@
 grammar SquareOne;
 
-squareOne: squareOneAlg | squareOneComm;
+squareOne: squareOneAlg | EOF;
 
-squareOneAlg: (squareOneBeginSlash? squareOneMoveSlash* squareOneModifier)? SQUARE_ONE_SLASH?;
+squareOneAlg: squareOneSimple | squareOneComm;
+
+squareOneSimple: squareOneBeginSlash? squareOneMoveSlash* squareOneModifier SQUARE_ONE_SLASH?;
 
 squareOneBeginSlash: SQUARE_ONE_SLASH;
 squareOneMoveSlash: squareOneModifier SQUARE_ONE_SLASH;
@@ -12,9 +14,9 @@ squareOneFaceTurn: SQUARE_ONE_PLANE_ZERO
 
 squareOneComm: squareOnePureComm | squareOneSetupComm;
 
-squareOnePureComm: COMM_BR_OPEN squareOne COMM_COMMA squareOne COMM_BR_CLOSE;
+squareOnePureComm: COMM_BR_OPEN squareOneAlg COMM_COMMA squareOneAlg COMM_BR_CLOSE;
 
-squareOneSetupComm: COMM_BR_OPEN squareOne COMM_SEMI_COLON squareOne COMM_BR_CLOSE;
+squareOneSetupComm: COMM_BR_OPEN squareOneAlg COMM_SEMI_COLON squareOneAlg COMM_BR_CLOSE;
 
 SQUARE_ONE_SLASH: '/';
 SQUARE_ONE_BR_OPEN: '(';

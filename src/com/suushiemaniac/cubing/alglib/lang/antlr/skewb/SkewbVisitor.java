@@ -23,6 +23,12 @@ public interface SkewbVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSkewbAlg(SkewbParser.SkewbAlgContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SkewbParser#skewbSimple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSkewbSimple(SkewbParser.SkewbSimpleContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SkewbParser#skewbMove}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

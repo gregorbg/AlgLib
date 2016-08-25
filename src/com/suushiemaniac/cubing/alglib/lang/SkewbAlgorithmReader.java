@@ -48,15 +48,15 @@ public class SkewbAlgorithmReader extends SkewbBaseVisitor<Algorithm> implements
 
         @Override
         public Commutator visitSkewbPureComm(SkewbParser.SkewbPureCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.skewb(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.skewb(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.skewbAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.skewbAlg(1));
             return new PureComm(partA, partB);
         }
 
         @Override
         public Commutator visitSkewbSetupComm(SkewbParser.SkewbSetupCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.skewb(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.skewb(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.skewbAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.skewbAlg(1));
             return new SetupComm(partA, partB);
         }
     }
@@ -69,8 +69,13 @@ public class SkewbAlgorithmReader extends SkewbBaseVisitor<Algorithm> implements
         this.commReader = new SkewbCommReader(this);
     }
 
-    @Override
-    public SimpleAlg visitSkewbAlg(SkewbParser.SkewbAlgContext ctx) {
+	@Override
+	public Algorithm visitSkewb(SkewbParser.SkewbContext ctx) {
+		return ctx.skewbAlg() != null ? this.visit(ctx.skewbAlg()) : new SimpleAlg();
+	}
+
+	@Override
+    public SimpleAlg visitSkewbSimple(SkewbParser.SkewbSimpleContext ctx) {
         SkewbMove[] moves = new SkewbMove[ctx.skewbMove().size()];
         for (int i = 0; i < moves.length; i++) moves[i] = this.moveReader.visit(ctx.skewbMove(i));
         return new SimpleAlg(moves);

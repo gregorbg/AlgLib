@@ -57,15 +57,15 @@ public class MegaminxAlgorithmReader extends MegaminxBaseVisitor<Algorithm> impl
 
         @Override
         public Commutator visitMegaminxPureComm(MegaminxParser.MegaminxPureCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.megaminx(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.megaminx(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.megaminxAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.megaminxAlg(1));
             return new PureComm(partA, partB);
         }
 
         @Override
         public Commutator visitMegaminxSetupComm(MegaminxParser.MegaminxSetupCommContext ctx) {
-            Algorithm partA = this.algorithmReader.visit(ctx.megaminx(0));
-            Algorithm partB = this.algorithmReader.visit(ctx.megaminx(1));
+            Algorithm partA = this.algorithmReader.visit(ctx.megaminxAlg(0));
+            Algorithm partB = this.algorithmReader.visit(ctx.megaminxAlg(1));
             return new SetupComm(partA, partB);
         }
     }
@@ -79,7 +79,12 @@ public class MegaminxAlgorithmReader extends MegaminxBaseVisitor<Algorithm> impl
     }
 
     @Override
-    public SimpleAlg visitMegaminxAlg(MegaminxParser.MegaminxAlgContext ctx) {
+    public Algorithm visitMegaminx(MegaminxParser.MegaminxContext ctx) {
+        return ctx.megaminxAlg() != null ? this.visit(ctx.megaminxAlg()) : new SimpleAlg();
+    }
+
+    @Override
+    public SimpleAlg visitMegaminxSimple(MegaminxParser.MegaminxSimpleContext ctx) {
         MegaminxMove[] moves = new MegaminxMove[ctx.megaminxMove().size()];
         for (int i = 0; i < moves.length; i++) moves[i] = this.moveReader.visit(ctx.megaminxMove(i));
         return new SimpleAlg(moves);

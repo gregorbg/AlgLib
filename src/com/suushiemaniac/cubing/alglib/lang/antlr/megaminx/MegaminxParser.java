@@ -20,12 +20,12 @@ public class MegaminxParser extends Parser {
 		MEGAMINX_WIDE_PLANE=1, MEGAMINX_WIDE_MODIFIER=2, MEGAMINX_U_PLANE=3, MEGAMINX_U_MODIFIER=4, 
 		COMM_BR_OPEN=5, COMM_COMMA=6, COMM_BR_CLOSE=7, COMM_SEMI_COLON=8, WHITESPACE=9;
 	public static final int
-		RULE_megaminx = 0, RULE_megaminxAlg = 1, RULE_megaminxMove = 2, RULE_gripMegaminx = 3, 
-		RULE_uMegaminx = 4, RULE_megaminxComm = 5, RULE_megaminxPureComm = 6, 
-		RULE_megaminxSetupComm = 7;
+		RULE_megaminx = 0, RULE_megaminxAlg = 1, RULE_megaminxSimple = 2, RULE_megaminxMove = 3, 
+		RULE_gripMegaminx = 4, RULE_uMegaminx = 5, RULE_megaminxComm = 6, RULE_megaminxPureComm = 7, 
+		RULE_megaminxSetupComm = 8;
 	public static final String[] ruleNames = {
-		"megaminx", "megaminxAlg", "megaminxMove", "gripMegaminx", "uMegaminx", 
-		"megaminxComm", "megaminxPureComm", "megaminxSetupComm"
+		"megaminx", "megaminxAlg", "megaminxSimple", "megaminxMove", "gripMegaminx", 
+		"uMegaminx", "megaminxComm", "megaminxPureComm", "megaminxSetupComm"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -89,9 +89,7 @@ public class MegaminxParser extends Parser {
 		public MegaminxAlgContext megaminxAlg() {
 			return getRuleContext(MegaminxAlgContext.class,0);
 		}
-		public MegaminxCommContext megaminxComm() {
-			return getRuleContext(MegaminxCommContext.class,0);
-		}
+		public TerminalNode EOF() { return getToken(MegaminxParser.EOF, 0); }
 		public MegaminxContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -107,24 +105,22 @@ public class MegaminxParser extends Parser {
 		MegaminxContext _localctx = new MegaminxContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_megaminx);
 		try {
-			setState(18);
+			setState(20);
 			switch (_input.LA(1)) {
 			case MEGAMINX_WIDE_PLANE:
 			case MEGAMINX_U_PLANE:
-			case COMM_COMMA:
-			case COMM_BR_CLOSE:
-			case COMM_SEMI_COLON:
+			case COMM_BR_OPEN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(16);
+				setState(18);
 				megaminxAlg();
 				}
 				break;
-			case COMM_BR_OPEN:
+			case EOF:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(17);
-				megaminxComm();
+				setState(19);
+				match(EOF);
 				}
 				break;
 			default:
@@ -143,11 +139,11 @@ public class MegaminxParser extends Parser {
 	}
 
 	public static class MegaminxAlgContext extends ParserRuleContext {
-		public List<MegaminxMoveContext> megaminxMove() {
-			return getRuleContexts(MegaminxMoveContext.class);
+		public MegaminxSimpleContext megaminxSimple() {
+			return getRuleContext(MegaminxSimpleContext.class,0);
 		}
-		public MegaminxMoveContext megaminxMove(int i) {
-			return getRuleContext(MegaminxMoveContext.class,i);
+		public MegaminxCommContext megaminxComm() {
+			return getRuleContext(MegaminxCommContext.class,0);
 		}
 		public MegaminxAlgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -163,24 +159,78 @@ public class MegaminxParser extends Parser {
 	public final MegaminxAlgContext megaminxAlg() throws RecognitionException {
 		MegaminxAlgContext _localctx = new MegaminxAlgContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_megaminxAlg);
+		try {
+			setState(24);
+			switch (_input.LA(1)) {
+			case MEGAMINX_WIDE_PLANE:
+			case MEGAMINX_U_PLANE:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(22);
+				megaminxSimple();
+				}
+				break;
+			case COMM_BR_OPEN:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(23);
+				megaminxComm();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class MegaminxSimpleContext extends ParserRuleContext {
+		public List<MegaminxMoveContext> megaminxMove() {
+			return getRuleContexts(MegaminxMoveContext.class);
+		}
+		public MegaminxMoveContext megaminxMove(int i) {
+			return getRuleContext(MegaminxMoveContext.class,i);
+		}
+		public MegaminxSimpleContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_megaminxSimple; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MegaminxVisitor ) return ((MegaminxVisitor<? extends T>)visitor).visitMegaminxSimple(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MegaminxSimpleContext megaminxSimple() throws RecognitionException {
+		MegaminxSimpleContext _localctx = new MegaminxSimpleContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_megaminxSimple);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(23);
+			setState(27); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==MEGAMINX_WIDE_PLANE || _la==MEGAMINX_U_PLANE) {
+			do {
 				{
 				{
-				setState(20);
+				setState(26);
 				megaminxMove();
 				}
 				}
-				setState(25);
+				setState(29); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
+			} while ( _la==MEGAMINX_WIDE_PLANE || _la==MEGAMINX_U_PLANE );
 			}
 		}
 		catch (RecognitionException re) {
@@ -214,21 +264,21 @@ public class MegaminxParser extends Parser {
 
 	public final MegaminxMoveContext megaminxMove() throws RecognitionException {
 		MegaminxMoveContext _localctx = new MegaminxMoveContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_megaminxMove);
+		enterRule(_localctx, 6, RULE_megaminxMove);
 		try {
-			setState(28);
+			setState(33);
 			switch (_input.LA(1)) {
 			case MEGAMINX_WIDE_PLANE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(26);
+				setState(31);
 				gripMegaminx();
 				}
 				break;
 			case MEGAMINX_U_PLANE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(27);
+				setState(32);
 				uMegaminx();
 				}
 				break;
@@ -263,13 +313,13 @@ public class MegaminxParser extends Parser {
 
 	public final GripMegaminxContext gripMegaminx() throws RecognitionException {
 		GripMegaminxContext _localctx = new GripMegaminxContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_gripMegaminx);
+		enterRule(_localctx, 8, RULE_gripMegaminx);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(30);
+			setState(35);
 			match(MEGAMINX_WIDE_PLANE);
-			setState(31);
+			setState(36);
 			match(MEGAMINX_WIDE_MODIFIER);
 			}
 		}
@@ -300,18 +350,18 @@ public class MegaminxParser extends Parser {
 
 	public final UMegaminxContext uMegaminx() throws RecognitionException {
 		UMegaminxContext _localctx = new UMegaminxContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_uMegaminx);
+		enterRule(_localctx, 10, RULE_uMegaminx);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(33);
+			setState(38);
 			match(MEGAMINX_U_PLANE);
-			setState(35);
+			setState(40);
 			_la = _input.LA(1);
 			if (_la==MEGAMINX_U_MODIFIER) {
 				{
-				setState(34);
+				setState(39);
 				match(MEGAMINX_U_MODIFIER);
 				}
 			}
@@ -349,22 +399,22 @@ public class MegaminxParser extends Parser {
 
 	public final MegaminxCommContext megaminxComm() throws RecognitionException {
 		MegaminxCommContext _localctx = new MegaminxCommContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_megaminxComm);
+		enterRule(_localctx, 12, RULE_megaminxComm);
 		try {
-			setState(39);
+			setState(44);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(37);
+				setState(42);
 				megaminxPureComm();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(38);
+				setState(43);
 				megaminxSetupComm();
 				}
 				break;
@@ -383,11 +433,11 @@ public class MegaminxParser extends Parser {
 
 	public static class MegaminxPureCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(MegaminxParser.COMM_BR_OPEN, 0); }
-		public List<MegaminxContext> megaminx() {
-			return getRuleContexts(MegaminxContext.class);
+		public List<MegaminxAlgContext> megaminxAlg() {
+			return getRuleContexts(MegaminxAlgContext.class);
 		}
-		public MegaminxContext megaminx(int i) {
-			return getRuleContext(MegaminxContext.class,i);
+		public MegaminxAlgContext megaminxAlg(int i) {
+			return getRuleContext(MegaminxAlgContext.class,i);
 		}
 		public TerminalNode COMM_COMMA() { return getToken(MegaminxParser.COMM_COMMA, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(MegaminxParser.COMM_BR_CLOSE, 0); }
@@ -404,19 +454,19 @@ public class MegaminxParser extends Parser {
 
 	public final MegaminxPureCommContext megaminxPureComm() throws RecognitionException {
 		MegaminxPureCommContext _localctx = new MegaminxPureCommContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_megaminxPureComm);
+		enterRule(_localctx, 14, RULE_megaminxPureComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(41);
+			setState(46);
 			match(COMM_BR_OPEN);
-			setState(42);
-			megaminx();
-			setState(43);
+			setState(47);
+			megaminxAlg();
+			setState(48);
 			match(COMM_COMMA);
-			setState(44);
-			megaminx();
-			setState(45);
+			setState(49);
+			megaminxAlg();
+			setState(50);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -433,11 +483,11 @@ public class MegaminxParser extends Parser {
 
 	public static class MegaminxSetupCommContext extends ParserRuleContext {
 		public TerminalNode COMM_BR_OPEN() { return getToken(MegaminxParser.COMM_BR_OPEN, 0); }
-		public List<MegaminxContext> megaminx() {
-			return getRuleContexts(MegaminxContext.class);
+		public List<MegaminxAlgContext> megaminxAlg() {
+			return getRuleContexts(MegaminxAlgContext.class);
 		}
-		public MegaminxContext megaminx(int i) {
-			return getRuleContext(MegaminxContext.class,i);
+		public MegaminxAlgContext megaminxAlg(int i) {
+			return getRuleContext(MegaminxAlgContext.class,i);
 		}
 		public TerminalNode COMM_SEMI_COLON() { return getToken(MegaminxParser.COMM_SEMI_COLON, 0); }
 		public TerminalNode COMM_BR_CLOSE() { return getToken(MegaminxParser.COMM_BR_CLOSE, 0); }
@@ -454,19 +504,19 @@ public class MegaminxParser extends Parser {
 
 	public final MegaminxSetupCommContext megaminxSetupComm() throws RecognitionException {
 		MegaminxSetupCommContext _localctx = new MegaminxSetupCommContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_megaminxSetupComm);
+		enterRule(_localctx, 16, RULE_megaminxSetupComm);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(47);
+			setState(52);
 			match(COMM_BR_OPEN);
-			setState(48);
-			megaminx();
-			setState(49);
+			setState(53);
+			megaminxAlg();
+			setState(54);
 			match(COMM_SEMI_COLON);
-			setState(50);
-			megaminx();
-			setState(51);
+			setState(55);
+			megaminxAlg();
+			setState(56);
 			match(COMM_BR_CLOSE);
 			}
 		}
@@ -482,20 +532,21 @@ public class MegaminxParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\138\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\5\2\25\n\2"+
-		"\3\3\7\3\30\n\3\f\3\16\3\33\13\3\3\4\3\4\5\4\37\n\4\3\5\3\5\3\5\3\6\3"+
-		"\6\5\6&\n\6\3\7\3\7\5\7*\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\2\2\n\2\4\6\b\n\f\16\20\2\2\64\2\24\3\2\2\2\4\31\3\2\2\2\6"+
-		"\36\3\2\2\2\b \3\2\2\2\n#\3\2\2\2\f)\3\2\2\2\16+\3\2\2\2\20\61\3\2\2\2"+
-		"\22\25\5\4\3\2\23\25\5\f\7\2\24\22\3\2\2\2\24\23\3\2\2\2\25\3\3\2\2\2"+
-		"\26\30\5\6\4\2\27\26\3\2\2\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2"+
-		"\32\5\3\2\2\2\33\31\3\2\2\2\34\37\5\b\5\2\35\37\5\n\6\2\36\34\3\2\2\2"+
-		"\36\35\3\2\2\2\37\7\3\2\2\2 !\7\3\2\2!\"\7\4\2\2\"\t\3\2\2\2#%\7\5\2\2"+
-		"$&\7\6\2\2%$\3\2\2\2%&\3\2\2\2&\13\3\2\2\2\'*\5\16\b\2(*\5\20\t\2)\'\3"+
-		"\2\2\2)(\3\2\2\2*\r\3\2\2\2+,\7\7\2\2,-\5\2\2\2-.\7\b\2\2./\5\2\2\2/\60"+
-		"\7\t\2\2\60\17\3\2\2\2\61\62\7\7\2\2\62\63\5\2\2\2\63\64\7\n\2\2\64\65"+
-		"\5\2\2\2\65\66\7\t\2\2\66\21\3\2\2\2\7\24\31\36%)";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13=\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\5\2"+
+		"\27\n\2\3\3\3\3\5\3\33\n\3\3\4\6\4\36\n\4\r\4\16\4\37\3\5\3\5\5\5$\n\5"+
+		"\3\6\3\6\3\6\3\7\3\7\5\7+\n\7\3\b\3\b\5\b/\n\b\3\t\3\t\3\t\3\t\3\t\3\t"+
+		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\2\2\13\2\4\6\b\n\f\16\20\22\2\29\2\26\3\2"+
+		"\2\2\4\32\3\2\2\2\6\35\3\2\2\2\b#\3\2\2\2\n%\3\2\2\2\f(\3\2\2\2\16.\3"+
+		"\2\2\2\20\60\3\2\2\2\22\66\3\2\2\2\24\27\5\4\3\2\25\27\7\2\2\3\26\24\3"+
+		"\2\2\2\26\25\3\2\2\2\27\3\3\2\2\2\30\33\5\6\4\2\31\33\5\16\b\2\32\30\3"+
+		"\2\2\2\32\31\3\2\2\2\33\5\3\2\2\2\34\36\5\b\5\2\35\34\3\2\2\2\36\37\3"+
+		"\2\2\2\37\35\3\2\2\2\37 \3\2\2\2 \7\3\2\2\2!$\5\n\6\2\"$\5\f\7\2#!\3\2"+
+		"\2\2#\"\3\2\2\2$\t\3\2\2\2%&\7\3\2\2&\'\7\4\2\2\'\13\3\2\2\2(*\7\5\2\2"+
+		")+\7\6\2\2*)\3\2\2\2*+\3\2\2\2+\r\3\2\2\2,/\5\20\t\2-/\5\22\n\2.,\3\2"+
+		"\2\2.-\3\2\2\2/\17\3\2\2\2\60\61\7\7\2\2\61\62\5\4\3\2\62\63\7\b\2\2\63"+
+		"\64\5\4\3\2\64\65\7\t\2\2\65\21\3\2\2\2\66\67\7\7\2\2\678\5\4\3\289\7"+
+		"\n\2\29:\5\4\3\2:;\7\t\2\2;\23\3\2\2\2\b\26\32\37#*.";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
