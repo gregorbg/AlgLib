@@ -19,7 +19,8 @@ public class CubicParser extends Parser {
 	public static final int
 		CUBIC_PLANE=1, CUBIC_OUTER_SLICE=2, CUBIC_CENTRAL_SLICE=3, CUBIC_MODIFIER=4, 
 		CUBIC_MODIFIER_CCW=5, CUBIC_MODIFIER_DOUBLE=6, CUBIC_WIDE=7, CUBIC_DEPTH=8, 
-		COMM_BR_OPEN=9, COMM_COMMA=10, COMM_BR_CLOSE=11, COMM_SEMI_COLON=12, WHITESPACE=13;
+		CUBIC_SLICE_DEPTH=9, COMM_BR_OPEN=10, COMM_COMMA=11, COMM_BR_CLOSE=12, 
+		COMM_SEMI_COLON=13, WHITESPACE=14;
 	public static final int
 		RULE_cubic = 0, RULE_cubicAlg = 1, RULE_cubicSimple = 2, RULE_cubicMove = 3, 
 		RULE_singleDepthCubic = 4, RULE_nDepthCubic = 5, RULE_centralSliceCubic = 6, 
@@ -32,13 +33,14 @@ public class CubicParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, null, null, null, null, "'''", "'2'", "'w'", null, "'['", "','", 
-		"']'"
+		null, null, null, null, null, "'''", "'2'", "'w'", null, null, "'['", 
+		"','", "']'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "CUBIC_PLANE", "CUBIC_OUTER_SLICE", "CUBIC_CENTRAL_SLICE", "CUBIC_MODIFIER", 
 		"CUBIC_MODIFIER_CCW", "CUBIC_MODIFIER_DOUBLE", "CUBIC_WIDE", "CUBIC_DEPTH", 
-		"COMM_BR_OPEN", "COMM_COMMA", "COMM_BR_CLOSE", "COMM_SEMI_COLON", "WHITESPACE"
+		"CUBIC_SLICE_DEPTH", "COMM_BR_OPEN", "COMM_COMMA", "COMM_BR_CLOSE", "COMM_SEMI_COLON", 
+		"WHITESPACE"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -116,6 +118,7 @@ public class CubicParser extends Parser {
 			case CUBIC_CENTRAL_SLICE:
 			case CUBIC_MODIFIER_DOUBLE:
 			case CUBIC_DEPTH:
+			case CUBIC_SLICE_DEPTH:
 			case COMM_BR_OPEN:
 				enterOuterAlt(_localctx, 1);
 				{
@@ -174,6 +177,7 @@ public class CubicParser extends Parser {
 			case CUBIC_CENTRAL_SLICE:
 			case CUBIC_MODIFIER_DOUBLE:
 			case CUBIC_DEPTH:
+			case CUBIC_SLICE_DEPTH:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(26);
@@ -240,7 +244,7 @@ public class CubicParser extends Parser {
 				setState(33); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << CUBIC_PLANE) | (1L << CUBIC_OUTER_SLICE) | (1L << CUBIC_CENTRAL_SLICE) | (1L << CUBIC_MODIFIER_DOUBLE) | (1L << CUBIC_DEPTH))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << CUBIC_PLANE) | (1L << CUBIC_OUTER_SLICE) | (1L << CUBIC_CENTRAL_SLICE) | (1L << CUBIC_MODIFIER_DOUBLE) | (1L << CUBIC_DEPTH) | (1L << CUBIC_SLICE_DEPTH))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -477,7 +481,7 @@ public class CubicParser extends Parser {
 	public static class OuterSliceCubicContext extends ParserRuleContext {
 		public TerminalNode CUBIC_OUTER_SLICE() { return getToken(CubicParser.CUBIC_OUTER_SLICE, 0); }
 		public TerminalNode CUBIC_MODIFIER() { return getToken(CubicParser.CUBIC_MODIFIER, 0); }
-		public TerminalNode CUBIC_DEPTH() { return getToken(CubicParser.CUBIC_DEPTH, 0); }
+		public TerminalNode CUBIC_SLICE_DEPTH() { return getToken(CubicParser.CUBIC_SLICE_DEPTH, 0); }
 		public TerminalNode CUBIC_MODIFIER_DOUBLE() { return getToken(CubicParser.CUBIC_MODIFIER_DOUBLE, 0); }
 		public OuterSliceCubicContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -499,11 +503,11 @@ public class CubicParser extends Parser {
 			{
 			setState(58);
 			_la = _input.LA(1);
-			if (_la==CUBIC_MODIFIER_DOUBLE || _la==CUBIC_DEPTH) {
+			if (_la==CUBIC_MODIFIER_DOUBLE || _la==CUBIC_SLICE_DEPTH) {
 				{
 				setState(57);
 				_la = _input.LA(1);
-				if ( !(_la==CUBIC_MODIFIER_DOUBLE || _la==CUBIC_DEPTH) ) {
+				if ( !(_la==CUBIC_MODIFIER_DOUBLE || _la==CUBIC_SLICE_DEPTH) ) {
 				_errHandler.recoverInline(this);
 				} else {
 					consume();
@@ -688,27 +692,27 @@ public class CubicParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\17S\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20S\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
 		"\f\t\f\3\2\3\2\5\2\33\n\2\3\3\3\3\5\3\37\n\3\3\4\6\4\"\n\4\r\4\16\4#\3"+
 		"\5\3\5\3\5\3\5\5\5*\n\5\3\6\3\6\5\6.\n\6\3\7\5\7\61\n\7\3\7\3\7\3\7\5"+
 		"\7\66\n\7\3\b\3\b\5\b:\n\b\3\t\5\t=\n\t\3\t\3\t\5\tA\n\t\3\n\3\n\5\nE"+
 		"\n\n\3\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\2\2\r\2"+
-		"\4\6\b\n\f\16\20\22\24\26\2\3\4\2\b\b\n\nT\2\32\3\2\2\2\4\36\3\2\2\2\6"+
-		"!\3\2\2\2\b)\3\2\2\2\n+\3\2\2\2\f\60\3\2\2\2\16\67\3\2\2\2\20<\3\2\2\2"+
-		"\22D\3\2\2\2\24F\3\2\2\2\26L\3\2\2\2\30\33\5\4\3\2\31\33\7\2\2\3\32\30"+
-		"\3\2\2\2\32\31\3\2\2\2\33\3\3\2\2\2\34\37\5\6\4\2\35\37\5\22\n\2\36\34"+
-		"\3\2\2\2\36\35\3\2\2\2\37\5\3\2\2\2 \"\5\b\5\2! \3\2\2\2\"#\3\2\2\2#!"+
-		"\3\2\2\2#$\3\2\2\2$\7\3\2\2\2%*\5\n\6\2&*\5\f\7\2\'*\5\20\t\2(*\5\16\b"+
-		"\2)%\3\2\2\2)&\3\2\2\2)\'\3\2\2\2)(\3\2\2\2*\t\3\2\2\2+-\7\3\2\2,.\7\6"+
-		"\2\2-,\3\2\2\2-.\3\2\2\2.\13\3\2\2\2/\61\7\n\2\2\60/\3\2\2\2\60\61\3\2"+
-		"\2\2\61\62\3\2\2\2\62\63\7\3\2\2\63\65\7\t\2\2\64\66\7\6\2\2\65\64\3\2"+
-		"\2\2\65\66\3\2\2\2\66\r\3\2\2\2\679\7\5\2\28:\7\6\2\298\3\2\2\29:\3\2"+
-		"\2\2:\17\3\2\2\2;=\t\2\2\2<;\3\2\2\2<=\3\2\2\2=>\3\2\2\2>@\7\4\2\2?A\7"+
-		"\6\2\2@?\3\2\2\2@A\3\2\2\2A\21\3\2\2\2BE\5\24\13\2CE\5\26\f\2DB\3\2\2"+
-		"\2DC\3\2\2\2E\23\3\2\2\2FG\7\13\2\2GH\5\4\3\2HI\7\f\2\2IJ\5\4\3\2JK\7"+
-		"\r\2\2K\25\3\2\2\2LM\7\13\2\2MN\5\4\3\2NO\7\16\2\2OP\5\4\3\2PQ\7\r\2\2"+
-		"Q\27\3\2\2\2\r\32\36#)-\60\659<@D";
+		"\4\6\b\n\f\16\20\22\24\26\2\3\4\2\b\b\13\13T\2\32\3\2\2\2\4\36\3\2\2\2"+
+		"\6!\3\2\2\2\b)\3\2\2\2\n+\3\2\2\2\f\60\3\2\2\2\16\67\3\2\2\2\20<\3\2\2"+
+		"\2\22D\3\2\2\2\24F\3\2\2\2\26L\3\2\2\2\30\33\5\4\3\2\31\33\7\2\2\3\32"+
+		"\30\3\2\2\2\32\31\3\2\2\2\33\3\3\2\2\2\34\37\5\6\4\2\35\37\5\22\n\2\36"+
+		"\34\3\2\2\2\36\35\3\2\2\2\37\5\3\2\2\2 \"\5\b\5\2! \3\2\2\2\"#\3\2\2\2"+
+		"#!\3\2\2\2#$\3\2\2\2$\7\3\2\2\2%*\5\n\6\2&*\5\f\7\2\'*\5\20\t\2(*\5\16"+
+		"\b\2)%\3\2\2\2)&\3\2\2\2)\'\3\2\2\2)(\3\2\2\2*\t\3\2\2\2+-\7\3\2\2,.\7"+
+		"\6\2\2-,\3\2\2\2-.\3\2\2\2.\13\3\2\2\2/\61\7\n\2\2\60/\3\2\2\2\60\61\3"+
+		"\2\2\2\61\62\3\2\2\2\62\63\7\3\2\2\63\65\7\t\2\2\64\66\7\6\2\2\65\64\3"+
+		"\2\2\2\65\66\3\2\2\2\66\r\3\2\2\2\679\7\5\2\28:\7\6\2\298\3\2\2\29:\3"+
+		"\2\2\2:\17\3\2\2\2;=\t\2\2\2<;\3\2\2\2<=\3\2\2\2=>\3\2\2\2>@\7\4\2\2?"+
+		"A\7\6\2\2@?\3\2\2\2@A\3\2\2\2A\21\3\2\2\2BE\5\24\13\2CE\5\26\f\2DB\3\2"+
+		"\2\2DC\3\2\2\2E\23\3\2\2\2FG\7\f\2\2GH\5\4\3\2HI\7\r\2\2IJ\5\4\3\2JK\7"+
+		"\16\2\2K\25\3\2\2\2LM\7\f\2\2MN\5\4\3\2NO\7\17\2\2OP\5\4\3\2PQ\7\16\2"+
+		"\2Q\27\3\2\2\2\r\32\36#)-\60\659<@D";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

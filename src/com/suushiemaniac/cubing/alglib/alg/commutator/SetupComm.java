@@ -52,27 +52,6 @@ public class SetupComm extends Commutator {
     }
 
     @Override
-    public boolean remove(Object o) {
-        return this.setup.remove(o) | this.inner.remove(o);
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return this.setup.removeAll(c) | this.inner.removeAll(c);
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return this.setup.retainAll(c) | this.inner.retainAll(c);
-    }
-
-    @Override
-    public void clear() {
-        this.setup.clear();
-        this.inner.clear();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof SetupComm)) return false;
         else {

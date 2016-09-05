@@ -57,27 +57,6 @@ public class PureComm extends Commutator {
     }
 
     @Override
-    public boolean remove(Object o) {
-        return this.partA.remove(o) | this.partB.remove(o);
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return this.partA.removeAll(c) | this.partB.removeAll(c);
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return this.partA.retainAll(c) | this.partB.retainAll(c);
-    }
-
-    @Override
-    public void clear() {
-        this.partA.clear();
-        this.partB.clear();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof PureComm)) return false;
         else {

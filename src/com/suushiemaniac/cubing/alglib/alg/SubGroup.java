@@ -1,6 +1,7 @@
 package com.suushiemaniac.cubing.alglib.alg;
 
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane;
+import com.suushiemaniac.cubing.alglib.move.plane.Plane;
 import com.suushiemaniac.cubing.alglib.util.FixArrayComparator;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
@@ -9,9 +10,9 @@ import java.util.Collections;
 
 public class SubGroup implements StringFormat {
     public static SubGroup fromAlg(Algorithm alg) {
-        CubicPlane[] algPlanes = new CubicPlane[alg.allMoves().size()];
+        Plane[] algPlanes = new Plane[alg.allMoves().size()];
         for (int i = 0; i < alg.allMoves().size(); i++)
-            algPlanes[i] = (CubicPlane) alg.nMove(i).getPlane();
+            algPlanes[i] = alg.nMove(i).getPlane();
         return new SubGroup(algPlanes);
     }
 
@@ -23,12 +24,12 @@ public class SubGroup implements StringFormat {
         return new SubGroup(algPlanes);
     }
 
-    private ArrayList<CubicPlane> groupList;
+    private ArrayList<Plane> groupList;
     private boolean hasRotation;
 
-    public SubGroup(CubicPlane... planes) {
+    public SubGroup(Plane... planes) {
         this.groupList = new ArrayList<>();
-        for (CubicPlane p : planes) {
+        for (Plane p : planes) {
             if (!this.hasRotation && p.isRotation()) hasRotation = true;
             if (!this.groupList.contains(p) && !p.isRotation())
                 this.groupList.add(p);

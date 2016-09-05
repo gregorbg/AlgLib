@@ -42,7 +42,7 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
         public CubicMove visitOuterSliceCubic(CubicParser.OuterSliceCubicContext ctx) {
             CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_OUTER_SLICE().getText());
             CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
-            int depth = ctx.CUBIC_DEPTH() == null ? (ctx.CUBIC_MODIFIER_DOUBLE() == null ? 1 : 2) : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
+            int depth = ctx.CUBIC_SLICE_DEPTH() == null ? (ctx.CUBIC_MODIFIER_DOUBLE() == null ? 1 : 2) : Integer.parseInt(ctx.CUBIC_SLICE_DEPTH().getText());
             return new CubicMove(plane, modifier, depth);
         }
 

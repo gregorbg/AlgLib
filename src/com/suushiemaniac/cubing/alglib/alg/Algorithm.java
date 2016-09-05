@@ -5,8 +5,9 @@ import com.suushiemaniac.cubing.alglib.transform.Transform;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-public interface Algorithm extends StringFormat, List<Move> {
+public interface Algorithm extends StringFormat, Iterable<Move> {
     Algorithm inverse();
 
     Algorithm plain();
@@ -34,4 +35,6 @@ public interface Algorithm extends StringFormat, List<Move> {
     Algorithm subAlg(int from, int to);
 
     SubGroup getSubGroup();
+
+    Stream<Move> stream();
 }
