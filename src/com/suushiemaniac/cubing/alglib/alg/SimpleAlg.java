@@ -10,23 +10,37 @@ import java.util.stream.Stream;
 public class SimpleAlg implements Algorithm {
     private List<Move> moves;
 
+	public SimpleAlg(Algorithm other) {
+		this(other.allMoves());
+	}
+
     public SimpleAlg(Move... moves) {
         this(Arrays.asList(moves));
     }
 
     public SimpleAlg(List<Move> moves) {
-		List<Move> list = new ArrayList<>();
+		this.moves = new ArrayList<>(moves);
+		this.reduce();
+    }
 
-		for (Move move : moves) {
-			if (list.size() == 0) list.add(move);
-			else if (list.get(list.size() - 1).cancels(move)) list.remove(list.size() - 1);
-			else if (list.get(list.size() - 1).merges(move))
-				list.set(list.size() - 1, list.get(list.size() - 1).merge(move));
-			else if (list.get(list.size() - 1).mayAppend(move)) list.add(move);
+    protected SimpleAlg reduce() {
+		List<Move> reduced = new ArrayList<>();
+
+		for (Move move : this.moves) {
+			if (reduced.size() == 0)
+				reduced.add(move);
+			else if (reduced.get(reduced.size() - 1).cancels(move))
+				reduced.remove(reduced.size() - 1);
+			else if (reduced.get(reduced.size() - 1).merges(move))
+				reduced.set(reduced.size() - 1, reduced.get(reduced.size() - 1).merge(move));
+			else if (reduced.get(reduced.size() - 1).mayAppend(move))
+				reduced.add(move);
 		}
 
-		this.moves = new ArrayList<>(list);
-    }
+		this.moves = new ArrayList<>(reduced);
+
+		return this;
+	}
 
 	@Override
 	public SimpleAlg inverse() {
@@ -50,7 +64,8 @@ public class SimpleAlg implements Algorithm {
     @Override
     public int moveLength() {
         int size = 0;
-        for (Move m : this.moves) if (!m.getPlane().isRotation()) size++;
+        for (Move m : this.moves)
+        	if (!m.getPlane().isRotation()) size++;
         return size;
     }
 
@@ -63,21 +78,24 @@ public class SimpleAlg implements Algorithm {
     public SimpleAlg merge(Algorithm other) {
 		List<Move> oldMoves = this.allMoves();
 		oldMoves.addAll(other.allMoves());
-		return new SimpleAlg(oldMoves);
+		this.moves = new ArrayList<>(oldMoves);
+		return this.reduce();
     }
 
     @Override
     public SimpleAlg append(Move other) {
 		List<Move> oldMoves = this.allMoves();
 		oldMoves.add(other);
-		return new SimpleAlg(oldMoves);
+		this.moves = new ArrayList<>(oldMoves);
+		return this.reduce();
     }
 
     @Override
     public Algorithm transform(Transform transform) {
 		List<Move> oldMoves = this.allMoves();
 		for (int i = 0; i < oldMoves.size(); i++) oldMoves.set(i, oldMoves.get(i).transform(transform));
-		return new SimpleAlg(oldMoves);
+		this.moves = new ArrayList<>(oldMoves);
+		return this.reduce();
     }
 
     @Override
