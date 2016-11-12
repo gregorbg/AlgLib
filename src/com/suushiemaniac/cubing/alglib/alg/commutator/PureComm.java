@@ -25,7 +25,7 @@ public class PureComm extends Commutator {
 
     @Override
     public String toFormatString() {
-        return "[" + this.partA.toFormatString() + " , " + this.partB.toFormatString() + "]";
+        return "[" + this.partA.toFormatString() + ", " + this.partB.toFormatString() + "]";
     }
 
     @Override

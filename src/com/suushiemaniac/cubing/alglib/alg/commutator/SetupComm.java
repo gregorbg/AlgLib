@@ -20,7 +20,7 @@ public class SetupComm extends Commutator {
 
     @Override
     public String toFormatString() {
-        return "[" + this.setup.toFormatString() + (this.cancels() ? " : " : " ; ") + this.inner.toFormatString() + "]";
+        return "[" + this.setup.toFormatString() + (this.cancels() ? ": " : "; ") + this.inner.toFormatString() + "]";
     }
 
     @Override

@@ -31,36 +31,55 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
     }
 
     private class CubicMoveReader extends CubicBaseVisitor<CubicMove> {
+    	private CubicModifierReader modifierReader;
+
+		public CubicMoveReader() {
+			this.modifierReader = new CubicModifierReader();
+		}
+
         @Override
         public CubicMove visitSingleDepthCubic(CubicParser.SingleDepthCubicContext ctx) {
             CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_PLANE().getText());
-            CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
+            CubicModifier modifier = this.modifierReader.visit(ctx.cubicModifier());
             return new CubicMove(plane, modifier, 1);
         }
 
         @Override
         public CubicMove visitOuterSliceCubic(CubicParser.OuterSliceCubicContext ctx) {
             CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_OUTER_SLICE().getText());
-            CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
-            int depth = ctx.CUBIC_SLICE_DEPTH() == null ? (ctx.CUBIC_MODIFIER_DOUBLE() == null ? 1 : 2) : Integer.parseInt(ctx.CUBIC_SLICE_DEPTH().getText());
+            CubicModifier modifier = this.modifierReader.visit(ctx.cubicModifier());
+            int depth = ctx.CUBIC_DEPTH() == null ? (ctx.CUBIC_MODIFIER_DOUBLE() == null ? 1 : 2) : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
             return new CubicMove(plane, modifier, depth);
         }
 
         @Override
         public CubicMove visitCentralSliceCubic(CubicParser.CentralSliceCubicContext ctx) {
             CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_CENTRAL_SLICE().getText());
-            CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
+            CubicModifier modifier = this.modifierReader.visit(ctx.cubicModifier());
             return new CubicMove(plane, modifier, 1);
         }
 
         @Override
         public CubicMove visitNDepthCubic(CubicParser.NDepthCubicContext ctx) {
             CubicPlane plane = CubicPlane.fromNotation(ctx.CUBIC_PLANE().getText());
-            CubicModifier modifier = CubicModifier.fromNotation(ctx.CUBIC_MODIFIER() == null ? "" : ctx.CUBIC_MODIFIER().getText());
+            CubicModifier modifier = this.modifierReader.visit(ctx.cubicModifier());
             int depth = ctx.CUBIC_DEPTH() == null ? 2 : Integer.parseInt(ctx.CUBIC_DEPTH().getText());
             return new CubicMove(plane, modifier, depth);
         }
     }
+
+    private class CubicModifierReader extends CubicBaseVisitor<CubicModifier> {
+		@Override
+		public CubicModifier visitCubicModifier(CubicParser.CubicModifierContext ctx) {
+			if (ctx.CUBIC_MODIFIER_DOUBLE() != null) {
+				return CubicModifier.DOUBLE;
+			} else if (ctx.CUBIC_MODIFIER_CCW() != null) {
+				return CubicModifier.CCW;
+			} else {
+				return CubicModifier.CW;
+			}
+		}
+	}
 
     private class CubicCommReader extends CubicBaseVisitor<Commutator> {
         private CubicAlgorithmReader algorithmReader;
@@ -75,7 +94,6 @@ public class CubicAlgorithmReader extends CubicBaseVisitor<Algorithm> implements
             Algorithm partB = this.algorithmReader.visit(ctx.cubicAlg(1));
             return new PureComm(partA, partB);
         }
-
         @Override
         public Commutator visitCubicSetupComm(CubicParser.CubicSetupCommContext ctx) {
             Algorithm partA = this.algorithmReader.visit(ctx.cubicAlg(0));

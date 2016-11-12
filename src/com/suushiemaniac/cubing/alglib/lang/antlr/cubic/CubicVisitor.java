@@ -59,6 +59,12 @@ public interface CubicVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOuterSliceCubic(CubicParser.OuterSliceCubicContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CubicParser#cubicModifier}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCubicModifier(CubicParser.CubicModifierContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CubicParser#cubicComm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
