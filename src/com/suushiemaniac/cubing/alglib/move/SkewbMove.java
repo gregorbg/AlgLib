@@ -73,7 +73,14 @@ public class SkewbMove implements Move {
         return this.plane.toFormatString() + this.modifier.toFormatString();
     }
 
-	@Override
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof SkewbMove
+                && ((SkewbMove) obj).plane == this.plane
+                && ((SkewbMove) obj).modifier == this.modifier;
+    }
+
+    @Override
 	public int hashCode() {
 		return this.toFormatString().hashCode();
 	}

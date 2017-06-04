@@ -51,4 +51,16 @@ public class ClockModifier implements Modifier {
     public int toNumber() {
         return Integer.parseInt(this.toNumString());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ClockModifier
+                && ((ClockModifier) obj).numModifier == this.numModifier
+                && ((ClockModifier) obj).directionModifier == this.directionModifier;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toFormatString().hashCode();
+    }
 }

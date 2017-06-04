@@ -25,6 +25,18 @@ public class SquareOneModifier implements Modifier {
         return "(" + this.halfModifierUp.toFormatString() + "," + this.halfModifierDown.toFormatString() + ")";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof SquareOneModifier
+                && ((SquareOneModifier) obj).halfModifierUp.equals(this.halfModifierUp)
+                && ((SquareOneModifier) obj).halfModifierDown.equals(this.halfModifierDown);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toFormatString().hashCode();
+    }
+
     public SquareOneHalfModifier getHalfModifierUp() {
         return this.halfModifierUp;
     }

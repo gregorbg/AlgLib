@@ -6,4 +6,6 @@ public interface Modifier extends StringFormat {
     Modifier inverse();
 
     Modifier merge(Modifier other);
+
+    boolean equals(Object other);
 }

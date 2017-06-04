@@ -77,7 +77,15 @@ public class PyraminxMove implements Move {
         return (this.depth == 0 ? this.plane.toFormatString().toLowerCase() : this.plane.toFormatString()) + this.modifier.toFormatString();
     }
 
-	@Override
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof PyraminxMove
+                && ((PyraminxMove) obj).plane == this.plane
+                && ((PyraminxMove) obj).modifier == this.modifier
+                && ((PyraminxMove) obj).depth == this.depth;
+    }
+
+    @Override
 	public int hashCode() {
 		return this.toFormatString().hashCode();
 	}

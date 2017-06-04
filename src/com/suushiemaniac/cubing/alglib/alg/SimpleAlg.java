@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 public class SimpleAlg implements Algorithm {
     private List<Move> moves;
+    private String formatDelimiter;
 
 	public SimpleAlg(Algorithm other) {
 		this(other.allMoves());
@@ -20,8 +21,14 @@ public class SimpleAlg implements Algorithm {
 
     public SimpleAlg(List<Move> moves) {
 		this.moves = new ArrayList<>(moves);
+		this.formatDelimiter = " ";
+
 		this.reduce();
     }
+
+    public void setFormatDelimiter(String formatDelimiter) {
+		this.formatDelimiter = formatDelimiter;
+	}
 
     protected SimpleAlg reduce() {
 		List<Move> reduced = new ArrayList<>();
@@ -58,7 +65,7 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public String toFormatString() {
-        return StringUtils.join(" ", this.allMoves());
+        return StringUtils.join(this.formatDelimiter, this.allMoves());
     }
 
     @Override
@@ -130,7 +137,9 @@ public class SimpleAlg implements Algorithm {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof SimpleAlg && this.allMoves().containsAll(((SimpleAlg) obj).allMoves()) && ((SimpleAlg) obj).allMoves().containsAll(this.allMoves());
+        return obj instanceof SimpleAlg
+				&& this.allMoves().containsAll(((SimpleAlg) obj).allMoves())
+				&& ((SimpleAlg) obj).allMoves().containsAll(this.allMoves());
     }
 
     @Override
@@ -140,7 +149,12 @@ public class SimpleAlg implements Algorithm {
 
 	@Override
 	public SubGroup getSubGroup() {
-		return SubGroup.fromAlg(this);
+		return SubGroup.fromAlg(this, false);
+	}
+
+	@Override
+	public SubGroup getRotationGroup() {
+		return SubGroup.fromAlg(this, true);
 	}
 
 	@Override
@@ -151,5 +165,13 @@ public class SimpleAlg implements Algorithm {
 	@Override
 	public Iterator<Move> iterator() {
 		return this.allMoves().iterator();
+	}
+
+	public Algorithm copy() {
+		return new SimpleAlg(this);
+	}
+
+	public String toString() {
+		return this.toFormatString();
 	}
 }

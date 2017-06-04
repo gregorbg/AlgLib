@@ -30,12 +30,12 @@ public class PureComm extends Commutator {
 
     @Override
     public Algorithm develop() {
-        return this.partA.merge(this.partB).merge(this.partA.inverse()).merge(this.partB.inverse());
+        return this.partA.copy().merge(this.partB).merge(this.partA.inverse()).merge(this.partB.inverse());
     }
 
     @Override
     public PureComm inverse() {
-        return new PureComm(this.partB, this.partA);
+        return new PureComm(this.partB.copy(), this.partA.copy());
     }
 
     @Override
@@ -68,5 +68,10 @@ public class PureComm extends Commutator {
     @Override
     public int hashCode() {
         return this.partA.hashCode() + this.partB.hashCode();
+    }
+
+    @Override
+    public PureComm copy() {
+        return new PureComm(this.partA.copy(), this.partB.copy());
     }
 }

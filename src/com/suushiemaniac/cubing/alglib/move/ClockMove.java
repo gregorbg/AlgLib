@@ -91,9 +91,9 @@ public class ClockMove implements Move {
 	@Override
 	public boolean equals(Object obj) {
 		return obj instanceof ClockMove
-				&& ((ClockMove) obj).plane.equals(this.plane)
-				&& ((ClockMove) obj).modifier.equals(this.modifier)
-				&& ((ClockMove) obj).endPinConfig == this.endPinConfig;
+                && ((ClockMove) obj).modifier.equals(this.modifier)
+                && ((ClockMove) obj).plane == this.plane
+                && ((ClockMove) obj).endPinConfig == this.endPinConfig;
 	}
 
 	@Override

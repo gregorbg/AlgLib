@@ -25,12 +25,12 @@ public class SetupComm extends Commutator {
 
     @Override
     public Algorithm develop() {
-        return this.setup.merge(this.inner).merge(this.setup.inverse());
+        return this.setup.copy().merge(this.inner).merge(this.setup.inverse());
     }
 
     @Override
     public SetupComm inverse() {
-        return new SetupComm(this.setup, this.inner.inverse());
+        return new SetupComm(this.setup.copy(), this.inner.inverse());
     }
 
     @Override
@@ -63,5 +63,10 @@ public class SetupComm extends Commutator {
     @Override
     public int hashCode() {
         return this.setup.hashCode() + this.inner.hashCode();
+    }
+
+    @Override
+    public SetupComm copy() {
+        return new SetupComm(this.setup.copy(), this.inner.copy());
     }
 }

@@ -23,4 +23,8 @@ public interface Move extends StringFormat {
     Move inverse();
 
     Move transform(Transform transform);
+
+    boolean equals(Object other);
+
+    int hashCode();
 }

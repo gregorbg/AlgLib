@@ -55,7 +55,12 @@ public abstract class Commutator implements Algorithm {
 
 	@Override
 	public SubGroup getSubGroup() {
-		return SubGroup.fromAlg(this.develop());
+		return this.develop().getSubGroup();
+	}
+
+	@Override
+	public SubGroup getRotationGroup() {
+		return this.develop().getRotationGroup();
 	}
 
 	@Override
@@ -91,5 +96,15 @@ public abstract class Commutator implements Algorithm {
 	@Override
 	public Stream<Move> stream() {
 		return this.develop().stream();
+	}
+
+	@Override
+	public int hashCode() {
+		return this.develop().hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return this.toFormatString();
 	}
 }

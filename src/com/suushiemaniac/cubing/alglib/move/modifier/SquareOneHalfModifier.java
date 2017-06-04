@@ -34,6 +34,18 @@ public class SquareOneHalfModifier implements Modifier {
         return this.directionModifier.toFormatString() + this.numModifier.toFormatString();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof SquareOneHalfModifier
+                && ((SquareOneHalfModifier) obj).directionModifier == this.directionModifier
+                && ((SquareOneHalfModifier) obj).numModifier == this.numModifier;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toNumber();
+    }
+
     public int toNumber() {
         return Integer.parseInt(this.toFormatString());
     }

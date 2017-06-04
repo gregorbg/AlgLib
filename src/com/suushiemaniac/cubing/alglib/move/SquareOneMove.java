@@ -95,7 +95,15 @@ public class SquareOneMove implements Move {
         return (this.beginSlash ? "/ " : "") + this.modifier.toFormatString() + (this.endSlash ? " /" : "");
     }
 
-	@Override
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof SquareOneMove
+                && ((SquareOneMove) obj).modifier == this.modifier
+                && ((SquareOneMove) obj).beginSlash == this.beginSlash
+                && ((SquareOneMove) obj).endSlash == this.endSlash;
+    }
+
+    @Override
 	public int hashCode() {
 		return this.toFormatString().hashCode();
 	}

@@ -84,7 +84,14 @@ public class MegaminxMove implements Move {
         return this.plane.toFormatString() + this.modifier.toFormatString();
     }
 
-	@Override
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof MegaminxMove
+                && ((MegaminxMove) obj).plane == this.plane
+                && ((MegaminxMove) obj).modifier == this.modifier;
+    }
+
+    @Override
 	public int hashCode() {
 		return this.toFormatString().hashCode();
 	}

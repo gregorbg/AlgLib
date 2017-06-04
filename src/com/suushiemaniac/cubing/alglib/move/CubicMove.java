@@ -76,13 +76,10 @@ public class CubicMove implements Move {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CubicMove)) return false;
-        else {
-            CubicMove compareTo = (CubicMove) obj;
-            return this.plane == compareTo.getPlane()
-                    && this.modifier == compareTo.getModifier()
-                    && this.depth == compareTo.getDepth();
-        }
+        return obj instanceof CubicMove
+                && ((CubicMove) obj).plane == this.plane
+				&& ((CubicMove) obj).modifier == this.modifier
+				&& ((CubicMove) obj).depth == this.depth;
     }
 
 	@Override

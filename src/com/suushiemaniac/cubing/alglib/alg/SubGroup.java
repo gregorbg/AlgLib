@@ -6,13 +6,13 @@ import com.suushiemaniac.cubing.alglib.util.FixArrayComparator;
 import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class SubGroup implements StringFormat {
-    public static SubGroup fromAlg(Algorithm alg) {
+    public static SubGroup fromAlg(Algorithm alg, boolean rotations) {
         Plane[] algPlanes = new Plane[alg.allMoves().size()];
         for (int i = 0; i < alg.allMoves().size(); i++)
-            algPlanes[i] = alg.nMove(i).getPlane();
+            if (alg.nMove(i).getPlane().isRotation() == rotations)
+                algPlanes[i] = alg.nMove(i).getPlane();
         return new SubGroup(algPlanes);
     }
 
@@ -25,17 +25,21 @@ public class SubGroup implements StringFormat {
     }
 
     private ArrayList<Plane> groupList;
-    private boolean hasRotation;
 
     public SubGroup(Plane... planes) {
         this.groupList = new ArrayList<>();
+
         for (Plane p : planes) {
-            if (!this.hasRotation && p.isRotation()) hasRotation = true;
-            if (!this.groupList.contains(p) && !p.isRotation())
+            if (p == null) {
+                continue;
+            }
+
+            if (!this.groupList.contains(p)) {
                 this.groupList.add(p);
+            }
         }
-        CubicPlane[] orderedPlanes = {CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK};
-        Collections.sort(this.groupList, new FixArrayComparator<>(orderedPlanes));
+        CubicPlane[] orderedPlanes = {CubicPlane.HORIZONTAL, CubicPlane.VERTICAL, CubicPlane.SPATIAL, CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK};
+        this.groupList.sort(new FixArrayComparator<>(orderedPlanes));
     }
 
     private String[] getElementsAsString() {
@@ -80,12 +84,12 @@ public class SubGroup implements StringFormat {
         return this.sameSubGroup(other) || this.largerSubGroup(other);
     }
 
-    public boolean hasRotation() {
-        return this.hasRotation;
-    }
-
     public int size() {
         return this.groupList.size();
+    }
+
+    public boolean isEmpty() {
+        return this.size() == 0;
     }
 
     public boolean containsAll(SubGroup other) {

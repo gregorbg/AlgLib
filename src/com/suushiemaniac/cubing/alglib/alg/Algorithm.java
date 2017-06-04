@@ -36,5 +36,9 @@ public interface Algorithm extends StringFormat, Iterable<Move> {
 
     SubGroup getSubGroup();
 
+    SubGroup getRotationGroup();
+
     Stream<Move> stream();
+
+    Algorithm copy();
 }

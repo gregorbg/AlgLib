@@ -4,4 +4,6 @@ import com.suushiemaniac.cubing.alglib.util.StringFormat;
 
 public interface Plane extends StringFormat {
     boolean isRotation();
+
+    boolean equals(Object other);
 }
