@@ -1,4 +1,8 @@
-src/Main.java
-/out
-/.idea
-/*.iml
+out/
+build/
+
+.idea/
+.gradle/
+
+*.iml
+*.jar
