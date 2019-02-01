@@ -2,56 +2,40 @@ package com.suushiemaniac.cubing.alglib.transform.rotate
 
 import com.suushiemaniac.cubing.alglib.move.CubicMove
 import com.suushiemaniac.cubing.alglib.move.Move
+import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane.*
 
-enum class CubicRotation : Rotation {
-    Y_90, X_90, Z_90, Y_180, X_180, Z_180, Y_270, X_270, Z_270;
-
+data class CubicRotation(val rotationOrders: List<List<CubicPlane>>, val pow: Int) : Rotation {
     override fun rotate(origin: Move): Move {
         if (origin !is CubicMove)
             return origin
         else {
-            val rotBaseOrdinal = this.ordinal % 3
-            val rotAmountOrdinal = this.ordinal / 3
+            val planeOrder = this.rotationOrders.find { origin.plane in it } ?: listOf(origin.plane)
 
-            val cPlane = origin.plane
-            val ordinal = cPlane.ordinal
-            val base = if (ordinal < 6) 0 else if (ordinal < 12) 6 else if (ordinal < 15) 12 else 15
-            val size = if (base < 12) 6 else 3
-            val isPlaneAffected = rotBaseOrdinal != (ordinal - base) / (size / 3)
+            val rotationIndex = (planeOrder.indexOf(origin.plane) + this.pow) % planeOrder.size
+            val rotatedPlane = planeOrder[rotationIndex]
 
-            val typeBase = if (ordinal < 6) 0 else if (ordinal < 12) 1 else if (ordinal < 15) 2 else 3
-            var rotIndex = if (isPlaneAffected) ROT_ORDER[rotBaseOrdinal][typeBase].indexOf(cPlane) else 0
-            val modLen = size / 3 * 2
-            val fullIndex = (rotIndex + rotAmountOrdinal + 1) % modLen
-            val plane = if (isPlaneAffected) ROT_ORDER[rotBaseOrdinal][typeBase][fullIndex] else cPlane
-
-            var modifier = origin.modifier
-            for (i in 0..rotAmountOrdinal)
-                if (isPlaneAffected && modLen == 2 && ++rotIndex % 2 % 2 == 1)
-                    modifier = modifier.inverse()
-
-            return CubicMove(plane, modifier, origin.depth, origin.fromDepth)
+            return CubicMove(rotatedPlane, origin.modifier, origin.depth, origin.fromDepth)
         }
     }
 
     companion object {
-        private val ROT_ORDER = arrayOf(
-                arrayOf(
-                        arrayOf(RIGHT, FRONT, LEFT, BACK),
-                        arrayOf(MIDDLE, SANDWICH),
-                        arrayOf(SPATIAL, HORIZONTAL)
-                ),
-                arrayOf(
-                        arrayOf(UP, BACK, DOWN, FRONT),
-                        arrayOf(SANDWICH, EQUATOR),
-                        arrayOf(VERTICAL, SPATIAL)
-                ),
-                arrayOf(
-                        arrayOf(RIGHT, DOWN, LEFT, UP),
-                        arrayOf(MIDDLE, EQUATOR),
-                        arrayOf(HORIZONTAL, VERTICAL)
-                )
+        val ROT_ORDER_X = listOf(
+                listOf(UP, BACK, DOWN, FRONT),
+                listOf(SANDWICH, EQUATOR),
+                listOf(VERTICAL, SPATIAL)
+        )
+
+        val ROT_ORDER_Y = listOf(
+                listOf(RIGHT, FRONT, LEFT, BACK),
+                listOf(MIDDLE, SANDWICH),
+                listOf(SPATIAL, HORIZONTAL)
+        )
+
+        val ROT_ORDER_Z = listOf(
+                listOf(RIGHT, DOWN, LEFT, UP),
+                listOf(MIDDLE, EQUATOR),
+                listOf(HORIZONTAL, VERTICAL)
         )
     }
 }
