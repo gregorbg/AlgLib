@@ -25,33 +25,26 @@ class CubicAlgorithmReader : CubicBaseVisitor<Algorithm>(), NotationReader {
         private val modifierReader = CubicModifierReader()
 
         override fun visitSingleDepthCubic(ctx: CubicParser.SingleDepthCubicContext): CubicMove {
-            val plane = CubicPlane.values().fromNotation(ctx.CUBIC_PLANE().text)
+            val plane = CubicPlane.values().fromNotation(ctx.singleDepthHelper().text)
             val modifier = this.modifierReader.visit(ctx.cubicModifier())
 
-            return CubicMove(plane, modifier, 1)
+            return CubicMove(plane, modifier, 1, 0)
         }
 
         override fun visitOuterSliceCubic(ctx: CubicParser.OuterSliceCubicContext): CubicMove {
-            val plane = CubicPlane.values().fromNotation(ctx.CUBIC_OUTER_SLICE().text)
+            val plane = CubicPlane.values().fromNotation(ctx.CUBIC_OUTER_SLICE().text.toUpperCase())
             val modifier = this.modifierReader.visit(ctx.cubicModifier())
-            val depth = if (ctx.CUBIC_DEPTH() == null) if (ctx.CUBIC_MODIFIER_DOUBLE() == null) 1 else 2 else Integer.parseInt(ctx.CUBIC_DEPTH().text)
+            val depth = ctx.outerDepthHelper()?.text?.toInt() ?: 1
 
-            return CubicMove(plane, modifier, depth)
-        }
-
-        override fun visitCentralSliceCubic(ctx: CubicParser.CentralSliceCubicContext): CubicMove {
-            val plane = CubicPlane.values().fromNotation(ctx.CUBIC_CENTRAL_SLICE().text)
-            val modifier = this.modifierReader.visit(ctx.cubicModifier())
-
-            return CubicMove(plane, modifier, 1)
+            return CubicMove(plane, modifier, 1, depth)
         }
 
         override fun visitNDepthCubic(ctx: CubicParser.NDepthCubicContext): CubicMove {
             val plane = CubicPlane.values().fromNotation(ctx.CUBIC_PLANE().text)
             val modifier = this.modifierReader.visit(ctx.cubicModifier())
-            val depth = if (ctx.CUBIC_DEPTH() == null) 2 else Integer.parseInt(ctx.CUBIC_DEPTH().text)
+            val depth = ctx.CUBIC_DEPTH()?.text?.toInt() ?: 2
 
-            return CubicMove(plane, modifier, depth)
+            return CubicMove(plane, modifier, depth, 0)
         }
     }
 
@@ -82,7 +75,7 @@ class CubicAlgorithmReader : CubicBaseVisitor<Algorithm>(), NotationReader {
     }
 
     override fun visitCubic(ctx: CubicParser.CubicContext): Algorithm {
-        return if (ctx.cubicAlg() != null) this.visit(ctx.cubicAlg()) else SimpleAlg()
+        return ctx.cubicAlg()?.let(this::visit) ?: SimpleAlg()
     }
 
     override fun visitCubicSimple(ctx: CubicParser.CubicSimpleContext): SimpleAlg {

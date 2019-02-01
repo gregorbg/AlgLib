@@ -8,13 +8,14 @@ cubicSimple: cubicMove+;
 
 cubicMove: singleDepthCubic
          | nDepthCubic
-         | outerSliceCubic
-         | centralSliceCubic;
+         | outerSliceCubic;
 
-singleDepthCubic: CUBIC_PLANE cubicModifier;
+singleDepthCubic: singleDepthHelper cubicModifier;
 nDepthCubic: CUBIC_DEPTH? CUBIC_PLANE CUBIC_WIDE cubicModifier;
-centralSliceCubic: CUBIC_CENTRAL_SLICE cubicModifier;
-outerSliceCubic: (CUBIC_DEPTH | CUBIC_MODIFIER_DOUBLE)? CUBIC_OUTER_SLICE cubicModifier;
+outerSliceCubic: outerDepthHelper? CUBIC_OUTER_SLICE cubicModifier;
+
+singleDepthHelper: CUBIC_PLANE | CUBIC_CENTRAL_SLICE;
+outerDepthHelper: CUBIC_MODIFIER_DOUBLE | CUBIC_DEPTH;
 
 cubicModifier: CUBIC_MODIFIER_CCW | CUBIC_MODIFIER_DOUBLE | ;
 

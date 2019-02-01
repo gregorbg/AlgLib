@@ -31,7 +31,7 @@ enum class CubicRotation : Rotation {
                 if (isPlaneAffected && modLen == 2 && ++rotIndex % 2 % 2 == 1)
                     modifier = modifier.inverse()
 
-            return CubicMove(plane, modifier, origin.depth)
+            return CubicMove(plane, modifier, origin.depth, origin.fromDepth)
         }
     }
 
@@ -39,19 +39,16 @@ enum class CubicRotation : Rotation {
         private val ROT_ORDER = arrayOf(
                 arrayOf(
                         arrayOf(RIGHT, FRONT, LEFT, BACK),
-                        arrayOf(RIGHT_SLICE, FRONT_SLICE, LEFT_SLICE, BACK_SLICE),
                         arrayOf(MIDDLE, SANDWICH),
                         arrayOf(SPATIAL, HORIZONTAL)
                 ),
                 arrayOf(
                         arrayOf(UP, BACK, DOWN, FRONT),
-                        arrayOf(UP_SLICE, BACK_SLICE, DOWN_SLICE, FRONT_SLICE),
                         arrayOf(SANDWICH, EQUATOR),
                         arrayOf(VERTICAL, SPATIAL)
                 ),
                 arrayOf(
                         arrayOf(RIGHT, DOWN, LEFT, UP),
-                        arrayOf(RIGHT_SLICE, DOWN_SLICE, LEFT_SLICE, UP_SLICE),
                         arrayOf(MIDDLE, EQUATOR),
                         arrayOf(HORIZONTAL, VERTICAL)
                 )
