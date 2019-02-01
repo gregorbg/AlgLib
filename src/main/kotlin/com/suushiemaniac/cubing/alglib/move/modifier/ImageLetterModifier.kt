@@ -1,25 +1,13 @@
 package com.suushiemaniac.cubing.alglib.move.modifier
 
 class ImageLetterModifier : Modifier {
-    override fun toFormatString(): String {
-        return ""
-    }
+    override val notation = ""
 
-    override fun inverse(): Modifier {
-        return this
-    }
+    override fun inverse() = this
+    override fun merge(other: Modifier) = other
 
-    override fun merge(other: Modifier): Modifier {
-        return other
-    }
-
-    override fun hashCode(): Int {
-        return 0
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return other is ImageLetterModifier
-    }
+    override fun hashCode() = 0
+    override fun equals(other: Any?) = other === INST
 
     companion object {
         val INST = ImageLetterModifier()

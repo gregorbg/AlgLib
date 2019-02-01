@@ -7,26 +7,9 @@ import com.suushiemaniac.cubing.alglib.move.plane.MegaminxPlane
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxUpPlane
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxWidePlane
 
-class MegaminxMove : Move {
-    override val plane: MegaminxPlane
-    override val modifier: MegaminxModifier
-
-    override val depth: Int
-        get() = if (this.plane is MegaminxUpPlane) 1 else 6
-
-    constructor(plane: MegaminxWidePlane, modifier: MegaminxWideModifier) {
-        this.plane = plane
-        this.modifier = modifier
-    }
-
-    constructor(plane: MegaminxUpPlane, modifier: MegaminxUpModifier) {
-        this.plane = plane
-        this.modifier = modifier
-    }
-
-    override fun merges(other: Move): Boolean {
-        return false
-    }
+data class MegaminxMove(override val plane: MegaminxPlane, override val modifier: MegaminxModifier) : Move {
+    override val notation = "${this.plane.notation}${this.modifier.notation}"
+    override val depth = if (this.plane is MegaminxUpPlane) 1 else 6
 
     override fun cancels(other: Move): Boolean {
         return (other is MegaminxMove
@@ -34,13 +17,9 @@ class MegaminxMove : Move {
                 && this.modifier === other.modifier.inverse())
     }
 
-    override fun mayAppend(other: Move): Boolean {
-        return true
-    }
-
-    override fun merge(other: Move): MegaminxMove {
-        return other as MegaminxMove
-    }
+    override fun mayAppend(other: Move) = other is MegaminxMove
+    override fun merges(other: Move) = false
+    override fun merge(other: Move) = other as MegaminxMove
 
     override fun inverse(): MegaminxMove {
         if (this.plane.type != this.modifier.type) return this
@@ -53,21 +32,5 @@ class MegaminxMove : Move {
             this
     }
 
-    override fun toString(): String {
-        return this.toFormatString()
-    }
-
-    override fun toFormatString(): String {
-        return this.plane.toFormatString() + this.modifier.toFormatString()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return (other is MegaminxMove
-                && other.plane === this.plane
-                && other.modifier === this.modifier)
-    }
-
-    override fun hashCode(): Int {
-        return this.toFormatString().hashCode()
-    }
+    override fun toString() = this.notation
 }

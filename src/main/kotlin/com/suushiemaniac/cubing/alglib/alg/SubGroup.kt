@@ -2,47 +2,28 @@ package com.suushiemaniac.cubing.alglib.alg
 
 import com.suushiemaniac.cubing.alglib.move.plane.CubicPlane
 import com.suushiemaniac.cubing.alglib.move.plane.Plane
-import com.suushiemaniac.cubing.alglib.util.FixArrayComparator
-import com.suushiemaniac.cubing.alglib.util.StringFormat
 
-class SubGroup(vararg planes: Plane) : StringFormat {
-    private val groupList: MutableList<Plane> = mutableListOf()
+class SubGroup(vararg planes: Plane) {
+    private val groupList = planes.toList().distinct().sortedBy(FIXED_ORDER::indexOf)
 
     private val elementsAsString
-        get() = this.groupList.map { it.toFormatString() }
+        get() = this.groupList.map { it.notation }
 
-    val isEmpty
-        get() = this.size() == 0
+    val size: Int
+        get() = this.groupList.size
 
-    init {
-        for (p in planes) {
-            if (!this.groupList.contains(p)) {
-                this.groupList.add(p)
-            }
-        }
-
-        val orderedPlanes: Array<Plane> = arrayOf(CubicPlane.HORIZONTAL, CubicPlane.VERTICAL, CubicPlane.SPATIAL, CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK)
-        this.groupList.sortedWith(FixArrayComparator(orderedPlanes))
-    }
-
-    override fun toString(): String {
-        return this.toFormatString()
-    }
-
-    override fun toFormatString(): String {
-        return this.elementsAsString.joinToString(",", prefix = "<", postfix = ">")
-    }
+    fun isEmpty() = this.groupList.isEmpty()
 
     fun toRawString(): String {
         return this.elementsAsString.joinToString("")
     }
 
     fun sameSubGroup(other: SubGroup): Boolean {
-        return this.size() == other.size() && this.containsAll(other) && other.containsAll(this)
+        return this.groupList == other.groupList
     }
 
     fun smallerSubGroup(other: SubGroup): Boolean {
-        return this.size() < other.size() && other.containsAll(this)
+        return this.size < other.size && other.groupList.containsAll(this.groupList)
     }
 
     fun sameOrSmallerSubGroup(other: SubGroup): Boolean {
@@ -50,30 +31,20 @@ class SubGroup(vararg planes: Plane) : StringFormat {
     }
 
     fun largerSubGroup(other: SubGroup): Boolean {
-        return this.size() > other.size() && this.containsAll(other)
+        return this.size > other.size && this.groupList.containsAll(other.groupList)
     }
 
     fun sameOrLargerSubGroup(other: SubGroup): Boolean {
         return this.sameSubGroup(other) || this.largerSubGroup(other)
     }
 
-    fun size(): Int {
-        return this.groupList.size
-    }
-
-    fun containsAll(other: SubGroup): Boolean {
-        return this.groupList.containsAll(other.groupList)
-    }
-
-    override fun hashCode(): Int {
-        return this.toRawString().hashCode()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return other is SubGroup && other.sameSubGroup(this)
-    }
+    override fun hashCode() = this.groupList.hashCode()
+    override fun equals(other: Any?) = other is SubGroup && other.sameSubGroup(this)
+    override fun toString() = this.elementsAsString.joinToString(",", prefix = "<", postfix = ">")
 
     companion object {
+        private val FIXED_ORDER: Array<Plane> = arrayOf(CubicPlane.HORIZONTAL, CubicPlane.VERTICAL, CubicPlane.SPATIAL, CubicPlane.MIDDLE, CubicPlane.SANDWICH, CubicPlane.EQUATOR, CubicPlane.LEFT, CubicPlane.RIGHT, CubicPlane.UP, CubicPlane.DOWN, CubicPlane.FRONT, CubicPlane.BACK)
+
         fun fromAlg(alg: Algorithm, rotations: Boolean): SubGroup {
             val algPlanes = alg.allMoves()
                     .filter { it.plane.isRotation == rotations }
@@ -85,8 +56,7 @@ class SubGroup(vararg planes: Plane) : StringFormat {
 
         fun fromCubicGroupString(alg: String): SubGroup {
             val algPlanes = alg.substringAfter("<").substringBeforeLast(">").split(",")
-                    .map { CubicPlane.fromNotation(it) }
-                    .filterNotNull()
+                    .mapNotNull { CubicPlane.values().find { p -> p.notation == it } }
                     .toTypedArray()
 
             return SubGroup(*algPlanes)

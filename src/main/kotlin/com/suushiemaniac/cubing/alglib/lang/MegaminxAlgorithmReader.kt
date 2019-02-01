@@ -13,42 +13,33 @@ import com.suushiemaniac.cubing.alglib.move.modifier.MegaminxUpModifier
 import com.suushiemaniac.cubing.alglib.move.modifier.MegaminxWideModifier
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxUpPlane
 import com.suushiemaniac.cubing.alglib.move.plane.MegaminxWidePlane
-import org.antlr.v4.runtime.CharStreams
-import org.antlr.v4.runtime.CommonTokenStream
+import com.suushiemaniac.cubing.alglib.util.ParseUtils.fromNotation
 
 class MegaminxAlgorithmReader : MegaminxBaseVisitor<Algorithm>(), NotationReader {
-    private val moveReader: MegaminxMoveReader
-    private val commReader: MegaminxCommReader
+    private val moveReader = MegaminxMoveReader()
+    private val commReader = MegaminxCommReader(this)
 
     override fun parse(input: String): Algorithm {
-        val errorListener = InvalidNotationErrorListener(input)
-        val lexer = MegaminxLexer(CharStreams.fromString(input))
-        lexer.removeErrorListeners()
-        lexer.addErrorListener(errorListener)
-        val tokens = CommonTokenStream(lexer)
-        val parser = MegaminxParser(tokens)
-        parser.removeErrorListeners()
-        parser.addErrorListener(errorListener)
-        val tree = parser.megaminx()
-        return this.visit(tree)
+        return NotationReader.parseString(input, ::MegaminxLexer, ::MegaminxParser, MegaminxParser::megaminx, this::visit)
     }
 
     private inner class MegaminxMoveReader : MegaminxBaseVisitor<MegaminxMove>() {
         override fun visitGripMegaminx(ctx: MegaminxParser.GripMegaminxContext): MegaminxMove {
-            val plane = MegaminxWidePlane.fromNotation(ctx.MEGAMINX_WIDE_PLANE().text)
-            val modifier = MegaminxWideModifier.fromNotation(ctx.MEGAMINX_WIDE_MODIFIER().text)
-            return MegaminxMove(plane!!, modifier!!)
+            val plane = MegaminxWidePlane.values().fromNotation(ctx.MEGAMINX_WIDE_PLANE().text)
+            val modifier = MegaminxWideModifier.values().fromNotation(ctx.MEGAMINX_WIDE_MODIFIER().text)
+
+            return MegaminxMove(plane, modifier)
         }
 
         override fun visitUMegaminx(ctx: MegaminxParser.UMegaminxContext): MegaminxMove {
-            val plane = MegaminxUpPlane.fromNotation(ctx.MEGAMINX_U_PLANE().text)
-            val modifier = MegaminxUpModifier.fromNotation(ctx.MEGAMINX_U_MODIFIER().text)
-            return MegaminxMove(plane!!, modifier!!)
+            val plane = MegaminxUpPlane.values().fromNotation(ctx.MEGAMINX_U_PLANE().text)
+            val modifier = MegaminxUpModifier.values().fromNotation(ctx.MEGAMINX_U_MODIFIER().text)
+
+            return MegaminxMove(plane, modifier)
         }
     }
 
     private inner class MegaminxCommReader(private val algorithmReader: MegaminxAlgorithmReader) : MegaminxBaseVisitor<Commutator>() {
-
         override fun visitMegaminxPureComm(ctx: MegaminxParser.MegaminxPureCommContext): Commutator {
             val partA = this.algorithmReader.visit(ctx.megaminxAlg(0))
             val partB = this.algorithmReader.visit(ctx.megaminxAlg(1))
@@ -62,18 +53,12 @@ class MegaminxAlgorithmReader : MegaminxBaseVisitor<Algorithm>(), NotationReader
         }
     }
 
-    init {
-        this.moveReader = MegaminxMoveReader()
-        this.commReader = MegaminxCommReader(this)
-    }
-
     override fun visitMegaminx(ctx: MegaminxParser.MegaminxContext): Algorithm {
         return if (ctx.megaminxAlg() != null) this.visit(ctx.megaminxAlg()) else SimpleAlg()
     }
 
     override fun visitMegaminxSimple(ctx: MegaminxParser.MegaminxSimpleContext): SimpleAlg {
-        val moves = ctx.megaminxMove().map { this.moveReader.visit(it) }.toTypedArray()
-        return SimpleAlg(*moves)
+        return SimpleAlg(ctx.megaminxMove().map(this.moveReader::visit))
     }
 
     override fun visitMegaminxComm(ctx: MegaminxParser.MegaminxCommContext): Commutator {

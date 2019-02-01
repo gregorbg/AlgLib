@@ -7,11 +7,8 @@ import com.suushiemaniac.cubing.alglib.move.plane.ImageLetterPlane
 
 class ImageStringReader : NotationReader {
     override fun parse(input: String): Algorithm {
-        val moves = input.toCharArray().map { ImageLetterMove(ImageLetterPlane(it)) }
+        val moves = input.toCharArray().map(::ImageLetterPlane).map(::ImageLetterMove)
 
-        val stringAlg = SimpleAlg(moves)
-        stringAlg.setFormatDelimiter("")
-
-        return stringAlg
+        return SimpleAlg(moves, "")
     }
 }

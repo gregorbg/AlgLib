@@ -5,10 +5,4 @@ enum class ClockPlane(override val notation: String) : Plane {
 
     override val isRotation: Boolean
         get() = this == VERTICAL
-
-    companion object {
-        fun fromNotation(notation: String): ClockPlane? {
-            return values().find { it.notation == notation }
-        }
-    }
 }

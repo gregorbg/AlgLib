@@ -5,36 +5,18 @@ import com.suushiemaniac.cubing.alglib.move.modifier.ClockModifier
 import com.suushiemaniac.cubing.alglib.move.modifier.ClockNumModifier
 import com.suushiemaniac.cubing.alglib.move.plane.ClockPlane
 
-class ClockMove : Move {
-    override val plane: ClockPlane
-    override val modifier: ClockModifier
+data class ClockMove(override val plane: ClockPlane, override val modifier: ClockModifier, val isEndPinConfig: Boolean) : Move {
+    override val notation = if (this.isEndPinConfig) this.plane.notation else this.plane.notation + if (this.plane.isRotation) this.modifier.numModifier.notation else this.modifier.notation
 
-    val isEndPinConfig: Boolean
+    override val depth = 1
 
-    override val depth: Int
-        get() = 1
-
-    constructor(plane: ClockPlane) {
-        this.plane = plane
-        this.modifier = ClockModifier.endPinModifier
-        this.isEndPinConfig = true
-    }
-
-    constructor(plane: ClockPlane, numModifier: ClockNumModifier, directionModifier: ClockDirectionModifier) {
-        this.plane = plane
-        this.modifier = ClockModifier(numModifier, directionModifier)
-        this.isEndPinConfig = false
-    }
-
-    constructor(plane: ClockPlane, modifier: ClockModifier) {
-        this.plane = plane
-        this.modifier = modifier
-        this.isEndPinConfig = false
-    }
+    constructor(plane: ClockPlane) : this(plane, ClockModifier.endPinModifier, true)
+    constructor(plane: ClockPlane, numModifier: ClockNumModifier, directionModifier: ClockDirectionModifier) : this(plane, ClockModifier(numModifier, directionModifier), false)
+    constructor(plane: ClockPlane, modifier: ClockModifier) : this(plane, modifier, false)
 
     override fun merges(other: Move): Boolean {
         return (other is ClockMove
-                && this.mayAppend(other)
+                && !this.isEndPinConfig
                 && !other.isEndPinConfig
                 && this.plane == other.plane
                 && !this.cancels(other))
@@ -42,43 +24,15 @@ class ClockMove : Move {
 
     override fun cancels(other: Move): Boolean {
         return (other is ClockMove
-                && this.mayAppend(other)
+                && !this.isEndPinConfig
                 && !other.isEndPinConfig
                 && this.plane == other.plane
                 && this.modifier.toNumber() + other.modifier.toNumber() == 0)
     }
 
-    override fun mayAppend(other: Move): Boolean {
-        return !this.isEndPinConfig
-    }
+    override fun mayAppend(other: Move) = !this.isEndPinConfig
+    override fun merge(other: Move) = ClockMove(this.plane, this.modifier.merge(other.modifier))
+    override fun inverse() = if (this.isEndPinConfig) ClockMove(this.plane) else ClockMove(this.plane, this.modifier.inverse())
 
-    override fun merge(other: Move): ClockMove {
-        return if (other !is ClockMove || this.isEndPinConfig) other as ClockMove else ClockMove(this.plane, this.modifier.merge(other.modifier))
-    }
-
-    override fun inverse(): Move {
-        return if (this.isEndPinConfig) ClockMove(this.plane) else ClockMove(this.plane, this.modifier.inverse())
-    }
-
-    override fun toString(): String {
-        return this.toFormatString()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return (other is ClockMove
-                && other.modifier == this.modifier
-                && other.plane == this.plane
-                && other.isEndPinConfig == this.isEndPinConfig)
-    }
-
-    override fun hashCode(): Int {
-        return this.toFormatString().hashCode()
-    }
-
-    override fun toFormatString(): String {
-        return if (this.isEndPinConfig)
-            this.plane.toFormatString()
-        else
-            this.plane.toFormatString() + if (this.plane.isRotation) this.modifier.numModifier.toFormatString() else this.modifier.toFormatString()
-    }
+    override fun toString() = this.notation
 }

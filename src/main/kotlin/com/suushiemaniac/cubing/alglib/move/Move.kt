@@ -3,9 +3,8 @@ package com.suushiemaniac.cubing.alglib.move
 import com.suushiemaniac.cubing.alglib.move.modifier.Modifier
 import com.suushiemaniac.cubing.alglib.move.plane.Plane
 import com.suushiemaniac.cubing.alglib.transform.Transform
-import com.suushiemaniac.cubing.alglib.util.StringFormat
 
-interface Move : StringFormat {
+interface Move : NotationValue {
     val plane: Plane
     val modifier: Modifier
     val depth: Int

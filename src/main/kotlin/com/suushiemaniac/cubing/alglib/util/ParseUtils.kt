@@ -2,8 +2,13 @@ package com.suushiemaniac.cubing.alglib.util
 
 import com.suushiemaniac.cubing.alglib.exception.InvalidNotationException
 import com.suushiemaniac.cubing.alglib.lang.*
+import com.suushiemaniac.cubing.alglib.move.NotationValue
 
 object ParseUtils {
+    fun <T : NotationValue> Array<T>.fromNotation(targetNotation: String): T {
+        return this.find { it.notation == targetNotation }!!
+    }
+
     fun isParseable(input: String, parser: NotationReader) = try {
         parser.parse(input).moveLength() >= 0
     } catch (e: InvalidNotationException) {

@@ -1,14 +1,7 @@
 package com.suushiemaniac.cubing.alglib.move.plane
 
-import com.suushiemaniac.cubing.alglib.util.StringFormat
+import com.suushiemaniac.cubing.alglib.move.NotationValue
 
-interface Plane : StringFormat {
+interface Plane : NotationValue {
     val isRotation: Boolean
-    val notation: String
-
-    override fun equals(other: Any?): Boolean
-
-    override fun toFormatString(): String {
-        return notation
-    }
 }

@@ -11,39 +11,29 @@ import com.suushiemaniac.cubing.alglib.antlr.PyraminxParser
 import com.suushiemaniac.cubing.alglib.move.PyraminxMove
 import com.suushiemaniac.cubing.alglib.move.modifier.PyraminxModifier
 import com.suushiemaniac.cubing.alglib.move.plane.PyraminxPlane
-import org.antlr.v4.runtime.CharStreams
-import org.antlr.v4.runtime.CommonTokenStream
+import com.suushiemaniac.cubing.alglib.util.ParseUtils.fromNotation
 
 class PyraminxAlgorithmReader : PyraminxBaseVisitor<Algorithm>(), NotationReader {
-    private val moveReader: PyraminxMoveReader
-    private val commReader: PyraminxCommReader
+    private val moveReader = PyraminxMoveReader()
+    private val commReader = PyraminxCommReader(this)
 
     override fun parse(input: String): Algorithm {
-        val errorListener = InvalidNotationErrorListener(input)
-        val lexer = PyraminxLexer(CharStreams.fromString(input))
-        lexer.removeErrorListeners()
-        lexer.addErrorListener(errorListener)
-        val tokens = CommonTokenStream(lexer)
-        val parser = PyraminxParser(tokens)
-        parser.removeErrorListeners()
-        parser.addErrorListener(errorListener)
-        val tree = parser.pyraminx()
-        return this.visit(tree)
+        return NotationReader.parseString(input, ::PyraminxLexer, ::PyraminxParser, PyraminxParser::pyraminx, this::visit)
     }
 
     private inner class PyraminxMoveReader : PyraminxBaseVisitor<PyraminxMove>() {
         override fun visitPyraminxFullMove(ctx: PyraminxParser.PyraminxFullMoveContext): PyraminxMove {
-            val plane = PyraminxPlane.fromNotation(ctx.PYRAMINX_FULL_PLANE().text)
-            val modifier = PyraminxModifier.fromNotation(if (ctx.PYRAMINX_MODIFIER() == null) "" else ctx.PYRAMINX_MODIFIER().text)
+            val plane = PyraminxPlane.values().fromNotation(ctx.PYRAMINX_FULL_PLANE().text)
+            val modifier = PyraminxModifier.values().fromNotation(ctx.PYRAMINX_MODIFIER()?.text ?: "")
 
-            return PyraminxMove(plane!!, modifier!!, 1)
+            return PyraminxMove(plane, modifier, 1)
         }
 
         override fun visitPyraminxTipMove(ctx: PyraminxParser.PyraminxTipMoveContext): PyraminxMove {
-            val plane = PyraminxPlane.fromNotation(ctx.PYRAMINX_TIP_PLANE().text.toUpperCase())
-            val modifier = PyraminxModifier.fromNotation(if (ctx.PYRAMINX_MODIFIER() == null) "" else ctx.PYRAMINX_MODIFIER().text)
+            val plane = PyraminxPlane.values().fromNotation(ctx.PYRAMINX_TIP_PLANE().text.toUpperCase())
+            val modifier = PyraminxModifier.values().fromNotation(ctx.PYRAMINX_MODIFIER()?.text ?: "")
 
-            return PyraminxMove(plane!!, modifier!!, 0)
+            return PyraminxMove(plane, modifier, 0)
         }
     }
 
@@ -63,18 +53,12 @@ class PyraminxAlgorithmReader : PyraminxBaseVisitor<Algorithm>(), NotationReader
         }
     }
 
-    init {
-        this.moveReader = PyraminxMoveReader()
-        this.commReader = PyraminxCommReader(this)
-    }
-
     override fun visitPyraminx(ctx: PyraminxParser.PyraminxContext): Algorithm {
         return if (ctx.pyraminxAlg() != null) this.visit(ctx.pyraminxAlg()) else SimpleAlg()
     }
 
     override fun visitPyraminxSimple(ctx: PyraminxParser.PyraminxSimpleContext): SimpleAlg {
-        val moves = ctx.pyraminxMove().map { this.moveReader.visit(it) }.toTypedArray()
-        return SimpleAlg(*moves)
+        return SimpleAlg(ctx.pyraminxMove().map(this.moveReader::visit))
     }
 
     override fun visitPyraminxComm(ctx: PyraminxParser.PyraminxCommContext): Algorithm {

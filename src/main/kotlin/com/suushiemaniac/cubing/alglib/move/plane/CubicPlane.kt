@@ -5,10 +5,4 @@ enum class CubicPlane(override val notation: String) : Plane {
 
     override val isRotation: Boolean
         get() = this == HORIZONTAL || this == VERTICAL || this == SPATIAL
-
-    companion object {
-        fun fromNotation(notation: String): CubicPlane? {
-            return values().find { it.notation == notation }
-        }
-    }
 }

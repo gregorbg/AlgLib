@@ -1,53 +1,38 @@
 package com.suushiemaniac.cubing.alglib.move.modifier
 
-class ClockModifier(val numModifier: ClockNumModifier, val directionModifier: ClockDirectionModifier) : Modifier {
-    override fun inverse(): ClockModifier {
-        return ClockModifier(this.numModifier, this.directionModifier.inverse())
-    }
+import kotlin.math.abs
+
+data class ClockModifier(val numModifier: ClockNumModifier, val directionModifier: ClockDirectionModifier) : Modifier {
+    override val notation = "${this.numModifier.notation}${this.directionModifier.notation}"
+
+    override fun inverse() = ClockModifier(this.numModifier, this.directionModifier.inverse())
 
     override fun merge(other: Modifier): ClockModifier {
         if (other !is ClockModifier) return other as ClockModifier
 
-        var newRot = this.toNumber() + other.toNumber()
-
-        if (newRot < -6) {
-            newRot = 6 + (newRot + 6)
-        } else if (newRot > 6) {
-            newRot = -6 + (newRot - 6)
+        val newRot = (this.toNumber() + other.toNumber()).let {
+            when {
+                it < -6 -> 6 + (it + 6)
+                it > 6 -> -6 + (it - 6)
+                else -> it
+            }
         }
 
         return ClockModifier.fromNumber(newRot)
     }
 
-    override fun toFormatString(): String {
-        return this.numModifier.toFormatString() + this.directionModifier.toFormatString()
-    }
+    fun toNumber() = "${this.directionModifier.notation}${this.numModifier.notation}".toInt()
 
-    fun toNumString(): String {
-        return this.directionModifier.toFormatString() + this.numModifier.toFormatString()
-    }
-
-    fun toNumber(): Int {
-        return Integer.parseInt(this.toNumString())
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return (other is ClockModifier
-                && other.numModifier == this.numModifier
-                && other.directionModifier == this.directionModifier)
-    }
-
-    override fun hashCode(): Int {
-        return this.toFormatString().hashCode()
-    }
+    override fun toString() = this.notation
 
     companion object {
         val endPinModifier = ClockModifier(ClockNumModifier.ZERO, ClockDirectionModifier.NEG)
 
         fun fromNumber(number: Int): ClockModifier {
-            val numModifier = ClockNumModifier.fromNotation(Math.abs(number).toString())
             val directionModifier = if (number < 0) ClockDirectionModifier.NEG else ClockDirectionModifier.POS
-            return ClockModifier(numModifier!!, directionModifier)
+            val numModifier = ClockNumModifier.values().find { it.notation == abs(number).toString() }!!
+
+            return ClockModifier(numModifier, directionModifier)
         }
     }
 }

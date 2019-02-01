@@ -1,12 +1,9 @@
 import com.suushiemaniac.cubing.alglib.lang.CubicAlgorithmReader
+import com.suushiemaniac.cubing.alglib.transform.mirror.CubicMirror
 
-fun main(vararg args: String) {
+fun main() {
     val reader = CubicAlgorithmReader()
+    val alg = reader.parse("[r ; [r , U R U']]")
 
-    val alg = reader.parse("[D' R2 U': [U2, R D R']]")
-    val otherAlg = reader.parse("[D' R2 U: [R D R', U2]]")
-
-    val ls = listOf(alg, otherAlg)
-
-    println(ls)
+    println(alg.transform(CubicMirror.M))
 }
