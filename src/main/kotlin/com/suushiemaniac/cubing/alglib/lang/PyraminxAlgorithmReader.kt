@@ -2,9 +2,9 @@ package com.suushiemaniac.cubing.alglib.lang
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm
 import com.suushiemaniac.cubing.alglib.alg.SimpleAlg
+import com.suushiemaniac.cubing.alglib.alg.commutator.CombinedAlg
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator
-import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm
-import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm
+import com.suushiemaniac.cubing.alglib.alg.commutator.Conjugate
 import com.suushiemaniac.cubing.alglib.antlr.PyraminxBaseVisitor
 import com.suushiemaniac.cubing.alglib.antlr.PyraminxLexer
 import com.suushiemaniac.cubing.alglib.antlr.PyraminxParser
@@ -37,19 +37,19 @@ class PyraminxAlgorithmReader : PyraminxBaseVisitor<Algorithm>(), NotationReader
         }
     }
 
-    private inner class PyraminxCommReader(private val algorithmReader: PyraminxAlgorithmReader) : PyraminxBaseVisitor<Commutator>() {
-        override fun visitPyraminxPureComm(ctx: PyraminxParser.PyraminxPureCommContext): Commutator {
+    private inner class PyraminxCommReader(private val algorithmReader: PyraminxAlgorithmReader) : PyraminxBaseVisitor<CombinedAlg>() {
+        override fun visitPyraminxPureComm(ctx: PyraminxParser.PyraminxPureCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.pyraminxAlg(0))
             val partB = this.algorithmReader.visit(ctx.pyraminxAlg(1))
 
-            return PureComm(partA, partB)
+            return Commutator(partA, partB)
         }
 
-        override fun visitPyraminxSetupComm(ctx: PyraminxParser.PyraminxSetupCommContext): Commutator {
+        override fun visitPyraminxSetupComm(ctx: PyraminxParser.PyraminxSetupCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.pyraminxAlg(0))
             val partB = this.algorithmReader.visit(ctx.pyraminxAlg(1))
 
-            return SetupComm(partA, partB)
+            return Conjugate(partA, partB)
         }
     }
 

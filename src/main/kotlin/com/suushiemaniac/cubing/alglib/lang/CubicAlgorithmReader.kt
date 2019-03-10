@@ -2,9 +2,9 @@ package com.suushiemaniac.cubing.alglib.lang
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm
 import com.suushiemaniac.cubing.alglib.alg.SimpleAlg
+import com.suushiemaniac.cubing.alglib.alg.commutator.CombinedAlg
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator
-import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm
-import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm
+import com.suushiemaniac.cubing.alglib.alg.commutator.Conjugate
 import com.suushiemaniac.cubing.alglib.antlr.CubicBaseVisitor
 import com.suushiemaniac.cubing.alglib.antlr.CubicLexer
 import com.suushiemaniac.cubing.alglib.antlr.CubicParser
@@ -58,19 +58,19 @@ class CubicAlgorithmReader : CubicBaseVisitor<Algorithm>(), NotationReader {
         }
     }
 
-    private inner class CubicCommReader(private val algorithmReader: CubicAlgorithmReader) : CubicBaseVisitor<Commutator>() {
-        override fun visitCubicPureComm(ctx: CubicParser.CubicPureCommContext): Commutator {
+    private inner class CubicCommReader(private val algorithmReader: CubicAlgorithmReader) : CubicBaseVisitor<CombinedAlg>() {
+        override fun visitCubicPureComm(ctx: CubicParser.CubicPureCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.cubicAlg(0))
             val partB = this.algorithmReader.visit(ctx.cubicAlg(1))
 
-            return PureComm(partA, partB)
+            return Commutator(partA, partB)
         }
 
-        override fun visitCubicSetupComm(ctx: CubicParser.CubicSetupCommContext): Commutator {
+        override fun visitCubicSetupComm(ctx: CubicParser.CubicSetupCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.cubicAlg(0))
             val partB = this.algorithmReader.visit(ctx.cubicAlg(1))
 
-            return SetupComm(partA, partB)
+            return Conjugate(partA, partB)
         }
     }
 
@@ -82,7 +82,7 @@ class CubicAlgorithmReader : CubicBaseVisitor<Algorithm>(), NotationReader {
         return SimpleAlg(ctx.cubicMove().map(this.moveReader::visit))
     }
 
-    override fun visitCubicComm(ctx: CubicParser.CubicCommContext): Commutator {
+    override fun visitCubicComm(ctx: CubicParser.CubicCommContext): CombinedAlg {
         return this.commReader.visit(ctx)
     }
 }

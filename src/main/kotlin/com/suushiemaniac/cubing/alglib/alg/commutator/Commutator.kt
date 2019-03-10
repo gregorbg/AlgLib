@@ -1,23 +1,21 @@
 package com.suushiemaniac.cubing.alglib.alg.commutator
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm
-import com.suushiemaniac.cubing.alglib.alg.SubGroup
-import com.suushiemaniac.cubing.alglib.move.Move
+import com.suushiemaniac.cubing.alglib.transform.Transform
 
-abstract class Commutator : Algorithm {
-    override val subGroup: SubGroup
-        get() = this.plain().subGroup
+data class Commutator(val partA: Algorithm, val partB: Algorithm) : CombinedAlg(partA, partB) {
+    override fun ownCancellationLength() = 2 * this.partA.moveLength() + 2 * this.partB.moveLength() - this.moveLength()
 
-    override val rotationGroup: SubGroup
-        get() = this.plain().rotationGroup
+    override fun plain() = this.partA + this.partB + this.partA.inverse() + this.partB.inverse()
+    override fun inverse() = Commutator(this.partB.copy(), this.partA.copy())
+    override operator fun invoke(first: Algorithm, second: Algorithm) = this.copy(partA = first, partB = second)
 
-    abstract fun ownCancellationLength(): Int
+    override fun toString() = "[${this.partA} , ${this.partB}]"
 
-    fun cancels() = this.ownCancellationLength() > 0
-
-    override fun allMoves() = this.plain().allMoves()
-    override fun merge(other: Algorithm) = this.plain().merge(other)
-    override fun append(other: Move) = this.plain().append(other)
-    override fun moveLength() = this.plain().moveLength()
-    override fun algLength() = this.plain().algLength()
+    companion object {
+        fun isCommutator(algorithm: Algorithm): Boolean {
+            //Not very useful atm, add functionality as long-term project??
+            return algorithm is Commutator
+        }
+    }
 }

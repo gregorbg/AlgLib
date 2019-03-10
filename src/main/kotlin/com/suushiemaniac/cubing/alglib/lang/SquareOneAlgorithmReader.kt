@@ -2,13 +2,12 @@ package com.suushiemaniac.cubing.alglib.lang
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm
 import com.suushiemaniac.cubing.alglib.alg.SimpleAlg
+import com.suushiemaniac.cubing.alglib.alg.commutator.CombinedAlg
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator
-import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm
-import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm
+import com.suushiemaniac.cubing.alglib.alg.commutator.Conjugate
 import com.suushiemaniac.cubing.alglib.antlr.SquareOneBaseVisitor
 import com.suushiemaniac.cubing.alglib.antlr.SquareOneLexer
 import com.suushiemaniac.cubing.alglib.antlr.SquareOneParser
-import com.suushiemaniac.cubing.alglib.move.Move
 import com.suushiemaniac.cubing.alglib.move.SquareOneMove
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneDirectionModifier
 import com.suushiemaniac.cubing.alglib.move.modifier.SquareOneHalfModifier
@@ -57,19 +56,19 @@ class SquareOneAlgorithmReader : SquareOneBaseVisitor<Algorithm>(), NotationRead
         }
     }
 
-    private inner class SquareOneCommReader(private val algorithmReader: SquareOneAlgorithmReader) : SquareOneBaseVisitor<Commutator>() {
-        override fun visitSquareOnePureComm(ctx: SquareOneParser.SquareOnePureCommContext): Commutator {
+    private inner class SquareOneCommReader(private val algorithmReader: SquareOneAlgorithmReader) : SquareOneBaseVisitor<CombinedAlg>() {
+        override fun visitSquareOnePureComm(ctx: SquareOneParser.SquareOnePureCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.squareOneAlg(0))
             val partB = this.algorithmReader.visit(ctx.squareOneAlg(1))
 
-            return PureComm(partA, partB)
+            return Commutator(partA, partB)
         }
 
-        override fun visitSquareOneSetupComm(ctx: SquareOneParser.SquareOneSetupCommContext): Commutator {
+        override fun visitSquareOneSetupComm(ctx: SquareOneParser.SquareOneSetupCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.squareOneAlg(0))
             val partB = this.algorithmReader.visit(ctx.squareOneAlg(1))
 
-            return SetupComm(partA, partB)
+            return Conjugate(partA, partB)
         }
     }
 
@@ -87,7 +86,7 @@ class SquareOneAlgorithmReader : SquareOneBaseVisitor<Algorithm>(), NotationRead
         return SimpleAlg(algMoves)
     }
 
-    override fun visitSquareOneComm(ctx: SquareOneParser.SquareOneCommContext): Commutator {
+    override fun visitSquareOneComm(ctx: SquareOneParser.SquareOneCommContext): CombinedAlg {
         return this.commReader.visit(ctx)
     }
 }

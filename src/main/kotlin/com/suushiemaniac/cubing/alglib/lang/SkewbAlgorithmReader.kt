@@ -2,9 +2,9 @@ package com.suushiemaniac.cubing.alglib.lang
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm
 import com.suushiemaniac.cubing.alglib.alg.SimpleAlg
+import com.suushiemaniac.cubing.alglib.alg.commutator.CombinedAlg
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator
-import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm
-import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm
+import com.suushiemaniac.cubing.alglib.alg.commutator.Conjugate
 import com.suushiemaniac.cubing.alglib.antlr.SkewbBaseVisitor
 import com.suushiemaniac.cubing.alglib.antlr.SkewbLexer
 import com.suushiemaniac.cubing.alglib.antlr.SkewbParser
@@ -32,19 +32,19 @@ class SkewbAlgorithmReader : SkewbBaseVisitor<Algorithm>(), NotationReader {
         }
     }
 
-    private inner class SkewbCommReader(private val algorithmReader: SkewbAlgorithmReader) : SkewbBaseVisitor<Commutator>() {
-        override fun visitSkewbPureComm(ctx: SkewbParser.SkewbPureCommContext): Commutator {
+    private inner class SkewbCommReader(private val algorithmReader: SkewbAlgorithmReader) : SkewbBaseVisitor<CombinedAlg>() {
+        override fun visitSkewbPureComm(ctx: SkewbParser.SkewbPureCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.skewbAlg(0))
             val partB = this.algorithmReader.visit(ctx.skewbAlg(1))
 
-            return PureComm(partA, partB)
+            return Commutator(partA, partB)
         }
 
-        override fun visitSkewbSetupComm(ctx: SkewbParser.SkewbSetupCommContext): Commutator {
+        override fun visitSkewbSetupComm(ctx: SkewbParser.SkewbSetupCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.skewbAlg(0))
             val partB = this.algorithmReader.visit(ctx.skewbAlg(1))
 
-            return SetupComm(partA, partB)
+            return Conjugate(partA, partB)
         }
     }
 

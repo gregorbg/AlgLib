@@ -2,9 +2,9 @@ package com.suushiemaniac.cubing.alglib.lang
 
 import com.suushiemaniac.cubing.alglib.alg.Algorithm
 import com.suushiemaniac.cubing.alglib.alg.SimpleAlg
+import com.suushiemaniac.cubing.alglib.alg.commutator.CombinedAlg
 import com.suushiemaniac.cubing.alglib.alg.commutator.Commutator
-import com.suushiemaniac.cubing.alglib.alg.commutator.PureComm
-import com.suushiemaniac.cubing.alglib.alg.commutator.SetupComm
+import com.suushiemaniac.cubing.alglib.alg.commutator.Conjugate
 import com.suushiemaniac.cubing.alglib.antlr.ClockBaseVisitor
 import com.suushiemaniac.cubing.alglib.antlr.ClockLexer
 import com.suushiemaniac.cubing.alglib.antlr.ClockParser
@@ -42,19 +42,19 @@ class ClockAlgorithmReader : ClockBaseVisitor<Algorithm>(), NotationReader {
         }
     }
 
-    private inner class ClockCommReader(private val algorithmReader: ClockAlgorithmReader) : ClockBaseVisitor<Commutator>() {
-        override fun visitClockPureComm(ctx: ClockParser.ClockPureCommContext): Commutator {
+    private inner class ClockCommReader(private val algorithmReader: ClockAlgorithmReader) : ClockBaseVisitor<CombinedAlg>() {
+        override fun visitClockPureComm(ctx: ClockParser.ClockPureCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.clockAlg(0))
             val partB = this.algorithmReader.visit(ctx.clockAlg(1))
 
-            return PureComm(partA, partB)
+            return Commutator(partA, partB)
         }
 
-        override fun visitClockSetupComm(ctx: ClockParser.ClockSetupCommContext): Commutator {
+        override fun visitClockSetupComm(ctx: ClockParser.ClockSetupCommContext): CombinedAlg {
             val partA = this.algorithmReader.visit(ctx.clockAlg(0))
             val partB = this.algorithmReader.visit(ctx.clockAlg(1))
 
-            return SetupComm(partA, partB)
+            return Conjugate(partA, partB)
         }
     }
 
