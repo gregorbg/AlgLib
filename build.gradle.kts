@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.20"
+    kotlin("jvm") version "1.3.31"
     antlr
     `maven-publish`
 }
@@ -15,7 +15,8 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    antlr("org.antlr:antlr4:4.7+")
+
+    antlr("org.antlr:antlr4:4.7.2")
 }
 
 tasks {
@@ -24,7 +25,7 @@ tasks {
     }
 
     create<Jar>("sourcesJar") {
-        classifier = "sources"
+        archiveClassifier.set("sources")
         from(sourceSets["main"].allSource)
         dependsOn("classes")
     }
